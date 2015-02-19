@@ -1,0 +1,222 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M384 256l-254 256 254 256-64 64-320-320 320-320z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 384,
+				"tags": [
+					"ios-arrow-back"
+				],
+				"defaultCode": 62415,
+				"grid": 32
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"id": 263,
+				"order": 5,
+				"name": "ios-arrow-back",
+				"prevSize": 32,
+				"code": 62415
+			},
+			"setIdx": 2,
+			"iconIdx": 263
+		},
+		{
+			"icon": {
+				"paths": [
+					"M0 256l64-64 320 320-320 320-64-64 254-256z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 384,
+				"tags": [
+					"ios-arrow-forward"
+				],
+				"defaultCode": 62417,
+				"grid": 32
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"id": 265,
+				"order": 6,
+				"name": "ios-arrow-forward",
+				"prevSize": 32,
+				"code": 62417
+			},
+			"setIdx": 2,
+			"iconIdx": 265
+		},
+		{
+			"icon": {
+				"paths": [
+					"M384 230l-300 282 300 282-42 38-342-320 342-320z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 384,
+				"tags": [
+					"ios-arrow-left"
+				],
+				"defaultCode": 62418,
+				"grid": 32
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"id": 266,
+				"order": 9,
+				"name": "ios-arrow-left",
+				"prevSize": 32,
+				"code": 62418
+			},
+			"setIdx": 2,
+			"iconIdx": 266
+		},
+		{
+			"icon": {
+				"paths": [
+					"M0 230l42-38 342 320-342 320-42-38 300-282z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 384,
+				"tags": [
+					"ios-arrow-right"
+				],
+				"defaultCode": 62419,
+				"grid": 32
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"id": 267,
+				"order": 10,
+				"prevSize": 32,
+				"code": 62419,
+				"name": "ios-arrow-right"
+			},
+			"setIdx": 2,
+			"iconIdx": 267
+		},
+		{
+			"icon": {
+				"paths": [
+					"M708 320c36 0 60 26 60 62v352c0 36-24 66-60 66h-640c-36 0-68-30-68-66v-352c0-36 32-62 68-62h26v-32h68v32h26c64-72 86-96 110-96h176c24 0 46 24 110 96h124zM384 720c94 0 172-76 172-170s-78-170-172-170-172 76-172 170 78 170 172 170zM610 418v-34h-34v34h34zM384 412c76 0 140 62 140 138s-64 138-140 138-140-62-140-138 64-138 140-138zM384 614c36 0 64-28 64-64s-28-64-64-64-64 28-64 64 28 64 64 64z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 768,
+				"tags": [
+					"ios-camera"
+				],
+				"defaultCode": 62454,
+				"grid": 32
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"id": 302,
+				"order": 7,
+				"name": "ios-camera",
+				"prevSize": 32,
+				"code": 62454
+			},
+			"setIdx": 2,
+			"iconIdx": 302
+		},
+		{
+			"icon": {
+				"paths": [
+					"M736 160h-704v704h704v-704zM768 128v0 768h-768v-768h768zM256 336v-32h384v32h-384zM256 528v-32h384v32h-384zM256 720v-32h384v32h-384zM128 320c0-22 10-32 32-32s32 10 32 32-10 32-32 32-32-10-32-32zM128 512c0-22 10-32 32-32s32 10 32 32-10 32-32 32-32-10-32-32zM128 704c0-22 10-32 32-32s32 10 32 32-10 32-32 32-32-10-32-32z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"width": 768,
+				"tags": [
+					"ios-list-outline"
+				],
+				"defaultCode": 62547,
+				"grid": 32
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"id": 395,
+				"order": 8,
+				"prevSize": 32,
+				"code": 62547,
+				"name": "ios-list-outline"
+			},
+			"setIdx": 2,
+			"iconIdx": 395
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icomoon"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-",
+			"metadata": {
+				"fontFamily": "icomoon",
+				"majorVersion": 1,
+				"minorVersion": 0
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 15,
+				"whitespace": 50
+			},
+			"showSelector": true,
+			"selector": "class",
+			"classSelector": ".icon",
+			"showMetrics": true,
+			"showMetadata": false,
+			"showVersion": false,
+			"resetPoint": 58880
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215,
+			"classSelector": ".icon"
+		},
+		"historySize": 100,
+		"showCodes": true,
+		"gridSize": 16,
+		"showGrid": true,
+		"showLiga": false
+	}
+}
