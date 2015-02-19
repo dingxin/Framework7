@@ -220,6 +220,9 @@
         gulp.src(paths.source.root + 'my-app/my-app.css')
             .pipe(gulp.dest(paths.build.styles));
 
+        gulp.src(paths.source.root + 'fonts/*.*')
+    		.pipe(gulp.dest(paths.build.root + 'fonts/'));
+
         gulp.src(paths.source.root + 'img/*.*')
             .pipe(gulp.dest(paths.build.root + 'img/'))
             .pipe(connect.reload());
@@ -325,6 +328,9 @@
                         path.basename = path.basename + '.min';
                     }))
                     .pipe(gulp.dest(paths.dist.styles));
+                
+                gulp.src(paths.source.root + 'fonts/*.*')
+                	.pipe(gulp.dest(paths.dist.root + 'fonts/'));
             });
     });
     

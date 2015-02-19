@@ -365,3 +365,58 @@ div.ks-demo-lazy {
 .ks-facebook-card .card-content-inner {
   padding: 15px 10px;
 }
+i.icon.icon-f7 {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-f7.png");
+}
+i.icon.icon-form-name {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-name.png");
+}
+i.icon.icon-form-password {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-password.png");
+}
+i.icon.icon-form-email {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-email.png");
+}
+i.icon.icon-form-calendar {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-calendar.png");
+}
+i.icon.icon-form-tel {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-tel.png");
+}
+i.icon.icon-form-gender {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-gender.png");
+}
+i.icon.icon-form-toggle {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-toggle.png");
+}
+i.icon.icon-form-comment {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-comment.png");
+}
+i.icon.icon-form-settings {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-settings.png");
+}
+i.icon.icon-form-url {
+  width: 29px;
+  height: 29px;
+  background-image: url("../img/i-form-url.png");
+}
