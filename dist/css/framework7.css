@@ -956,7 +956,7 @@ html.ios-gt-6.pixel-ratio-3 .toolbar:before {
   }
   .tabbar a.tab-link,
   .tabbar a.link {
-    width: auto;
+    /*width: auto;*/
     min-width: 105px;
   }
   .tabbar-labels {
