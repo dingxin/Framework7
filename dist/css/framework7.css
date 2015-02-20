@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 19, 2015
+ * Released on: February 20, 2015
  */
 html,
 body {
@@ -46,6 +46,7 @@ body {
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 a,
 input,
@@ -5550,101 +5551,3 @@ html.ios-gt-6.pixel-ratio-3 .picker-calendar.picker-modal-inline .picker-calenda
   opacity: 1;
 }
 /* === Color Themes === */
-.color-blue {
-  color: #007aff;
-}
-.list-block .item-link.list-button.color-blue,
-.tabbar a.active.color-blue,
-a.color-blue {
-  color: #007aff;
-}
-.label-switch input[type="checkbox"]:checked + .checkbox.color-blue,
-.label-switch.color-blue input[type="checkbox"]:checked + .checkbox {
-  background-color: #007aff;
-}
-.color-blue.button:not(.button-fill),
-.color-blue.buttons-row .button,
-.theme-blue .button:not(.button-fill) {
-  border-color: #007aff;
-}
-html:not(.watch-active-state) .color-blue.button:not(.button-fill):active,
-html:not(.watch-active-state) .color-blue.buttons-row .button:active,
-html:not(.watch-active-state) .theme-blue .button:not(.button-fill):active,
-.color-blue.button:not(.button-fill).active-state,
-.color-blue.buttons-row .button.active-state,
-.theme-blue .button:not(.button-fill).active-state {
-  background-color: rgba(0, 122, 255, 0.15);
-}
-.color-blue.button:not(.button-fill).active,
-.color-blue.buttons-row .button.active,
-.theme-blue .button:not(.button-fill).active {
-  background-color: #007aff;
-  color: #fff;
-}
-.theme-blue .button.button-fill,
-.button.button-fill.color-blue {
-  background: #007aff;
-  color: #fff;
-}
-.color-blue i.icon,
-.theme-blue i.icon,
-i.icon.color-blue,
-i.icon.theme-blue {
-  color: #007aff;
-}
-.theme-blue .modal-button,
-.theme-blue .actions-modal-button {
-  color: #007aff;
-}
-.theme-blue a,
-.theme-blue .item-link.list-button {
-  color: #007aff;
-}
-.theme-blue .tabbar a,
-.tabbar.theme-blue a {
-  color: inherit;
-}
-.theme-blue .tabbar a.active,
-.tabbar.theme-blue a.active {
-  color: #007aff;
-}
-.theme-blue .range-slider input[type="range"]::-webkit-slider-thumb:before,
-.range-slider.theme-blue input[type="range"]::-webkit-slider-thumb:before {
-  background-color: #007aff;
-}
-.theme-blue label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-blue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
-  background-color: #007aff;
-}
-.theme-blue label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-blue label.label-radio input[type="radio"]:checked ~ .item-inner {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23007aff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
-}
-.theme-blue .swiper-pagination-bullet-active {
-  background-color: #007aff;
-}
-.theme-blue .picker-calendar-day.picker-calendar-day-selected span {
-  background-color: #007aff !important;
-}
-.swiper-button-next.color-blue,
-.swiper-container-rtl .swiper-button-prev.color-blue,
-.theme-blue .swiper-button-next,
-.theme-blue .swiper-container-rtl .swiper-button-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
-}
-.swiper-button-prev.color-blue,
-.swiper-container-rtl .swiper-button-next.color-blue,
-.theme-blue .swiper-button-prev,
-.theme-blue .swiper-container-rtl .swiper-button-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
-}
-.bg-blue,
-.button.button-fill.bg-blue,
-a.bg-blue,
-.list-block .swipeout-actions-left a.bg-blue,
-.list-block .swipeout-actions-right a.bg-blue {
-  background-color: #007aff;
-}
-.border-blue {
-  border-color: #007aff;
-}
