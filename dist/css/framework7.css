@@ -919,6 +919,7 @@ html.ios-gt-6.pixel-ratio-3 .toolbar:before {
 }
 .tabbar i.icon {
   height: 30px;
+  font-size: 30px;
 }
 .tabbar-labels {
   height: 50px;
@@ -1479,6 +1480,7 @@ i.icon {
   background-repeat: no-repeat;
   font-style: normal;
   position: relative;
+  text-align: center;
 }
 i.icon.icon-back:before {
   content: "\f3cf";
@@ -1828,6 +1830,10 @@ html.ios-gt-6.pixel-ratio-3 .list-block ul:after {
 }
 .list-block .item-media i + img {
   margin-left: 5px;
+}
+.list-block .item-media i.icon {
+  font-size: 29px;
+  width: 29px;
 }
 .list-block .item-media + .item-inner {
   margin-left: 15px;
