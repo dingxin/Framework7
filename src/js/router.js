@@ -34,15 +34,11 @@ app.router = {
         // Loading new page
         var removeClasses = 'page-on-center page-on-right page-on-left';
         if (direction === 'to-left') {
-            // leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
-            // rightPage.removeClass('page-on-left').addClass('page-from-right-to-center');
             leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
             rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
         }
         // Go back
         if (direction === 'to-right') {
-            // leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
-            // rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
             leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
             rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
             
@@ -520,17 +516,15 @@ app.router._load = function (view, options) {
             view.refreshPreviousPage();
         }
     }
-
     if (animatePages) {
         // Set pages before animation
         app.router.animatePages(oldPage, newPage, 'to-left', view);
 
         // Dynamic navbar animation
         if (dynamicNavbar) {
-            setTimeout(function () {
+            setTimeout(function() {
                 app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
             }, 0);
-
         }
         newPage.animationEnd(function (e) {
             afterAnimation();
@@ -540,6 +534,7 @@ app.router._load = function (view, options) {
         newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
         afterAnimation();
     }
+
 };
 
 app.router.load = function (view, options) {
