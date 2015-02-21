@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 20, 2015
+ * Released on: February 21, 2015
  */
 html,
 body {
@@ -391,14 +391,14 @@ p {
   -webkit-transform: translate3d(-20%, 0, 0);
   transform: translate3d(-20%, 0, 0);
 }
-.page-on-center .page-fake-shadow {
+.page-on-center .swipeback-page-shadow {
   opacity: 1;
 }
 .page-on-right {
   -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
-.page-on-right .page-fake-shadow {
+.page-on-right .swipeback-page-shadow {
   opacity: 0;
 }
 .page-content {
@@ -408,8 +408,10 @@ p {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
-.page-fake-shadow {
+.swipeback-page-shadow {
   position: absolute;
   right: 100%;
   top: 0;
@@ -420,8 +422,13 @@ p {
   z-index: -1;
   content: '';
 }
+html.android .swipeback-page-shadow {
+  display: none;
+  -webkit-animation: none;
+  animation: none;
+}
 .page-transitioning,
-.page-transitioning .page-fake-shadow {
+.page-transitioning .swipeback-page-shadow {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
@@ -436,6 +443,12 @@ p {
   background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.01) 50%, rgba(0, 0, 0, 0.2) 100%);
   z-index: -1;
   content: '';
+}
+html.android .page-from-right-to-center:before,
+html.android .page-from-center-to-right:before {
+  display: none;
+  -webkit-animation: none;
+  animation: none;
 }
 .page-from-right-to-center {
   -webkit-animation: pageFromRightToCenter 400ms forwards;

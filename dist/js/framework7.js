@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 20, 2015
+ * Released on: February 21, 2015
  */
         (function () {
         
@@ -148,7 +148,7 @@
             };
         
             // Link to local storage
-            app.ls = localStorage;
+            app.ls = window.localStorage;
         
             // RTL
             app.rtl = $('body').css('direction') === 'rtl';
@@ -357,10 +357,10 @@
                         return;
                     }
         
-                    if (view.params.swipeBackPageAnimateShadow) {
-                        pageShadow = activePage.find('.page-fake-shadow');
+                    if (view.params.swipeBackPageAnimateShadow && !app.device.android) {
+                        pageShadow = activePage.find('.swipeback-page-shadow');
                         if (pageShadow.length === 0) {
-                            pageShadow = $('<div class="page-fake-shadow"></div>');
+                            pageShadow = $('<div class="swipeback-page-shadow"></div>');
                             activePage.append(pageShadow);
                         }
                     }
@@ -410,7 +410,7 @@
                 }
         
                 activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-                if (view.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - 1 * percentage;
+                if (view.params.swipeBackPageAnimateShadow && !app.device.android) pageShadow[0].style.opacity = 1 - 1 * percentage;
         
                 previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
                 if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
@@ -1356,6 +1356,7 @@
                 view: view,
                 url: pageContainer.f7PageData && pageContainer.f7PageData.url,
                 query: pageContainer.f7PageData && pageContainer.f7PageData.query,
+                navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
                 from: position,
                 context: pageContext
             };
@@ -1379,6 +1380,7 @@
                 view: view,
                 from: params.position,
                 context: pageContext,
+                navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
                 swipeBack: params.swipeBack
             };
         
@@ -1410,6 +1412,7 @@
                 from: params.position,
                 context: pageContext,
                 swipeBack: params.swipeBack,
+                navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
                 fromPage: params.fromPage
             };
             var oldPage = params.oldPage,
@@ -1553,15 +1556,11 @@
                 // Loading new page
                 var removeClasses = 'page-on-center page-on-right page-on-left';
                 if (direction === 'to-left') {
-                    // leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
-                    // rightPage.removeClass('page-on-left').addClass('page-from-right-to-center');
                     leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
                     rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
                 }
                 // Go back
                 if (direction === 'to-right') {
-                    // leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
-                    // rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
                     leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
                     rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
                     
@@ -2039,17 +2038,15 @@
                     view.refreshPreviousPage();
                 }
             }
-        
             if (animatePages) {
                 // Set pages before animation
                 app.router.animatePages(oldPage, newPage, 'to-left', view);
         
                 // Dynamic navbar animation
                 if (dynamicNavbar) {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
                     }, 0);
-        
                 }
                 newPage.animationEnd(function (e) {
                     afterAnimation();
@@ -2059,6 +2056,7 @@
                 newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
                 afterAnimation();
             }
+        
         };
         
         app.router.load = function (view, options) {
@@ -6841,7 +6839,7 @@
         
                 if (pb.params.swipeToClose && pb.params.type !== 'page') {
                     sliderSettings.onTouchStart = pb.swipeCloseTouchStart;
-                    sliderSettings.onOppositeTouchMove = pb.swipeCloseTouchMove;
+                    sliderSettings.onTouchMoveOpposite = pb.swipeCloseTouchMove;
                     sliderSettings.onTouchEnd = pb.swipeCloseTouchEnd;
                 }
         
@@ -10617,8 +10615,12 @@
                 // Observer
                 observer: false,
                 observeParents: false,
+                // Callbacks
+                runCallbacksOnInit: true
                 /*
                 Callbacks:
+                onInit: function (swiper)
+                onDestroy: function (swiper)
                 onClick: function (swiper, e) 
                 onTap: function (swiper, e) 
                 onDoubleTap: function (swiper, e) 
@@ -10629,9 +10631,9 @@
                 onTransitionEnd: function (swiper) 
                 onImagesReady: function (swiper) 
                 onProgress: function (swiper, progress) 
-                onDestroy: function () 
                 onTouchStart: function (swiper, e) 
                 onTouchMove: function (swiper, e) 
+                onTouchMoveOpposite: function (swiper, e) 
                 onTouchEnd: function (swiper, e) 
                 onReachBeginning: function (swiper) 
                 onReachEnd: function (swiper) 
@@ -11435,17 +11437,20 @@
                 }
                 if (s.params.onTouchMove) s.params.onTouchMove(s, e);
                 s.allowClick = false;
-                if (!isTouched) return;
                 if (e.targetTouches && e.targetTouches.length > 1) return;
                 
                 touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                 touchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
             
-                var touchAngle = Math.atan2(Math.abs(touchesCurrent.y - touchesStart.y), Math.abs(touchesCurrent.x - touchesStart.x)) * 180 / Math.PI;
                 if (typeof isScrolling === 'undefined') {
+                    var touchAngle = Math.atan2(Math.abs(touchesCurrent.y - touchesStart.y), Math.abs(touchesCurrent.x - touchesStart.x)) * 180 / Math.PI;
                     isScrolling = isH() ? touchAngle > s.params.touchAngle : (90 - touchAngle > s.params.touchAngle);
                     // isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
                 }
+                if (isScrolling && s.params.onTouchMoveOpposite) {
+                    s.params.onTouchMoveOpposite(s, e);
+                }
+                if (!isTouched) return;
                 if (isScrolling)  {
                     isTouched = false;
                     return;
@@ -11557,8 +11562,8 @@
             };
             s.onTouchEnd = function (e) {
                 if (e.originalEvent) e = e.originalEvent;
-                if (!isTouched) return;
                 if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
+                if (!isTouched) return;
             
                 //Return Grab Cursor
                 if (s.params.grabCursor && isMoved && isTouched) {
@@ -11648,22 +11653,26 @@
                         }
             
                         velocities.length = 0;
-            
                         var momentumDuration = 1000 * s.params.freeModeMomentumRatio;
                         var momentumDistance = s.velocity * momentumDuration;
             
                         var newPosition = s.translate + momentumDistance;
+                        if (s.rtl) newPosition = - newPosition;
                         var doBounce = false;
                         var afterBouncePosition;
                         var bounceAmount = Math.abs(s.velocity) * 20 * s.params.freeModeMomentumBounceRatio;
                         if (newPosition < s.maxTranslate()) {
                             if (s.params.freeModeMomentumBounce) {
-                                if (newPosition + s.maxTranslate() < -bounceAmount) newPosition = s.maxTranslate() - bounceAmount;
+                                if (newPosition + s.maxTranslate() < -bounceAmount) {
+                                    newPosition = s.maxTranslate() - bounceAmount;
+                                }
                                 afterBouncePosition = s.maxTranslate();
                                 doBounce = true;
                                 allowMomentumBounce = true;
                             }
-                            else newPosition = s.maxTranslate();
+                            else {
+                                newPosition = s.maxTranslate();
+                            }
                         }
                         if (newPosition > s.minTranslate()) {
                             if (s.params.freeModeMomentumBounce) {
@@ -11674,11 +11683,18 @@
                                 doBounce = true;
                                 allowMomentumBounce = true;
                             }
-                            else newPosition = s.minTranslate();
+                            else {
+                                newPosition = s.minTranslate();
+                            }
                         }
                         //Fix duration
                         if (s.velocity !== 0) {
-                            momentumDuration = Math.abs((newPosition - s.translate) / s.velocity);
+                            if (s.rtl) {
+                                momentumDuration = Math.abs((-newPosition - s.translate) / s.velocity);
+                            }
+                            else {
+                                momentumDuration = Math.abs((newPosition - s.translate) / s.velocity);
+                            }
                         }
             
                         if (s.params.freeModeMomentumBounce && doBounce) {
@@ -12455,10 +12471,10 @@
                     s.effects[s.params.effect].setTranslate();
                 }
                 if (s.params.loop) {
-                    s.slideTo(s.params.initialSlide + s.loopedSlides, 0, false);
+                    s.slideTo(s.params.initialSlide + s.loopedSlides, 0, s.params.runCallbacksOnInit);
                 }
                 else {
-                    s.slideTo(s.params.initialSlide, 0, false);
+                    s.slideTo(s.params.initialSlide, 0, s.params.runCallbacksOnInit);
                 }
                 s.attachEvents();
                 if (s.params.observer && s.support.observer) {
@@ -12479,6 +12495,7 @@
                 if (s.params.hashnav) {
                     if (s.hashnav) s.hashnav.init();
                 }
+                if (s.params.onInit) s.params.onInit(s);
             };
             
             // Destroy
@@ -12486,10 +12503,10 @@
                 s.detachEvents();
                 s.disconnectObservers();
                 if (s.params.keyboardControl) {
-                    if (s.disableKeyboard) s.disableKeyboard();
+                    if (s.disableKeyboardControl) s.disableKeyboardControl();
                 }
                 if (s.params.mousewheelControl) {
-                    if (s.disableMousewheel) s.disableMousewheel();
+                    if (s.disableMousewheelControl) s.disableMousewheelControl();
                 }
                 if (s.params.onDestroy) s.params.onDestroy();
                 if (deleteInstance !== false) s = null;
