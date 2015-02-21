@@ -378,7 +378,7 @@ app.popover = function (modal, target, removeOnClose) {
     app.openModal(modal);
     return modal[0];
 };
-app.popup = function (modal, removeOnClose) {
+app.popup = function (modal, removeOnClose, hideOverlay) {
     if (typeof removeOnClose === 'undefined') removeOnClose = true;
     if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
         var _modal = document.createElement('div');
@@ -396,7 +396,11 @@ app.popup = function (modal, removeOnClose) {
     if (modal.find('.' + app.params.viewClass).length > 0) {
         app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
     }
-    app.openModal(modal);
+    modal.find('.page:not(.cached)').each(function () {
+        app.initPageWithCallback(this);
+    });
+
+    app.openModal(modal, hideOverlay);
     return modal[0];
 };
 app.pickerModal = function (pickerModal, removeOnClose) {
@@ -426,7 +430,7 @@ app.loginScreen = function (modal) {
     app.openModal(modal);
     return modal[0];
 };
-app.openModal = function (modal) {
+app.openModal = function (modal, hideOverlay) {
     modal = $(modal);
     var isModal = modal.hasClass('modal');
     if ($('.modal.modal-in:not(.modal-out)').length && app.params.modalStack && isModal) {
@@ -447,7 +451,7 @@ app.openModal = function (modal) {
     }
 
     var overlay;
-    if (!isLoginScreen && !isPickerModal) {
+    if (!isLoginScreen && !isPickerModal && !hideOverlay) {
         if ($('.modal-overlay').length === 0 && !isPopup) {
             $('body').append('<div class="modal-overlay"></div>');
         }
@@ -469,7 +473,7 @@ app.openModal = function (modal) {
     }
 
     // Classes for transition in
-    if (!isLoginScreen && !isPickerModal) overlay.addClass('modal-overlay-visible');
+    if (!isLoginScreen && !isPickerModal && !hideOverlay) overlay.addClass('modal-overlay-visible');
     modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
         if (modal.hasClass('modal-out')) modal.trigger('closed');
         else modal.trigger('opened');
