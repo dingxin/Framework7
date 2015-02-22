@@ -3248,8 +3248,10 @@
                         side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
                     }
                     else {
+                        if (app.params.swipePanelOnlyClose) return;
                         side = app.params.swipePanel;
                     }
+                    if (!side) return;
                 }
                 panel = $('.panel.panel-' + side);
                 opened = panel.hasClass('active');
@@ -4245,7 +4247,7 @@
                             select[i].selected = select[i].textContent.trim() === selectedText.trim();
                         }
                     } else {
-                        itemAfter.text(valueText);
+                        itemAfter.text(valueText.join(', '));
                     }
                 }
                 
@@ -5525,17 +5527,17 @@
             }
             function targetNeedsPrevent(el) {
                 el = $(el);
+                var prevent = true;
                 if (el.is('label') || el.parents('label').length > 0) {
                     if (app.device.android) {
-                        var osv = app.device.osVersion.split('.');
-                        if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4)) {
-                            return false;
-                        }
-                        else return true;
+                        prevent = false;
                     }
-                    else return false;
+                    else if (app.device.ios && el.is('input')) {
+                        prevent = true;
+                    }
+                    else prevent = false;
                 }
-                return true;
+                return prevent;
             }
         
             // Mouse Handlers
@@ -5703,7 +5705,6 @@
                 evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
                 evt.forwardedTouchEvent = true;
                 targetElement.dispatchEvent(evt);
-        
                 return false;
             }
             function handleTouchCancel(e) {
@@ -5713,7 +5714,6 @@
         
             function handleClick(e) {
                 var allowClick = false;
-                
                 if (trackClick) {
                     targetElement = null;
                     trackClick = false;
@@ -5723,9 +5723,11 @@
                 if (e.target.type === 'submit' && e.detail === 0) {
                     return true;
                 }
-        
-                if (!targetElement) {
-                    allowClick =  true;
+                // if (!targetElement) {
+                //     allowClick =  true;
+                // }
+                if (!needsFastClick) {
+                    allowClick = true;
                 }
                 if (document.activeElement === targetElement) {
                     allowClick =  true;
@@ -5736,7 +5738,6 @@
                 if (!e.cancelable) {
                     allowClick =  true;
                 }
-        
                 if (!allowClick) {
                     e.stopImmediatePropagation();
                     e.stopPropagation();
@@ -5750,7 +5751,6 @@
                     }
                     targetElement = null;
                 }
-        
                 return allowClick;
             }
             if (app.support.touch) {
@@ -10040,13 +10040,14 @@
             var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
             var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
         
-            device.ios = device.android = device.iphone = device.ipad = false;
+            device.ios = device.android = device.iphone = device.ipad = device.androidChrome = false;
             
             // Android
             if (android) {
                 device.os = 'android';
                 device.osVersion = android[2];
                 device.android = true;
+                device.androidChrome = ua.toLowerCase().indexOf('chrome') >= 0;
             }
             if (ipad || iphone || ipod) {
                 device.os = 'ios';
@@ -10895,6 +10896,15 @@
                 }
             };
             /*=========================
+              Min/Max Translate
+              ===========================*/
+            s.minTranslate = function () {
+                return (-s.snapGrid[0]);
+            };
+            s.maxTranslate = function () {
+                return (-s.snapGrid[s.snapGrid.length - 1]);
+            };
+            /*=========================
               Slider/slides sizes
               ===========================*/
             s.updateContainerSize = function () {
@@ -11060,22 +11070,6 @@
                 }
             };
             
-            s.update = function () {
-                s.updateContainerSize();
-                s.updateSlidesSize();
-                s.updateProgress();
-                s.updatePagination();
-                s.updateClasses();
-            };
-            
-            // Min/max translates
-            s.minTranslate = function () {
-                return (-s.snapGrid[0]);
-            };
-            s.maxTranslate = function () {
-                return (-s.snapGrid[s.snapGrid.length - 1]);
-            };
-            
             /*=========================
               Slider/slides progress
               ===========================*/
@@ -11227,7 +11221,33 @@
                     s.bullets = s.paginationContainer.find('.' + s.params.bulletClass);
                 }
             };
-            
+            /*=========================
+              Common update method
+              ===========================*/
+            s.update = function (updateTranslate) {
+                s.updateContainerSize();
+                s.updateSlidesSize();
+                s.updateProgress();
+                s.updatePagination();
+                s.updateClasses();
+                if (s.params.scrollbar && s.scrollbar) {
+                    s.scrollbar.set();
+                }
+                if (updateTranslate) {
+                    var translated, newTranslate;
+                    if (s.isEnd) {
+                        translated = s.slideTo(s.slides.length - 1, 0, false, true);
+                    }
+                    else {
+                        translated = s.slideTo(s.activeIndex, 0, false, true);
+                    }
+                    if (!translated) {
+                        newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
+                        s.setWrapperTranslate(newTranslate);
+                    }
+                    
+                }
+            };
             
             /*=========================
               Resize Handler
@@ -11238,14 +11258,14 @@
                 s.updateProgress();
                 s.updateClasses();
                 if (s.params.slidesPerView === 'auto') s.updatePagination();
+                if (s.params.scrollbar && s.scrollbar) {
+                    s.scrollbar.set();
+                }
                 if (s.isEnd) {
                     s.slideTo(s.slides.length - 1, 0, false, true);
                 }
                 else {
                     s.slideTo(s.activeIndex, 0, false, true);
-                }
-                if (s.params.scrollbar && s.scrollbar) {
-                    s.scrollbar.init();
                 }
             };
             
@@ -11395,12 +11415,32 @@
                 }
             };
             
-            var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate, startTranslate, allowThresholdMove;
+            var isTouched, 
+                isMoved, 
+                touchStartTime, 
+                isScrolling, 
+                currentTranslate, 
+                startTranslate, 
+                allowThresholdMove,
+                // Form elements to match
+                formElements = 'input, select, textarea, button',
+                // Last click time
+                lastClickTime = Date.now(), clickTimeout,
+                //Velocities
+                velocities = [], 
+                allowMomentumBounce;
+            
+            // Animating Flag
             s.animating = false;
-            var lastClickTime = Date.now(), clickTimeout;
-            var velocities = [], allowMomentumBounce;
-            // Form elements to match
-            var formElements = 'input, select, textarea, button';
+            
+            // Touches information
+            s.touches = {
+                startX: 0,
+                startY: 0,
+                currentX: 0,
+                currentY: 0,
+                diff: 0
+            };
             
             // Touch handlers
             s.onTouchStart = function (e) {
@@ -11413,8 +11453,8 @@
                 isTouched = true;
                 isMoved = false;
                 isScrolling = undefined;
-                touchesStart.x = touchesCurrent.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-                touchesStart.y = touchesCurrent.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = Date.now();
                 s.allowClick = true;
                 s.updateContainerSize();
@@ -11443,11 +11483,11 @@
                 s.allowClick = false;
                 if (e.targetTouches && e.targetTouches.length > 1) return;
                 
-                touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                touchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
             
                 if (typeof isScrolling === 'undefined') {
-                    var touchAngle = Math.atan2(Math.abs(touchesCurrent.y - touchesStart.y), Math.abs(touchesCurrent.x - touchesStart.x)) * 180 / Math.PI;
+                    var touchAngle = Math.atan2(Math.abs(s.touches.currentY - s.touches.startY), Math.abs(s.touches.currentX - s.touches.startX)) * 180 / Math.PI;
                     isScrolling = isH() ? touchAngle > s.params.touchAngle : (90 - touchAngle > s.params.touchAngle);
                     // isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
                 }
@@ -11480,7 +11520,7 @@
                             s.stopAutoplay();
                         }
                         else {
-                            s.pauseAutoplay(0);
+                            s.pauseAutoplay();
                         }
                     }
                     allowMomentumBounce = false;
@@ -11494,7 +11534,7 @@
                 }
                 isMoved = true;
             
-                var diff = isH() ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+                var diff = s.touches.diff = isH() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
             
                 diff = diff * s.params.touchRatio;
                 if (s.rtl) diff = -diff;
@@ -11531,9 +11571,10 @@
                     if (Math.abs(diff) > s.params.threshold || allowThresholdMove) {
                         if (!allowThresholdMove) {
                             allowThresholdMove = true;
-                            touchesStart.x = touchesCurrent.x;
-                            touchesStart.y = touchesCurrent.y;
+                            s.touches.startX = s.touches.currentX;
+                            s.touches.startY = s.touches.currentY;
                             currentTranslate = startTranslate;
+                            s.touches.diff = isH() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
                             return;
                         }
                     }
@@ -11550,12 +11591,12 @@
                     //Velocity
                     if (velocities.length === 0) {
                         velocities.push({
-                            position: touchesStart[isH() ? 'x' : 'y'],
+                            position: s.touches[isH() ? 'startX' : 'startY'],
                             time: touchStartTime
                         });
                     }
                     velocities.push({
-                        position: touchesCurrent[isH() ? 'x' : 'y'],
+                        position: s.touches[isH() ? 'currentX' : 'currentY'],
                         time: (new Date()).getTime()
                     });
                 }
@@ -11609,9 +11650,7 @@
                     if (s && s.allowClick) s.allowClick = true;
                 }, 0);
             
-                var touchesDiff = isH() ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
-            
-                if (!isTouched || !isMoved || !s.swipeDirection || touchesDiff === 0 || currentTranslate === startTranslate) {
+                if (!isTouched || !isMoved || !s.swipeDirection || s.touches.diff === 0 || currentTranslate === startTranslate) {
                     isTouched = isMoved = false;
                     return;
                 }
@@ -11640,7 +11679,6 @@
             
                             var distance = lastMoveEvent.position - velocityEvent.position;
                             var time = lastMoveEvent.time - velocityEvent.time;
-            
                             s.velocity = distance / time;
                             s.velocity = s.velocity / 2;
                             if (Math.abs(s.velocity) < 0.02) {
@@ -11648,8 +11686,7 @@
                             }
                             // this implies that the user stopped moving a finger then released.
                             // There would be no events with distance zero, so the last event is stale.
-                            // if (Math.abs(s.velocity) < 0.1 & time > 150 || timeDiff > 300) {
-                            if (time > 150 || timeDiff > 300) {
+                            if (time > 150 || (new Date().getTime() - lastMoveEvent.time) > 300) {
                                 s.velocity = 0;
                             }
                         } else {
@@ -11855,6 +11892,7 @@
                         
                 }
                 s.updateClasses();
+                return true;
             };
             
             s.onTransitionStart = function () {
@@ -12061,7 +12099,7 @@
                     s.wrapper.prepend($(prependSlides[i].cloneNode(true)).addClass(s.params.slideDuplicateClass));
                 }
             };
-            s.deleteLoop = function () {
+            s.destroyLoop = function () {
                 s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
             };
             s.fixLoop = function () {
@@ -12080,11 +12118,11 @@
                 }
             };
             /*=========================
-              Append/Prepend Slides
+              Append/Prepend/Remove Slides
               ===========================*/
             s.appendSlide = function (slides) {
                 if (s.params.loop) {
-                    s.deleteLoop();
+                    s.destroyLoop();
                 }
                 if (typeof slides === 'object' && slides.length) {
                     for (var i = 0; i < slides.length; i++) {
@@ -12098,12 +12136,12 @@
                     s.createLoop();
                 }
                 if (!(s.params.observer && s.support.observer)) {
-                    s.update();
+                    s.update(true);
                 }
             };
             s.prependSlide = function (slides) {
                 if (s.params.loop) {
-                    s.deleteLoop();
+                    s.destroyLoop();
                 }
                 var newActiveIndex = s.activeIndex + 1;
                 if (typeof slides === 'object' && slides.length) {
@@ -12119,9 +12157,42 @@
                     s.createLoop();
                 }
                 if (!(s.params.observer && s.support.observer)) {
-                    s.update();
+                    s.update(true);
                 }
                 s.slideTo(newActiveIndex, 0, false);
+            };
+            s.removeSlide = function (slidesIndexes) {
+                if (s.params.loop) {
+                    s.destroyLoop();
+                }
+                var newActiveIndex = s.activeIndex,
+                    indexToRemove;
+                if (typeof slidesIndexes === 'object' && slidesIndexes.length) {
+                    for (var i = 0; i < slidesIndexes.length; i++) {
+                        indexToRemove = slidesIndexes[i];
+                        if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
+                        if (indexToRemove < newActiveIndex) newActiveIndex--;
+                    }
+                    newActiveIndex = Math.max(newActiveIndex, 0);
+                }
+                else {
+                    indexToRemove = slidesIndexes;
+                    if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
+                    if (indexToRemove < newActiveIndex) newActiveIndex--;
+                    newActiveIndex = Math.max(newActiveIndex, 0);
+                }
+            
+                if (!(s.params.observer && s.support.observer)) {
+                    s.update(true);
+                }
+                s.slideTo(newActiveIndex, 0, false);
+            };
+            s.removeAllSlides = function () {
+                var slidesIndexes = [];
+                for (var i = 0; i < s.slides.length; i++) {
+                    slidesIndexes.push(i);
+                }
+                s.removeSlide(slidesIndexes);
             };
             
         
@@ -12325,7 +12396,7 @@
               Scrollbar
               ===========================*/
             s.scrollbar = {
-                init: function () {
+                set: function () {
                     if (!s.params.scrollbar) return;
                     var sb = s.scrollbar;
                     sb.track = $(s.params.scrollbar);
@@ -12468,7 +12539,7 @@
                 s.updateSlidesSize();
                 s.updatePagination();
                 if (s.params.scrollbar && s.scrollbar) {
-                    s.scrollbar.init();
+                    s.scrollbar.set();
                 }
                 if (s.params.effect !== 'slide' && s.effects[s.params.effect]) {
                     if (!s.params.loop) s.updateProgress();
@@ -12552,7 +12623,7 @@
         
                 flexbox: (function () {
                     var div = document.createElement('div').style;
-                    var styles = ('WebkitBox msFlexbox MsFlexbox WebkitFlex MozBox fles').split(' ');
+                    var styles = ('WebkitBox msFlexbox MsFlexbox WebkitFlex MozBox flex').split(' ');
                     for (var i = 0; i < styles.length; i++) {
                         if (styles[i] in div) return true;
                     }
