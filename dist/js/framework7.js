@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 21, 2015
+ * Released on: February 22, 2015
  */
         (function () {
         
@@ -11480,7 +11480,7 @@
                             s.stopAutoplay();
                         }
                         else {
-                            s.pauseAutoplay();
+                            s.pauseAutoplay(0);
                         }
                     }
                     allowMomentumBounce = false;
