@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 22, 2015
+ * Released on: February 23, 2015
  */
 html,
 body {
@@ -589,7 +589,7 @@ html.android .page-from-center-to-right:before {
   top: 0;
   width: 100%;
   height: 100%;
-  padding: 0 8px;
+  padding: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -767,8 +767,14 @@ html.ios-gt-6.pixel-ratio-3 .navbar:after {
 .navbar .left {
   margin-right: 10px;
 }
+.navbar .left a:first-child {
+  padding-left: 8px;
+}
 .navbar .right {
   margin-left: 10px;
+}
+.navbar .right a:last-child {
+  padding-right: 8px;
 }
 .navbar .right:first-child {
   position: absolute;
