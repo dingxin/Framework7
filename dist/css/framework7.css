@@ -2530,6 +2530,9 @@ html:not(.watch-active-state) .button:active,
 .button.button-round {
   border-radius: 27px;
 }
+.button.button-noround {
+  border-radius: 0;
+}
 .button.active {
   background: #007aff;
   color: #fff;
@@ -2593,6 +2596,18 @@ html:not(.watch-active-state) .button.button-fill:active,
 }
 .buttons-row .button.button-round:last-child {
   border-radius: 0 27px 27px 0;
+}
+.buttons-row.noround1 .button:first-child {
+  border-radius: 0;
+}
+.buttons-row.noround1 .button:last-child {
+  border-radius: 0;
+}
+.buttons-row.noround1 .button.button-round:first-child {
+  border-radius: 0;
+}
+.buttons-row.noround1 .button.button-round:last-child {
+  border-radius: 0;
 }
 .range-slider {
   width: 100%;

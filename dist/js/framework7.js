@@ -2053,8 +2053,10 @@
                 });
             }
             else {
-                newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
-                afterAnimation();
+            	if (dynamicNavbar) {
+                    newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
+            	}
+            	afterAnimation();
             }
         
         };

@@ -158,6 +158,9 @@ html.android {
     &.button-round {
         border-radius: 27px;
     }
+    &.button-noround {
+        border-radius: 0;
+    }
     &.active {
         background: @blue;
         color: #fff;
@@ -213,8 +216,13 @@ html.android {
     .button.button-round:last-child {
         border-radius: 0 27px 27px 0;
     }
+    .button.button-noround:first-child {
+        border-radius: 0;
+    }
+    .button.button-noround:last-child {
+        border-radius: 0;
+    }
 }
-
 
 // Slider
 .range-slider {
