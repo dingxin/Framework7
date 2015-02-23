@@ -686,6 +686,7 @@ html:not(.watch-active-state) .toolbar a.link:active,
 .navbar i.icon,
 .toolbar i.icon {
   display: block;
+  font-size: 32px;
 }
 .navbar {
   left: 0;
