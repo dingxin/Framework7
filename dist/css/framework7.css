@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 23, 2015
+ * Released on: March 4, 2015
  */
 html,
 body {
@@ -2238,7 +2238,7 @@ html.ios-gt-6.pixel-ratio-3 .list-block .list-group-title:before {
   position: -moz-sticky;
   position: sticky;
   top: 0px;
-  z-index: 10;
+  z-index: 20;
   margin-top: 0;
 }
 .list-block .list-group-title:before {
@@ -2842,10 +2842,8 @@ html.android-4 .accordion-item-content {
 }
 .card {
   background: #fff;
-  margin-left: 10px;
-  margin-right: 10px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-  margin-bottom: 10px;
+  margin: 10px;
   position: relative;
   border-radius: 2px;
   font-size: 14px;
@@ -4506,18 +4504,9 @@ html.with-statusbar-overlay body .panel {
 .swiper-pagination-clickable .swiper-pagination-bullet {
   cursor: pointer;
 }
-.swiper-pagination-white .swiper-pagination-bullet {
-  background: #fff;
-}
 .swiper-pagination-bullet-active {
   opacity: 1;
   background: #007aff;
-}
-.swiper-pagination-white .swiper-pagination-bullet-active {
-  background: #fff;
-}
-.swiper-pagination-black .swiper-pagination-bullet-active {
-  background: #000;
 }
 .swiper-container-vertical > .swiper-pagination {
   right: 10px;
