@@ -215,7 +215,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
     }
 
-    var searchbarHTML =   '<form class="searchbar" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
+    var searchbarHTML =   '<form class="searchbar searchbar-init" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
                             '<div class="searchbar-input">' +
                                 '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                 '<a href="#" class="searchbar-clear"></a>' +
@@ -252,7 +252,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                 template: smartSelectItemTemplate,
                 height: virtualListItemHeight || undefined,
                 searchByItem: function (query, index, item) {
-                    if (item.text.toLowerCase().indexOf(query.trim()) >=0 ) return true;
+                    if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                     return false;
                 }
             });
