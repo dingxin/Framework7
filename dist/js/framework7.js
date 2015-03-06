@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 4, 2015
+ * Released on: March 6, 2015
  */
         (function () {
         
@@ -836,140 +836,167 @@
         /*======================================================
         ************   Searchbar   ************
         ======================================================*/
-        app.initSearchbar = function (pageContainer) {
-            pageContainer = $(pageContainer);
-            var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
-            if (searchbar.length === 0) return;
-            if (!pageContainer.hasClass('page')) pageContainer = searchbar.parents('.page').eq(0);
-            var searchbarOverlay = pageContainer.hasClass('page') ? pageContainer.find('.searchbar-overlay') : $('.searchbar-overlay');
-            var input = searchbar.find('input[type="search"]');
-            var clear = searchbar.find('.searchbar-clear');
-            var cancel = searchbar.find('.searchbar-cancel');
-            var searchList = $(searchbar.attr('data-search-list'));
-            var isVirtualList = searchList.hasClass('virtual-list');
-            var virtualList;
-            var searchIn = searchbar.attr('data-search-in');
-            var searchBy = searchbar.attr('data-search-by');
-            var found = searchbar.attr('data-searchbar-found');
-            if (!found) {
-                found = pageContainer.find('.searchbar-found');
-                if (found.length === 0) found = $('.searchbar-found');
+        var Searchbar = function (container, params) {
+            var defaults = {
+                input: null,
+                clearButton: null,
+                cancelButton: null,
+                searchList: null,
+                searchIn: '.item-title',
+                searchBy: '',
+                found: null,
+                notFoud: null,
+                overlay: null,
+                ignore: '.searhbar-ignore'
+            };
+            params = params || {};
+            for (var def in defaults) {
+                if (typeof params[def] === 'undefined' || params[def] === null) {
+                    params[def] = defaults[def];
+                }
+            }
+            
+            // Instance
+            var s = this;
+        
+            // Params
+            s.params = params;
+        
+            // Container
+            container = $(container);
+            s.container = container;
+        
+            // Active
+            s.active = false;
+        
+            // Input
+            s.input = s.params.input ? $(s.params.input) : s.container.find('input[type="search"]');
+            s.clearButton = s.params.clearButton ? $(s.params.clearButton) : s.container.find('.searchbar-clear');
+            s.cancelButton = s.params.cancelButton ? $(s.params.cancelButton) : s.container.find('.searchbar-cancel');
+        
+            // Search List
+            s.searchList = $(s.params.searchList);
+        
+            // Is Virtual List
+            s.isVirtualList = s.searchList.hasClass('virtual-list');
+        
+            // Is In Page
+            s.pageContainer = s.container.parents('.page').eq(0);
+        
+            // Overlay
+            if (!s.params.overlay) {
+                s.overlay = s.pageContainer.length > 0 ? s.pageContainer.find('.searchbar-overlay') : $('.searchbar-overlay');
             }
             else {
-                found = $(found);
+                s.overlay = $(s.params.overlay);
             }
-            var notFound = searchbar.attr('data-searchbar-not-found');
-            if (!notFound) {
-                notFound = pageContainer.find('.searchbar-not-found');
-                if (notFound.length === 0) notFound = $('.searchbar-not-found');
+            // Found and not found
+            if (!s.params.found) {
+                s.found = s.pageContainer.length > 0 ? s.pageContainer.find('.searchbar-found') : $('.searchbar-found');
             }
             else {
-                notFound = $(notFound);
+                s.found = $(s.params.found);
+            }
+            if (!s.params.notFound) {
+                s.notFound = s.pageContainer.length > 0 ? s.pageContainer.find('.searchbar-not-found') : $('.searchbar-not-found');
+            }
+            else {
+                s.notFound = $(s.params.notFound);
             }
         
             // Cancel button
             var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-            if (cancel.length > 0) {
-                cancel.show();
-                cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
+            if (s.cancelButton.length > 0) {
+                s.cancelButton.show();
+                s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
             }
-                
         
-            // Handlers
-            function disableSearchbar() {
-                input.val('').trigger('change');
-                searchbar.removeClass('searchbar-active searchbar-not-empty');
-                if (cancel.length > 0) cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
-                
-                if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
+            // Enable/disalbe
+            s.enable = function () {
+                function _enable() {
+                    if (s.searchList.length && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+                    s.container.addClass('searchbar-active');
+                    if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
+                    s.searchList.trigger('enableSearch');
+                    s.active = true;
+                }
                 if (app.device.ios) {
                     setTimeout(function () {
-                        input.blur();
-                        searchList.trigger('disableSearch');
+                        _enable();
                     }, 400);
                 }
                 else {
-                    input.blur();
-                    searchList.trigger('disableSearch');
+                    _enable();
                 }
-            }
+            };
         
-            // Activate
-            function enableSearchbar() {
+            s.disable = function () {
+                s.input.val('').trigger('change');
+                s.container.removeClass('searchbar-active searchbar-not-empty');
+                if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+                
+                if (s.searchList.length) s.overlay.removeClass('searchbar-overlay-active');
+                function _disable() {
+                    s.input.blur();
+                    s.searchList.trigger('disableSearch');
+                    s.active = false;
+                }
                 if (app.device.ios) {
                     setTimeout(function () {
-                        if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
-                        searchbar.addClass('searchbar-active');
-                        if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
-                        searchList.trigger('enableSearch');
-        
+                        _disable();
                     }, 400);
                 }
                 else {
-                    if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
-                    searchbar.addClass('searchbar-active');
-                    if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
-                    searchList.trigger('enableSearch');
+                    _disable();
                 }
-            }
+            };
         
             // Clear
-            function clearSearchbar() {
-                input.val('').trigger('change').focus();
-                searchList.trigger('clearSearch');
-            }
-        
-            // Change
-            function searchValue() {
-                setTimeout(function () {
-                    var value = input.val().trim();
-                    if (value.length === 0) {
-                        searchbar.removeClass('searchbar-not-empty');
-                        if (searchList && searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
-                    }
-                    else {
-                        searchbar.addClass('searchbar-not-empty');
-                        if (searchList && searchbar.hasClass('searchbar-active')) searchbarOverlay.removeClass('searchbar-overlay-active');
-                    }
-                    if (searchList.length > 0 && (searchIn || isVirtualList)) search(value);
-                }, 0);
-            }
-        
-            //Prevent submit
-            function preventSubmit(e) {
-                e.preventDefault();
-            }
-        
-            function attachEvents(destroy) {
-                var method = destroy ? 'off' : 'on';
-                searchbar[method]('submit', preventSubmit);
-                cancel[method]('click', disableSearchbar);
-                searchbarOverlay[method]('click', disableSearchbar);
-                input[method]('focus', enableSearchbar);
-                input[method]('change keydown keypress keyup', searchValue);
-                clear[method]('click', clearSearchbar);
-            }
-            function detachEvents() {
-                attachEvents(true);
-            }
-            searchbar[0].f7DestroySearchbar = detachEvents;
-        
-            // Attach events
-            attachEvents();
+            s.clear = function () {
+                s.input.val('').trigger('change').focus();
+                s.searchList.trigger('clearSearch');
+            };
         
             // Search
+            s.handleInput = function () {
+                setTimeout(function () {
+                    var value = s.input.val().trim();
+                    if (s.searchList.length > 0 && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
+                }, 0);
+            };
+        
             var previousQuery;
-            function search(query) {
+            var virtualList;
+            s.search = function (query, internal) {
                 if (query.trim() === previousQuery) return;
                 previousQuery = query.trim();
+        
+                if (!internal) {
+                    if (!s.active) {
+                        s.enable();
+                    }
+                    if (!internal) {
+                        s.input.val(query);
+                    }
+                }
+                // Add active/inactive classes on overlay
+                if (query.length === 0) {
+                    s.container.removeClass('searchbar-not-empty');
+                    if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+                }
+                else {
+                    s.container.addClass('searchbar-not-empty');
+                    if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.removeClass('searchbar-overlay-active');
+                }
+        
                 var values = query.trim().toLowerCase().split(' ');
                 var foundItems = [];
-                if (isVirtualList) {
-                    virtualList = searchList[0].f7VirtualList;
+                if (s.isVirtualList) {
+                    virtualList = s.searchList[0].f7VirtualList;
                     if (query.trim() === '') {
                         virtualList.resetFilter();
-                        notFound.hide();
-                        found.show();
+                        s.notFound.hide();
+                        s.found.show();
                         return;
                     }
                     if (virtualList.params.searchAll) {
@@ -984,10 +1011,9 @@
                     }
                 }
                 else {
-                    searchIn = searchbar.attr('data-search-in');
-                    searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
+                    s.searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
                         el = $(el);
-                        var compareWithEl = el.find(searchIn);
+                        var compareWithEl = el.find(s.params.searchIn);
                         if (compareWithEl.length === 0) return;
                         var compareWith;
                         compareWith = compareWithEl.text().trim().toLowerCase();
@@ -995,7 +1021,7 @@
                         for (var i = 0; i < values.length; i++) {
                             if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
                         }
-                        if (wordsMatch !== values.length) {
+                        if (wordsMatch !== values.length && !(s.params.ignore && el.is(s.params.ignore))) {
                             el.addClass('hidden-by-searchbar');
                         }
                         else {
@@ -1004,7 +1030,7 @@
                     });
         
                     if (app.params.searchbarHideDividers) {
-                        searchList.find('.item-divider, .list-group-title').each(function () {
+                        s.searchList.find('.item-divider, .list-group-title').each(function () {
                             var title = $(this);
                             var nextElements = title.nextAll('li');
                             var hide = true;
@@ -1015,15 +1041,17 @@
                                     hide = false;
                                 }
                             }
-                            if (hide) title.addClass('hidden-by-searchbar');
+                            var ignore = s.params.ignore && title.is(s.params.ignore);
+                            if (hide && !ignore) title.addClass('hidden-by-searchbar');
                             else title.removeClass('hidden-by-searchbar');
                         });
                     }
                     if (app.params.searchbarHideGroups) {
-                        searchList.find('.list-group').each(function () {
+                        s.searchList.find('.list-group').each(function () {
                             var group = $(this);
+                            var ignore = s.params.ignore && group.is(s.params.ignore);
                             var notHidden = group.find('li:not(.hidden-by-searchbar)');
-                            if (notHidden.length === 0) {
+                            if (notHidden.length === 0 && !ignore) {
                                 group.addClass('hidden-by-searchbar');
                             }
                             else {
@@ -1032,23 +1060,78 @@
                         });
                     }
                 }
-                searchList.trigger('search', {query: query, foundItems: foundItems});
+                s.searchList.trigger('search', {query: query, foundItems: foundItems});
                 if (foundItems.length === 0) {
-                    notFound.show();
-                    found.hide();
+                    s.notFound.show();
+                    s.found.hide();
                 }
                 else {
-                    notFound.hide();
-                    found.show();
+                    s.notFound.hide();
+                    s.found.show();
                 }
-                if (isVirtualList) {
+                if (s.isVirtualList) {
                     virtualList.filterItems(foundItems);
                 }
+            };
+        
+            // Events
+            function preventSubmit(e) {
+                e.preventDefault();
             }
+        
+            s.attachEvents = function (destroy) {
+                var method = destroy ? 'off' : 'on';
+                s.container[method]('submit', preventSubmit);
+                s.cancelButton[method]('click', s.disable);
+                s.overlay[method]('click', s.disable);
+                s.input[method]('focus', s.enable);
+                s.input[method]('change keydown keypress keyup', s.handleInput);
+                s.clearButton[method]('click', s.clear);
+            };
+            s.detachEvents = function() {
+                s.attachEvents(true);
+            };
+        
+            // Init Destroy
+            s.init = function () {
+                s.attachEvents();
+            };
+            s.destroy = function () {
+                s.detachEvents();
+                s = null;
+            };
+        
+            // Init
+            s.init();
+        
+            s.container[0].f7Searchbar = s;
+            return s;
+        
+        };
+        app.searchbar = function (container, params) {
+            return new Searchbar(container, params);
+        };
+        app.initPageSearchbar = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
+            if (searchbar.length === 0) return;
+            if (!searchbar.hasClass('searchbar-init')) return;
+            var sb = app.searchbar(searchbar, {
+                input: searchbar.data('input'),
+                clearButton: searchbar.data('clear-button'),
+                cancelButton: searchbar.data('cancel-button'),
+                searchList: searchbar.data('search-list'),
+                searchIn: searchbar.data('search-in'),
+                searchBy: searchbar.data('search-by'),
+                found: searchbar.data('found'),
+                notFoud: searchbar.data('not-found'),
+                overlay: searchbar.data('overlay'),
+                ignore: searchbar.data('ignore')
+            });
         
             // Destroy on page remove
             function pageBeforeRemove() {
-                detachEvents();
+                sb.destroy();
                 pageContainer.off('pageBeforeRemove', pageBeforeRemove);
             }
             if (pageContainer.hasClass('page')) {
@@ -1060,86 +1143,144 @@
             pageContainer = $(pageContainer);
             var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
             if (searchbar.length === 0) return;
-            if (searchbar[0].f7DestroySearchbar) searchbar[0].f7DestroySearchbar();
+            if (searchbar[0].f7Searchbar) searchbar[0].f7Searchbar.destroy();
         };
         
 
         /*======================================================
         ************   Messagebar   ************
         ======================================================*/
-        app.initMessagebar = function (pageContainer) {
-            pageContainer = $(pageContainer);
-            var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
-            if (messagebar.length === 0) return;
-            var textarea = messagebar.find('textarea');
-            var pageContent = messagebar.parents('.page').find('.page-content');
-            var pageContentInitialPadding = parseInt(pageContent.css('padding-bottom'));
-            var initialBarHeight = messagebar[0].offsetHeight;
-            var initialAreaHeight = textarea[0].offsetHeight;
+        var Messagebar = function (container, params) {
+            var defaults = {
+                textarea: null,
+                maxHeight: null,
+            };
+            params = params || {};
+            for (var def in defaults) {
+                if (typeof params[def] === 'undefined' || params[def] === null) {
+                    params[def] = defaults[def];
+                }
+            }
+            
+            // Instance
+            var m = this;
         
-            //Prevent submit
+            // Params
+            m.params = params;
+        
+            // Container
+            m.container = $(container);
+            if (m.container.length === 0) return;
+        
+            // Textarea
+            m.textarea = m.params.textarea ? $(m.params.textarea) : m.container.find('textarea');
+        
+            // Is In Page
+            m.pageContainer = m.container.parents('.page').eq(0);
+            m.pageContent = m.pageContainer.find('.page-content');
+        
+            // Initial Sizes
+            m.pageContentPadding = parseInt(m.pageContent.css('padding-bottom'));
+            m.initialBarHeight = m.container[0].offsetHeight;
+            m.initialAreaHeight = m.textarea[0].offsetHeight;
+            
+        
+            // Resize textarea
+            m.sizeTextarea = function () {
+                // Reset
+                m.textarea.css({'height': ''});
+                
+                var height = m.textarea[0].offsetHeight;
+                var diff = height - m.textarea[0].clientHeight;
+                var scrollHeight = m.textarea[0].scrollHeight;
+        
+                // Update
+                if (scrollHeight + diff > height) {
+                    var newAreaHeight = scrollHeight + diff;
+                    var newBarHeight = m.initialBarHeight + (newAreaHeight - m.initialAreaHeight);
+                    var maxBarHeight = m.params.maxHeight || m.container.parents('.view')[0].offsetHeight - 88;
+                    if (newBarHeight > maxBarHeight) {
+                        newBarHeight = parseInt(maxBarHeight, 10);
+                        newAreaHeight = newBarHeight - m.initialBarHeight + m.initialAreaHeight;
+                    }
+                    m.textarea.css('height', newAreaHeight + 'px');
+                    m.container.css('height', newBarHeight + 'px');
+                    if (m.pageContent.length > 0) {
+                        m.pageContent.css('padding-bottom', newBarHeight + 'px');
+                        m.pageContent.scrollTop(m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
+                    }
+                }
+                else {
+                    if (m.pageContent.length > 0) {
+                        m.container.css({'height': '', 'bottom': ''});
+                        m.pageContent.css({'padding-bottom': ''});
+                    }
+                }
+            };
+            
+            // Clear
+            m.clear = function () {
+                m.textarea.val('').trigger('change');
+            };
+            m.value = function (value) {
+                if (typeof value === 'undefined') return m.textarea.val();
+                else m.textarea.val(value).trigger('change');  
+            };
+            
+            // Handle textarea
+            m.textareaTimeout = undefined;
+            m.handleTextarea = function (e) {
+                clearTimeout(m.textareaTimeout);
+                m.textareaTimeout = setTimeout(function () {
+                    m.sizeTextarea();
+                }, 0);
+            };
+        
+            //Events
             function preventSubmit(e) {
                 e.preventDefault();
             }
         
-            // Resize textarea
-            function sizeTextarea() {
-                // Reset
-                textarea.css({'height': ''});
-                
-                var height = textarea[0].offsetHeight;
-                var diff = height - textarea[0].clientHeight;
-                var scrollHeight = textarea[0].scrollHeight;
-                var addExtra = parseInt((messagebar.attr('data-keyboard-height') || 0), 10);
-                // Update
-                if (scrollHeight + diff > height) {
-                    var newAreaHeight = scrollHeight + diff;
-                    var newBarHeight = initialBarHeight + (newAreaHeight - initialAreaHeight);
-                    var maxBarHeight = messagebar.attr('data-max-height') || messagebar.parents('.view')[0].offsetHeight - 88;
-                    if (newBarHeight > maxBarHeight) {
-                        newBarHeight = parseInt(maxBarHeight, 10);
-                        newAreaHeight = newBarHeight - initialBarHeight + initialAreaHeight;
-                    }
-                    textarea.css('height', newAreaHeight + 'px');
-                    messagebar.css('height', newBarHeight + 'px');
-                    if (pageContent.length > 0) {
-                        pageContent.css('padding-bottom', newBarHeight + addExtra + 'px');
-                        pageContent.scrollTop(pageContent[0].scrollHeight - pageContent[0].offsetHeight);
-                    }
-                }
-                else {
-                    if (pageContent.length > 0) {
-                        messagebar.css({'height': ''});
-                        pageContent.css({'padding-bottom': addExtra ? pageContentInitialPadding + addExtra + 'px' : ''});
-                    }
-                }
-            }
-            var to;
-            function handleKey(e) {
-                clearTimeout(to);
-                to = setTimeout(function () {
-                    sizeTextarea();
-                }, 0);
-                    
-            }
-        
-            function attachEvents(destroy) {
+            m.attachEvents = function (destroy) {
                 var method = destroy ? 'off' : 'on';
-                messagebar[method]('submit', preventSubmit);
-                textarea[method]('change keydown keypress keyup paste cut', handleKey);
-            }
-            function detachEvents() {
-                attachEvents(true);
-            }
+                m.container[method]('submit', preventSubmit);
+                m.textarea[method]('change keydown keypress keyup paste cut', m.handleTextarea);
+            };
+            m.detachEvents = function () {
+                m.attachEvents(true);
+            };
             
-            messagebar[0].f7DestroyMessagebar = detachEvents;
+            // Init Destroy
+            m.init = function () {
+                m.attachEvents();
+            };
+            m.destroy = function () {
+                m.detachEvents();
+                m = null;
+            };
         
-            // Attach events
-            attachEvents();
+            // Init
+            m.init();
+        
+            m.container[0].f7Searchbar = m;
+            return m;
+        };
+        app.messagebar = function (container, params) {
+            return new Messagebar(container, params);
+        };
+        app.initPageMessagebar = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
+            if (messagebar.length === 0) return;
+            if (!messagebar.hasClass('messagebar-init')) return;
+            var mb = app.messagebar(messagebar, {
+                textarea: messagebar.data('textarea'),
+                maxHeight: messagebar.data('max-height') && parseInt(messagebar.data('max-height'), 10),
+            });
         
             // Destroy on page remove
             function pageBeforeRemove() {
-                detachEvents();
+                mb.destroy();
                 pageContainer.off('pageBeforeRemove', pageBeforeRemove);
             }
             if (pageContainer.hasClass('page')) {
@@ -1150,7 +1291,7 @@
             pageContainer = $(pageContainer);
             var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
             if (messagebar.length === 0) return;
-            if (messagebar[0].f7DestroyMessagebar) messagebar[0].f7DestroyMessagebar();
+            if (messagebar[0].f7Messagebar) messagebar[0].f7Messagebar.destroy();
         };
 
         /*======================================================
@@ -1480,22 +1621,21 @@
             // Size navbars on page load
             if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
             // Init messages
-            if (app.initMessages) app.initMessages(pageContainer);
+            if (app.initPageMessages) app.initPageMessages(pageContainer);
             // Init forms storage
             if (app.initFormsStorage) app.initFormsStorage(pageContainer);
             // Init smart select
             if (app.initSmartSelects) app.initSmartSelects(pageContainer);
             // Init slider
-            if (app.initSlider) app.initSlider(pageContainer);
-            if (app.initSwiper) app.initSwiper(pageContainer);
+            if (app.initPageSwiper) app.initPageSwiper(pageContainer);
             // Init pull to refres
             if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
             // Init infinite scroll
             if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
             // Init searchbar
-            if (app.initSearchbar) app.initSearchbar(pageContainer);
+            if (app.initPageSearchbar) app.initPageSearchbar(pageContainer);
             // Init message bar
-            if (app.initMessagebar) app.initMessagebar(pageContainer);
+            if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
             // Init scroll toolbars
             if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
             // Init scroll toolbars
@@ -1506,8 +1646,7 @@
             // Size navbars on page reinit
             if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
             // Reinit slider
-            if (app.reinitSlider) app.reinitSlider(pageContainer);
-            if (app.reinitSwiper) app.reinitSwiper(pageContainer);
+            if (app.reinitPageSwiper) app.reinitPageSwiper(pageContainer);
             // Reinit lazy load
             if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
         };
@@ -2009,11 +2148,11 @@
         
             function afterAnimation() {
                 view.allowPageChange = true;
-                newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
-                oldPage.removeClass('page-from-center-to-left page-on-center').addClass('page-on-left');
+                newPage.removeClass('page-from-right-to-center page-on-right page-on-left').addClass('page-on-center');
+                oldPage.removeClass('page-from-center-to-left page-on-center page-on-right').addClass('page-on-left');
                 if (dynamicNavbar) {
                     newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-left navbar-on-right').addClass('navbar-on-center');
-                    oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center').addClass('navbar-on-left');
+                    oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center navbar-on-right').addClass('navbar-on-left');
                 }
                 app.pageAnimCallbacks('after', view, {
                     pageContainer: newPage[0], 
@@ -2057,7 +2196,7 @@
                 });
             }
             else {
-                newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
+                if (dynamicNavbar) newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
                 afterAnimation();
             }
         
@@ -2205,7 +2344,7 @@
                     });
                 }
                 else {
-                    newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
+                    if (dynamicNavbar) newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
                     afterAnimation();
                 }
             }
@@ -3526,14 +3665,11 @@
                     }
                 }
         
-                if (!app.params.imagesLazyLoadSequential) {
-                    onLoad();
-                    return;
-                }
-        
-                if (imageIsLoading) {
-                    if (imagesSequence.indexOf(el[0]) < 0) imagesSequence.push(el[0]);
-                    return;
+                if (app.params.imagesLazyLoadSequential) {
+                    if (imageIsLoading) {
+                        if (imagesSequence.indexOf(el[0]) < 0) imagesSequence.push(el[0]);
+                        return;
+                    }
                 }
         
                 // Loading flag
@@ -3609,106 +3745,154 @@
         /*======================================================
         ************   Messages   ************
         ======================================================*/
-        app.initMessages = function (pageContainer) {
-            var page = $(pageContainer);
-            var messages = page.find('.messages');
+        var Messages = function (container, params) {
+            var defaults = {
+                autoLayout: true,
+                newMessagesFirst: false,
+                messageTemplate: 
+                    '{{#if day}}' +
+                    '<div class="messages-date">{{day}} {{#if time}}, <span>{{time}}</span>{{/if}}</div>' +
+                    '{{/if}}' +
+                    '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} message-appear-from-{{position}}">' +
+                        '{{#if name}}<div class="message-name">{{name}}</div>{{/if}}' +
+                        '<div class="message-text">{{text}}</div>' +
+                        '{{#if avatar}}<div class="message-avatar" style="background-image:url({{avatar}})"></div>{{/if}}' +
+                        '{{#if label}}<div class="message-label">{{label}}</div>{{/if}}' +
+                    '</div>'
+            };
+            params = params || {};
+            for (var def in defaults) {
+                if (typeof params[def] === 'undefined' || params[def] === null) {
+                    params[def] = defaults[def];
+                }
+            }
+        
+            // Instance
+            var m = this;
+        
+            // Params
+            m.params = params;
+        
+            // Container
+            m.container = $(container);
+            if (m.container.length === 0) return;
+        
+            // Autolayout
+            if (m.params.autoLayout) m.container.addClass('messages-auto-layout');
+        
+            // Is In Page
+            m.pageContainer = m.container.parents('.page').eq(0);
+            m.pageContent = m.pageContainer.find('.page-content');
+        
+            // Compiled template
+            m.template = Template7.compile(m.params.messageTemplate);
+        
+            // Auto Layout
+            m.layout = function () {
+                m.container.find('.message').each(function () {
+                    var message = $(this);
+                    if (message.find('.message-text img').length > 0) message.addClass('message-pic');
+                    if (message.find('.message-avatar').length > 0) message.addClass('message-with-avatar');
+                });
+                m.container.find('.message').each(function () {
+                    var message = $(this);
+                    var isSent = message.hasClass('message-sent');
+                    var next = message.next('.message-' + (isSent ? 'sent' : 'received'));
+                    var prev = message.prev('.message-' + (isSent ? 'sent' : 'received'));
+                    if (next.length === 0) {
+                        message.addClass('message-last message-with-tail');
+                    }
+                    else message.removeClass('message-last message-with-tail');
+        
+                    if (prev.length === 0) {
+                        message.addClass('message-first');
+                    }
+                    else message.removeClass('message-first');
+        
+                    if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
+                        if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
+                            prev.addClass('message-last message-with-tail');
+                            message.addClass('message-first');
+                        }
+                    }
+                });
+                
+            };
+        
+            // Add Message
+            m.appendMessage = function (props) {
+                return m.addMessage(props, 'append');
+            };
+            m.prependMessage = function (props) {
+                return m.addMessage(props, 'prepend');
+            };
+            m.addMessage = function (props, method) {
+                if (typeof method === 'undefined') {
+                    method = m.params.newMessagesFirst ? 'prepend' : 'append';
+                }
+                props = props || {};
+                props.type = props.type || 'sent';
+                if (!props.text) return false;
+        
+                props.hasImage = props.text.indexOf('<img') >= 0;
+                props.position = method === 'append' ? 'bottom' : 'top';
+                
+                var messageHTML = m.template(props);
+                m.container[method](messageHTML);
+        
+                if (m.params.autoLayout) m.layout();
+                if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
+                    m.scrollMessages();
+                }
+            };
+        
+            // Scroll
+            m.scrollMessages = function (duration) {
+                if (typeof duration === 'undefined') duration = 400;
+                var currentScroll = m.pageContent[0].scrollTop;
+                var newScroll = m.params.newMessagesFirst ? 0 : m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight;
+                if (newScroll === currentScroll) return;
+                m.pageContent.scrollTop(newScroll, duration);
+            };
+        
+            // Init Destroy
+            m.init = function () {
+                if (m.params.autoLayout) m.layout();
+                m.scrollMessages(0);
+            };
+            m.destroy = function () {
+                m = null;
+            };
+        
+            // Init
+            m.init();
+        
+            m.container[0].f7Messagebar = m;
+            return m;
+        };
+        app.messages = function (container, params) {
+            return new Messages (container, params);
+        };
+        app.initPageMessages = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var messages = pageContainer.find('.messages');
             if (messages.length === 0) return;
-            var pageContent = page.find('.page-content');
-            if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
-            if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
-        };
-        app.addMessage = function (props, messagesContent, addToTop) {
-            props = props || {};
-            props.type = props.type || 'sent';
-            if (!props.text || props.length === 0) return false;
-            messagesContent = $(messagesContent || '.messages-content');
-            if (messagesContent.length === 0) return false;
-            var messages = messagesContent.find('.messages');
-            var newOnTop = messages.hasClass('new-messages-first');
-        
-            if (typeof addToTop === 'undefined') {
-                addToTop = newOnTop ? true : false;
+            if (!messages.hasClass('messages-init')) {
+                return;
             }
-            var method = addToTop ? 'prepend' : 'append';
+            var m = app.messages(messages, {
+                autoLayout: messages.data('auto-layout'),
+                newMessagesFirst: messages.data('new-messages-first') && (messages.data('new-messages-first') === 'false' ? false : true),
+            });
         
-            var html = '';
-            if (props.day) {
-                html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
+            // Destroy on page remove
+            function pageBeforeRemove() {
+                m.destroy();
+                pageContainer.off('pageBeforeRemove', pageBeforeRemove);
             }
-            var isPic = props.text.indexOf('<img') >= 0 ? 'message-pic' : '';
-            var withAvatar = props.avatar ? 'message-with-avatar' : '';
-            var messageClass = 'message' + ' message-' + props.type + ' ' + isPic  + ' ' + withAvatar + ' message-appear-from-' + (method === 'append' ? 'bottom' : 'top');
-            html += '<div class="' + messageClass + '">' +
-                        (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
-                        '<div class="message-text">' + props.text + '</div>' +
-                        (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
-                        (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
-                    '</div>';
-            messages[method](html);
-            if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
-            if ((method === 'append' && !newOnTop) || (method === 'prepend' && newOnTop)) {
-                app.scrollMessagesContainer(messagesContent);
+            if (pageContainer.hasClass('page')) {
+                pageContainer.on('pageBeforeRemove', pageBeforeRemove);
             }
-        };
-        app.updateMessagesLayout = function (messages) {
-            messages.find('.message').each(function () {
-                var message = $(this);
-                if (message.find('.message-text img').length > 0) message.addClass('message-pic');
-                if (message.find('.message-avatar').length > 0) message.addClass('message-with-avatar');
-            });
-            messages.find('.message-sent').each(function () {
-                var message = $(this);
-                var next = message.next('.message-sent');
-                var prev = message.prev('.message-sent');
-                if (next.length === 0) {
-                    message.addClass('message-last message-with-tail');
-                }
-                else message.removeClass('message-last message-with-tail');
-        
-                if (prev.length === 0) {
-                    message.addClass('message-first');
-                }
-                else message.removeClass('message-first');
-                // Search for changed names
-                if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
-                    if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
-                        prev.addClass('message-last message-with-tail');
-                        message.addClass('message-first');
-                    }
-                }
-            });
-            messages.find('.message-received').each(function () {
-                var message = $(this);
-                var next = message.next('.message-received');
-                var prev = message.prev('.message-received');
-                if (next.length === 0) {
-                    message.addClass('message-last message-with-tail');
-                }
-                else message.removeClass('message-last message-with-tail');
-        
-                if (prev.length === 0) {
-                    message.addClass('message-first');
-                }
-                else message.removeClass('message-first');
-        
-                // Search for changed names
-                if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
-                    if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
-                        prev.addClass('message-last message-with-tail');
-                        message.addClass('message-first');
-                    }
-                }
-            });
-        };
-        app.scrollMessagesContainer = function (messagesContent) {
-            messagesContent = $(messagesContent || '.messages-content');
-            if (messagesContent.length === 0) return;
-            var messages = messagesContent.find('.messages');
-            var newOnTop = messages.hasClass('new-messages-first');
-            var currentScroll = messagesContent[0].scrollTop;
-            var newScroll = newOnTop ? 0 : messagesContent[0].scrollHeight - messagesContent[0].offsetHeight;
-            if (newScroll === currentScroll) return;
-            messagesContent.scrollTop(newScroll, 400);
         };
         
 
@@ -4434,7 +4618,7 @@
                 searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
             }
         
-            var searchbarHTML =   '<form class="searchbar" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
+            var searchbarHTML =   '<form class="searchbar searchbar-init" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
                                     '<div class="searchbar-input">' +
                                         '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                         '<a href="#" class="searchbar-clear"></a>' +
@@ -4471,7 +4655,7 @@
                         template: smartSelectItemTemplate,
                         height: virtualListItemHeight || undefined,
                         searchByItem: function (query, index, item) {
-                            if (item.text.toLowerCase().indexOf(query.trim()) >=0 ) return true;
+                            if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                             return false;
                         }
                     });
@@ -6483,7 +6667,7 @@
         app.swiper = function (container, params) {
             return new Swiper(container, params);
         };
-        app.initSwiper = function (pageContainer) {
+        app.initPageSwiper = function (pageContainer) {
             var page = $(pageContainer);
             var swipers = page.find('.swiper-init');
             if (swipers.length === 0) return;
@@ -6502,24 +6686,24 @@
                 }
                 else {
                     params = {
-                        initialSlide: parseInt(swiper.data('initialSlide'), 10) || undefined,
-                        spaceBetween: parseInt(swiper.data('spaceBetween'), 10) || undefined,
+                        initialSlide: parseInt(swiper.data('initial-slide'), 10) || undefined,
+                        spaceBetween: parseInt(swiper.data('space-between'), 10) || undefined,
                         speed: parseInt(swiper.data('speed'), 10) || undefined,
-                        slidesPerView: swiper.data('slidesPerView') || undefined,
-                        slidesPerColumn: parseInt(swiper.data('slidesPerColumn'), 10) || undefined,
-                        centeredSlides: swiper.data('centeredSlides') && (swiper.data('centeredSlides') === 'true' ? true : false),
+                        slidesPerView: swiper.data('slides-per-view') || undefined,
+                        slidesPerColumn: parseInt(swiper.data('slides-per-column'), 10) || undefined,
+                        centeredSlides: swiper.data('centered-slides') && (swiper.data('centered-slides') === 'true' ? true : false),
                         direction: swiper.data('direction'),
                         pagination: swiper.data('pagination'),
-                        paginationHide: swiper.data('paginationHide') && (swiper.data('paginationHide') === 'true' ? true : false),
-                        paginationClickable: swiper.data('paginationClickable') && (swiper.data('paginationClickable') === 'true' ? true : false),
+                        paginationHide: swiper.data('pagination-hide') && (swiper.data('pagination-hide') === 'true' ? true : false),
+                        paginationClickable: swiper.data('pagination-clickable') && (swiper.data('pagination-clickable') === 'true' ? true : false),
                         scrollbar: swiper.data('scrollbar'),
-                        scrollbarHide: swiper.data('scrollbarHide') && (swiper.data('scrollbarHide') === 'true' ? true : false),
+                        scrollbarHide: swiper.data('scrollbar-hide') && (swiper.data('scrollbar-hide') === 'true' ? true : false),
                         loop: swiper.data('loop') && (swiper.data('loop') === 'true' ? true : false),
                         effect: swiper.data('effect') || 'slide',
-                        freeMode: swiper.data('freeMode') && (swiper.data('freeMode') === 'true' ? true : false),
-                        onlyExternal: swiper.data('onlyExternal') && (swiper.data('onlyExternal') === 'true' ? true : false),
-                        nextButton: swiper.data('nextButton'),
-                        prevButton: swiper.data('prevButton'),
+                        freeMode: swiper.data('free-mode') && (swiper.data('free-mode') === 'true' ? true : false),
+                        onlyExternal: swiper.data('only-external') && (swiper.data('only-external') === 'true' ? true : false),
+                        nextButton: swiper.data('next-button'),
+                        prevButton: swiper.data('prev-button'),
                         autoplay: swiper.data('autoplay'),
                         parallax: swiper.data('parallax') && (swiper.data('parallax') === 'true' ? true : false)
                     };
@@ -6528,14 +6712,14 @@
                 destroySwiperOnRemove(_slider);
             }
         };
-        app.reinitSwiper = function (pageContainer) {
+        app.reinitPageSwiper = function (pageContainer) {
             var page = $(pageContainer);
             var sliders = page.find('.swiper-init');
             if (sliders.length === 0) return;
             for (var i = 0; i < sliders.length; i++) {
                 var sliderInstance = sliders[0].swiper;
                 if (sliderInstance) {
-                    sliderInstance.onResize();
+                    sliderInstance.update(true);
                 }
             }
         };

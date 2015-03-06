@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 4, 2015
+ * Released on: March 6, 2015
  */
 html,
 body {
@@ -2348,6 +2348,7 @@ html.ios-gt-6.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 /* === Forms === */
 .list-block input[type="text"],
 .list-block input[type="password"],
+.list-block input[type="search"],
 .list-block input[type="email"],
 .list-block input[type="tel"],
 .list-block input[type="url"],
