@@ -45,6 +45,7 @@ var Messages = function (container, params) {
 
     // Auto Layout
     m.layout = function () {
+        if (!m.container.hasClass('messages-auto-layout')) m.container.addClass('messages-auto-layout');
         m.container.find('.message').each(function () {
             var message = $(this);
             if (message.find('.message-text img').length > 0) message.addClass('message-pic');
@@ -123,7 +124,7 @@ var Messages = function (container, params) {
     // Init
     m.init();
 
-    m.container[0].f7Messagebar = m;
+    m.container[0].f7Messages = m;
     return m;
 };
 app.messages = function (container, params) {
@@ -136,10 +137,7 @@ app.initPageMessages = function (pageContainer) {
     if (!messages.hasClass('messages-init')) {
         return;
     }
-    var m = app.messages(messages, {
-        autoLayout: messages.data('auto-layout'),
-        newMessagesFirst: messages.data('new-messages-first') && (messages.data('new-messages-first') === 'false' ? false : true),
-    });
+    var m = app.messages(messages, messages.dataset());
 
     // Destroy on page remove
     function pageBeforeRemove() {

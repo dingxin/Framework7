@@ -113,7 +113,7 @@ var Messagebar = function (container, params) {
     // Init
     m.init();
 
-    m.container[0].f7Searchbar = m;
+    m.container[0].f7Messagebar = m;
     return m;
 };
 app.messagebar = function (container, params) {
@@ -124,10 +124,7 @@ app.initPageMessagebar = function (pageContainer) {
     var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
     if (messagebar.length === 0) return;
     if (!messagebar.hasClass('messagebar-init')) return;
-    var mb = app.messagebar(messagebar, {
-        textarea: messagebar.data('textarea'),
-        maxHeight: messagebar.data('max-height') && parseInt(messagebar.data('max-height'), 10),
-    });
+    var mb = app.messagebar(messagebar, messagebar.dataset());
 
     // Destroy on page remove
     function pageBeforeRemove() {
@@ -137,10 +134,4 @@ app.initPageMessagebar = function (pageContainer) {
     if (pageContainer.hasClass('page')) {
         pageContainer.on('pageBeforeRemove', pageBeforeRemove);
     }
-};
-app.destroyMessagebar = function (pageContainer) {
-    pageContainer = $(pageContainer);
-    var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
-    if (messagebar.length === 0) return;
-    if (messagebar[0].f7Messagebar) messagebar[0].f7Messagebar.destroy();
 };

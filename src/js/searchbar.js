@@ -10,9 +10,9 @@ var Searchbar = function (container, params) {
         searchIn: '.item-title',
         searchBy: '',
         found: null,
-        notFoud: null,
+        notFound: null,
         overlay: null,
-        ignore: '.searhbar-ignore'
+        ignore: '.searchbar-ignore'
     };
     params = params || {};
     for (var def in defaults) {
@@ -281,18 +281,7 @@ app.initPageSearchbar = function (pageContainer) {
     var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
     if (searchbar.length === 0) return;
     if (!searchbar.hasClass('searchbar-init')) return;
-    var sb = app.searchbar(searchbar, {
-        input: searchbar.data('input'),
-        clearButton: searchbar.data('clear-button'),
-        cancelButton: searchbar.data('cancel-button'),
-        searchList: searchbar.data('search-list'),
-        searchIn: searchbar.data('search-in'),
-        searchBy: searchbar.data('search-by'),
-        found: searchbar.data('found'),
-        notFoud: searchbar.data('not-found'),
-        overlay: searchbar.data('overlay'),
-        ignore: searchbar.data('ignore')
-    });
+    var sb = app.searchbar(searchbar, searchbar.dataset());
 
     // Destroy on page remove
     function pageBeforeRemove() {
@@ -303,10 +292,4 @@ app.initPageSearchbar = function (pageContainer) {
         pageContainer.on('pageBeforeRemove', pageBeforeRemove);
     }
         
-};
-app.destroySearchbar = function (pageContainer) {
-    pageContainer = $(pageContainer);
-    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
-    if (searchbar.length === 0) return;
-    if (searchbar[0].f7Searchbar) searchbar[0].f7Searchbar.destroy();
 };
