@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 9, 2015
+ * Released on: March 16, 2015
  */
 html,
 body {
@@ -2396,7 +2396,7 @@ html.ios-gt-6.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
   -ms-appearance: none;
   appearance: none;
 }
-.list-block .lable {
+.list-block .label {
   vertical-align: top;
 }
 .list-block textarea {
