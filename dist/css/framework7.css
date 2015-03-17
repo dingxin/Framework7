@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 16, 2015
+ * Released on: March 17, 2015
  */
 html,
 body {
@@ -4184,7 +4184,7 @@ html.with-statusbar-overlay body .statusbar-overlay {
   display: block;
 }
 html.with-statusbar-overlay body .panel {
-  padding-top: 20px;
+  /*padding-top: 20px;*/
 }
 .statusbar-overlay {
   background: #f7f7f8;

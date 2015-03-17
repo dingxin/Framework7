@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 16, 2015
+ * Released on: March 17, 2015
  */
 (function () {
 
@@ -8501,7 +8501,13 @@
                     transition = '';
                     if (!p.params.animate) transition = 0;
                 }
-                var targetDate = new Date(year, month).getTime();
+                var targetDate;
+                if (year < p.currentYear) {
+                    targetDate = new Date(year, month + 1, -1).getTime();
+                }
+                else {
+                    targetDate = new Date(year, month).getTime();
+                }
                 if (p.params.maxDate && targetDate > new Date(p.params.maxDate).getTime()) {
                     return false;
                 }
@@ -8509,7 +8515,7 @@
                     return false;
                 }
                 var currentDate = new Date(p.currentYear, p.currentMonth).getTime();
-                var dir;
+                var dir = targetDate > currentDate ? 'next' : 'prev';
                 var newMonthHTML = p.monthHTML(new Date(year, month));
                 p.monthsTranslate = p.monthsTranslate || 0;
                 var prevTranslate = p.monthsTranslate;
@@ -8518,7 +8524,6 @@
                 if (targetDate > currentDate) {
                     // To next
                     p.monthsTranslate --;
-                    dir = 'next';
                     if (!p.animating) p.months.eq(p.months.length - 1).remove();
                     p.wrapper.append(newMonthHTML);
                     p.months = p.wrapper.find('.picker-calendar-month');
@@ -8528,7 +8533,6 @@
                 else {
                     // To prev
                     p.monthsTranslate ++;
-                    dir = 'prev';
                     if (!p.animating) p.months.eq(0).remove();
                     p.wrapper.prepend(newMonthHTML);
                     p.months = p.wrapper.find('.picker-calendar-month');
