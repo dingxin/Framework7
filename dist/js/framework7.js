@@ -10,11 +10,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: March 17, 2015
-=======
  * Released on: March 22, 2015
->>>>>>> refs/remotes/f7/master
  */
 (function () {
 
@@ -6050,11 +6046,7 @@
                     targetElement = null;
                 }
                 needsFastClickTimeOut = setTimeout(function () {
-<<<<<<< HEAD
-                    needsFastClick = false;    
-=======
                     needsFastClick = false;
->>>>>>> refs/remotes/f7/master
                 }, 100);
                 return allowClick;
             }
