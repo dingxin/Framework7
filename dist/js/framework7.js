@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 23, 2015
+ * Released on: March 26, 2015
  */
 (function () {
 
@@ -9168,6 +9168,7 @@
                 for (var i = 0; i < this.length; i++) {
                     this[i].removeAttribute(attr);
                 }
+                return this;
             },
             prop: function (props, value) {
                 if (arguments.length === 1 && typeof props === 'string') {

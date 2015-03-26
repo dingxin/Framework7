@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 23, 2015
+ * Released on: March 26, 2015
  */
 html,
 body {
@@ -2036,6 +2036,7 @@ html.ios-gt-6.pixel-ratio-3 .list-block .item-link.list-button:after {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  margin-top: -1px;
 }
 .list-block .list-block-label {
   margin: 10px 0 35px;
