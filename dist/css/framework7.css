@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 26, 2015
+ * Released on: March 27, 2015
  */
 html,
 body {
@@ -3357,6 +3357,11 @@ html.ios-gt-6.pixel-ratio-3 .actions-modal-label:after {
 .actions-modal-button:first-child:last-child,
 .actions-modal-label:first-child:last-child {
   border-radius: 4px;
+}
+.actions-modal-button.disabled,
+.actions-modal-label.disabled {
+  opacity: 0.95;
+  color: #8e8e93;
 }
 .actions-modal-button {
   cursor: pointer;

@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 26, 2015
+ * Released on: March 27, 2015
  */
 (function () {
 
@@ -47,6 +47,10 @@
             fastClicks: true,
             fastClicksDistanceThreshold: 0,
             fastClicksDelayBetweenClicks: 50,
+            // Tap Hold
+            tapHold: false,
+            tapHoldDelay: 750,
+            tapHoldPreventClicks: true,
             // Active State
             activeState: true,
             activeStateElements: 'a, button, label, span',
@@ -1366,7 +1370,7 @@
                 method: 'GET',
                 beforeSend: app.params.onAjaxStart,
                 complete: function (xhr) {
-                    if (xhr.status === 200 || xhr.status === 0) {
+                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
                         if (app.params.cache && !ignoreCache) {
                             app.removeFromCache(_url);
                             app.cache.push({
@@ -2996,7 +3000,7 @@
             }
             var modalHTML;
             if (toPopover) {
-                var actionsPopoverTemplate = 
+                var actionsToPopoverTemplate = app.params.modalActionsToPopoverTemplate || 
                     '<div class="popover actions-popover">' +
                       '<div class="popover-inner">' +
                         '{{#each this}}' +
@@ -3006,7 +3010,7 @@
                             '{{#if label}}' +
                             '<li class="actions-popover-label {{#if color}}color-{{color}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</li>' +
                             '{{else}}' +
-                            '<li><a href="#" class="item-link list-button {{#if color}}color-{{color}}{{/if}} {{#if bg}}bg-{{bg}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</a></li>' +
+                            '<li><a href="#" class="item-link list-button {{#if color}}color-{{color}}{{/if}} {{#if bg}}bg-{{bg}}{{/if}} {{#if bold}}actions-popover-bold{{/if}} {{#if disabled}}disabled{{/if}}">{{text}}</a></li>' +
                             '{{/if}}' +
                             '{{/each}}' +
                           '</ul>' +
@@ -3014,10 +3018,10 @@
                         '{{/each}}' +
                       '</div>' +
                     '</div>';
-                if (!app._compiledTemplates.actionsPopover) {
-                    app._compiledTemplates.actionsPopover = t7.compile(actionsPopoverTemplate);
+                if (!app._compiledTemplates.actionsToPopover) {
+                    app._compiledTemplates.actionsToPopover = t7.compile(actionsToPopoverTemplate);
                 }
-                var popoverHTML = app._compiledTemplates.actionsPopover(params);
+                var popoverHTML = app._compiledTemplates.actionsToPopover(params);
                 modal = $(app.popover(popoverHTML, target, true));
                 groupSelector = '.list-block ul';
                 buttonSelector = '.list-button';
@@ -3037,6 +3041,7 @@
                             if (button.bold) buttonClass += ' actions-modal-button-bold';
                             if (button.color) buttonClass += ' color-' + button.color;
                             if (button.bg) buttonClass += ' bg-' + button.bg;
+                            if (button.disabled) buttonClass += ' disabled';
                             buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
                             if (j === params[i].length - 1) buttonsHTML += '</div>';
                         }
@@ -3808,7 +3813,7 @@
                     '{{#if day}}' +
                     '<div class="messages-date">{{day}} {{#if time}}, <span>{{time}}</span>{{/if}}</div>' +
                     '{{/if}}' +
-                    '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} message-appear-from-{{position}}">' +
+                    '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} {{#if position}}message-appear-from-{{position}}{{/if}}">' +
                         '{{#if name}}<div class="message-name">{{name}}</div>{{/if}}' +
                         '<div class="message-text">{{text}}</div>' +
                         '{{#if avatar}}<div class="message-avatar" style="background-image:url({{avatar}})"></div>{{/if}}' +
@@ -3876,30 +3881,71 @@
             };
         
             // Add Message
-            m.appendMessage = function (props) {
-                return m.addMessage(props, 'append');
+            m.appendMessage = function (props, animate) {
+                return m.addMessage(props, 'append', animate);
             };
-            m.prependMessage = function (props) {
-                return m.addMessage(props, 'prepend');
+            m.prependMessage = function (props, animate) {
+                return m.addMessage(props, 'prepend', animate);
             };
-            m.addMessage = function (props, method) {
+            m.addMessage = function (props, method, animate) {
+                return m.addMessages([props], method, animate);
+            };
+            m.addMessages = function (newMessages, method, animate) {
+                if (typeof animate === 'undefined') {
+                    animate = true;
+                }
                 if (typeof method === 'undefined') {
                     method = m.params.newMessagesFirst ? 'prepend' : 'append';
                 }
-                props = props || {};
-                props.type = props.type || 'sent';
-                if (!props.text) return false;
+                var newMessagesHTML = '', i;
+                for (i = 0; i < newMessages.length; i++) {
+                    var props = newMessages[i] || {};
+                    props.type = props.type || 'sent';
+                    if (!props.text) continue;
+                    props.hasImage = props.text.indexOf('<img') >= 0;
+                    if (animate) props.position = method === 'append' ? 'bottom' : 'top';
         
-                props.hasImage = props.text.indexOf('<img') >= 0;
-                props.position = method === 'append' ? 'bottom' : 'top';
-                
-                var messageHTML = m.template(props);
-                m.container[method](messageHTML);
+                    newMessagesHTML += m.template(props);
+                }
+                m.container[method](newMessagesHTML);
         
                 if (m.params.autoLayout) m.layout();
                 if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
-                    m.scrollMessages();
+                    m.scrollMessages(animate ? undefined : 0);
                 }
+                var messages = m.container.find('.message');
+                if (newMessages.length === 1) {
+                    return method === 'append' ? messages[messages.length - 1] : messages[0];
+                }
+                else {
+                    var messagesToReturn = [];
+                    if (method === 'append') {
+                        for (i = messages.length - newMessages.length; i < messages.length; i++) {
+                            messagesToReturn.push(messages[i]);
+                        }
+                    }
+                    else {
+                        for (i = 0; i < newMessages.length; i++) {
+                            messagesToReturn.push(messages[i]);
+                        }   
+                    }
+                    return messagesToReturn;
+                }
+                
+            };
+            m.removeMessage = function (message) {
+                message = $(message);
+                if (message.length === 0) {
+                    return false;
+                }
+                else {
+                    message.remove();
+                    if (m.params.autoLayout) m.layout();
+                    return true;
+                }
+            };
+            m.removeMessages = function (messages) {
+                m.removeMessage(messages);
             };
             m.clean = function () {
                 m.container.html('');
@@ -3916,8 +3962,14 @@
         
             // Init Destroy
             m.init = function () {
-                if (m.params.autoLayout) m.layout();
-                m.scrollMessages(0);
+                if (m.params.messages) {
+                    m.addMessages(m.params.messages, undefined, false);
+                }
+                else {
+                    if (m.params.autoLayout) m.layout();    
+                    m.scrollMessages(0);
+                }
+                
             };
             m.destroy = function () {
                 m = null;
@@ -5743,7 +5795,7 @@
                 window.addEventListener('touchstart', function () {});
             }
         
-            var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
+            var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved, tapHoldFired, tapHoldTimeout;
             var activableElement, activeTimeout, needsFastClick, needsFastClickTimeOut;
         
             function findActivableElement(e) {
@@ -5781,9 +5833,13 @@
             function removeActive(el) {
                 activableElement.removeClass('active-state');
             }
-        
+            function isFormElement(el) {
+                var nodes = ('input select textarea label').split(' ');
+                if (el.nodeName && nodes.indexOf(el.nodeName.toLowerCase()) >= 0) return true;
+                return false;
+            }
             function androidNeedsBlur(el) {
-                var noBlur = ('button checkbox file image radio submit input textarea').split(' ');
+                var noBlur = ('button input textarea select').split(' ');
                 if (document.activeElement && el !== document.activeElement && document.activeElement !== document.body) {
                     if (noBlur.indexOf(el.nodeName.toLowerCase()) >= 0) {
                         return false;
@@ -5850,8 +5906,17 @@
             // Touch Handlers
             function handleTouchStart(e) {
                 isMoved = false;
+                tapHoldFired = false;
                 if (e.targetTouches.length > 1) {
                     return true;
+                }
+                if (app.params.tapHold) {
+                    if (tapHoldTimeout) clearTimeout(tapHoldTimeout);
+                    tapHoldTimeout = setTimeout(function () {
+                        tapHoldFired = true;
+                        e.preventDefault();
+                        $(e.target).trigger('taphold');
+                    }, app.params.tapHoldDelay);
                 }
                 if (needsFastClickTimeOut) clearTimeout(needsFastClickTimeOut);
                 needsFastClick = targetNeedsFastClick(e.target);
@@ -5926,15 +5991,18 @@
                     trackClick = false;
                     targetElement = null;
                     isMoved = true;
-                }
-                    
-                if (app.params.activeState) {
-                    clearTimeout(activeTimeout);
-                    removeActive();
+                    if (app.params.tapHold) {
+                        clearTimeout(tapHoldTimeout);
+                    }
+        			if (app.params.activeState) {
+        				clearTimeout(activeTimeout);
+        				removeActive();
+        			}
                 }
             }
             function handleTouchEnd(e) {
                 clearTimeout(activeTimeout);
+                clearTimeout(tapHoldTimeout);
         
                 if (!trackClick) {
                     if (!activeSelection && needsFastClick) {
@@ -6006,6 +6074,7 @@
         
             function handleClick(e) {
                 var allowClick = false;
+                
                 if (trackClick) {
                     targetElement = null;
                     trackClick = false;
@@ -6015,8 +6084,7 @@
                     return true;
                 }
                 if (!targetElement) {
-                    var nodeName = e.target && e.target.nodeName.toLowerCase();
-                    if (nodeName && !(nodeName === 'input' || nodeName === 'label' || nodeName === 'textarea' || nodeName === 'select')) {
+                    if (!isFormElement(e.target)) {
                         allowClick =  true;
                     }
                 }
@@ -6031,6 +6099,9 @@
                 }
                 if (!e.cancelable) {
                     allowClick =  true;
+                }
+                if (app.params.tapHold && app.params.tapHoldPreventClicks && tapHoldFired) {
+                    allowClick = false;
                 }
                 if (!allowClick) {
                     e.stopImmediatePropagation();
@@ -6047,7 +6118,14 @@
                 }
                 needsFastClickTimeOut = setTimeout(function () {
                     needsFastClick = false;
-                }, 100);
+                }, (app.device.ios || app.device.androidChrome ? 100 : 400));
+        
+                if (app.params.tapHold) {
+                    tapHoldTimeout = setTimeout(function () {
+                        tapHoldFired = false;
+                    }, (app.device.ios || app.device.androidChrome ? 100 : 400));
+                }
+                    
                 return allowClick;
             }
             if (app.support.touch) {
@@ -9227,7 +9305,7 @@
                         for (var i = 0; i < el.attributes.length; i++) {
                             var attr = el.attributes[i];
                             if (attr.name.indexOf('data-') >= 0) {
-                                dataset[$.camelCase(attr.name.split('data-')[1])] = attr.value;
+                                dataset[$.toCamelCase(attr.name.split('data-')[1])] = attr.value;
                             }
                         }
                     }
@@ -9846,7 +9924,7 @@
                 timeout: 0
             };
             var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
-            
+        
         
             //For jQuery guys
             if (options.type) options.method = options.type;
@@ -9855,7 +9933,7 @@
             $.each(globalAjaxOptions, function (globalOptionName, globalOptionValue) {
                 if (callbacks.indexOf(globalOptionName) < 0) defaults[globalOptionName] = globalOptionValue;
             });
-            
+        
             // Function to run XHR callbacks and events
             function fireAjaxCallback (eventName, eventData, callbackName) {
                 var a = arguments;
@@ -9898,7 +9976,7 @@
             }
             // JSONP
             if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-                
+        
                 var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
                 var abortTimeout;
                 var callbackSplit = options.url.split('callback=');
@@ -9956,7 +10034,7 @@
         
             // Create POST Data
             var postData = null;
-            
+        
             if ((_method === 'POST' || _method === 'PUT') && options.data) {
                 if (options.processData) {
                     var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
@@ -9993,7 +10071,7 @@
                 else {
                     postData = options.data;
                 }
-                    
+        
             }
         
             // Additional headers
@@ -10022,7 +10100,7 @@
             // Handle XHR
             xhr.onload = function (e) {
                 if (xhrTimeout) clearTimeout(xhrTimeout);
-                if (xhr.status === 200 || xhr.status === 0) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
                     var responseData;
                     if (options.dataType === 'json') {
                         try {
@@ -10046,7 +10124,7 @@
                 }
                 fireAjaxCallback('ajaxComplete', {xhr: xhr}, 'complete', xhr, xhr.status);
             };
-            
+        
             xhr.onerror = function (e) {
                 if (xhrTimeout) clearTimeout(xhrTimeout);
                 fireAjaxCallback('ajaxError', {xhr: xhr}, 'error', xhr, xhr.status);
@@ -10090,6 +10168,7 @@
                 createMethod(methods[i]);
             }
         })();
+        
 
         // DOM Library Utilites
         $.parseUrlQuery = function (url) {
@@ -10153,7 +10232,7 @@
         
             return resultArray.join(separator);
         };
-        $.camelCase = function (string) {
+        $.toCamelCase = function (string) {
             return string.toLowerCase().replace(/-(.)/g, function(match, group1) {
                 return group1.toUpperCase();
             });
