@@ -10,11 +10,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: March 27, 2015
-=======
- * Released on: March 28, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: March 30, 2015
  */
 (function () {
 
@@ -47,6 +43,7 @@
             pushStateRoot: undefined,
             pushStateNoAnimation: false,
             pushStateSeparator: '#!/',
+            pushStatePreventOnLoad: true,
             // Fast clicks
             fastClicks: true,
             fastClicksDistanceThreshold: 0,
@@ -974,7 +971,6 @@
         
             // Search List
             s.searchList = $(s.params.searchList);
-            s.ul = s.searchList.children('ul');
         
             // Is Virtual List
             s.isVirtualList = s.searchList.hasClass('virtual-list');
@@ -1123,10 +1119,7 @@
                     }
                 }
                 else {
-                    if (s.ul.length === 0) {
-                        s.ul = s.searchList.children('ul');
-                    }
-                    s.ul.children('li').removeClass('hidden-by-searchbar').each(function (index, el) {
+                    s.searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
                         el = $(el);
                         var compareWithText = [];
                         el.find(s.params.searchIn).each(function () {
@@ -4079,8 +4072,9 @@
                         app.swipeoutOpenedEl.is(target[0]) ||
                         target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                         target.hasClass('modal-in') ||
-                        target.parents('.modal.modal-in').length > 0 ||
-                        target.hasClass('modal-overlay')
+                        target.hasClass('modal-overlay') ||
+                        target.hasClass('actions-modal') || 
+                        target.parents('.actions-modal.modal-in, .modal.modal-in').length > 0
                         )) {
                         app.swipeoutClose(app.swipeoutOpenedEl);
                     }
@@ -6783,12 +6777,16 @@
         };
         
         app.initPushState = function () {
-            var blockPopstate = true;
-            $(window).on('load', function () {
-                setTimeout(function () {
-                    blockPopstate = false;
-                }, 0);
-            });
+            var blockPopstate;
+            if (app.params.pushStatePreventOnLoad) {
+                blockPopstate = true;
+                $(window).on('load', function () {
+                    setTimeout(function () {
+                        blockPopstate = false;
+                    }, 0);
+                });
+            }
+                
             function handlePopState(e) {
                 if (blockPopstate) return;
                 var mainView = app.mainView;
