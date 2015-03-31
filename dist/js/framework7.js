@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 30, 2015
+ * Released on: March 31, 2015
  */
 (function () {
 
@@ -312,7 +312,7 @@
                 el;
         
             view.handleTouchStart = function (e) {
-                if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
+                if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl || !view.allowPageChange) return;
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
@@ -333,7 +333,6 @@
                     isTouched = false;
                     return;
                 }
-        
                 if (!isMoved) {
                     var cancel = false;
                     // Calc values during first move fired
@@ -1876,7 +1875,6 @@
         
                 if (view && view.params && view.params.preprocess) {
                     content = view.params.preprocess(content, url, next);
-                    console.log(content);
                     if (typeof content !== 'undefined') {
                         next(content);
                     }
