@@ -1,7 +1,7 @@
 /* === Grid === */
 .row {
     .flexbox();
-    .justify-content(flex-start);
+    .justify-content(space-between);
     .flex-wrap(wrap);
     .align-items(flex-start);
     > [class*="col-"] {
@@ -22,6 +22,11 @@
             width: ~"@{divider}%";
             width: ~"-webkit-calc((100% - 15px*@{n-1}) / @{n})";   
             width: ~"calc((100% - 15px*@{n-1}) / @{n})";   
+        }
+        &.no-gutter {
+            .col-@{className} {
+                width: ~"@{divider}%";
+            }
         }
         .-((@i - 1));
     } .-;
