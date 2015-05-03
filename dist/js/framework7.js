@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.5
+ * Framework7 1.0.6
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: April 29, 2015
+ * Released on: May 3, 2015
  */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '1.0.5';
+        app.version = '1.0.6';
     
         // Default Parameters
         app.params = {
@@ -803,7 +803,6 @@
                 return;
             }
             navbarInnerContainer.f7NavbarInitialized = true;
-        
             // Before Init
             app.pluginHook('navbarBeforeInit', navbarData, pageData);
             $(navbarInnerContainer).trigger('navbarBeforeInit', eventData);
@@ -843,17 +842,29 @@
             var viewContainer = navbarContainer.parents('.' + app.params.viewClass);
             var view;
             if (viewContainer.length === 0) return;
+            if (navbarContainer.parents('.navbar-through').length === 0 && viewContainer.find('.navbar-through').length === 0) return;
             view = viewContainer[0].f7View || undefined;
         
             navbarContainer.find('.navbar-inner').each(function () {
                 var navbarInnerContainer = this;
                 var pageContainer;
-                viewContainer.find('.page').each(function () {
-                    if (this.f7PageData && this.f7PageData.navbarInnerContainer === navbarInnerContainer) {
-                        pageContainer = this;
-        
+                if ($(navbarInnerContainer).attr('data-page')) {
+                    // For dom cache
+                    pageContainer = viewContainer.find('.page[data-page="' + $(navbarInnerContainer).attr('data-page') + '"]')[0];
+                }
+                if (!pageContainer) {
+                    var pages = viewContainer.find('.page');
+                    if (pages.length === 1) {
+                        pageContainer = pages[0];
                     }
-                });
+                    else {
+                        viewContainer.find('.page').each(function () {
+                            if (this.f7PageData && this.f7PageData.navbarInnerContainer === navbarInnerContainer) {
+                                pageContainer = this;
+                            }
+                        });
+                    }
+                }
                 app.navbarInitCallback(view, pageContainer, navbarContainer[0], navbarInnerContainer);
             });
         };
@@ -1239,7 +1250,7 @@
                     if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.removeClass('searchbar-overlay-active');
                 }
         
-                if (s.params.externalSearch) {
+                if (s.params.customSearch) {
                     s.triggerEvent('search', {query: query});
                     return;
                 }
@@ -4891,6 +4902,7 @@
                 optionImage = optionData.optionImage || $selectData.optionImage;
                 optionIcon = optionData.optionIcon || $selectData.optionIcon;
                 optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
+                if (app.params.material) optionHasMedia = optionImage || optionIcon;
                 optionColor = optionData.optionColor;
                 optionClassName = optionData.optionClass;
                 optionGroup = option.parent('optgroup')[0];
@@ -4919,7 +4931,8 @@
                     hasMedia: optionHasMedia,
                     checkbox: inputType === 'checkbox',
                     inputName: inputName,
-                    test: this
+                    test: this,
+                    material: app.params.material
                 });
             }
         

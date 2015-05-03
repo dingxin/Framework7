@@ -1,7 +1,7 @@
 /* === Grid === */
 .row {
     .flexbox();
-    .justify-content(space-between);
+    //.justify-content(space-between);
     .flex-wrap(wrap);
     .align-items(flex-start);
     > [class*="col-"] {
@@ -31,6 +31,8 @@
         .-((@i - 1));
     } .-;
     .--(@j: 1) when (@j < length(@cols)) {
+        @divider: e(extract(@cols, @j));
+        @className: `Math.floor(@{divider})`;
         .col-auto:nth-last-child(@{j}), .col-auto:nth-last-child(@{j}) ~ .col-auto {
             @j-1: @j - 1;  
             width: 100% / @j;

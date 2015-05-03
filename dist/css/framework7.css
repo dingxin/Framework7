@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.5
+ * Framework7 1.0.6
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: April 29, 2015
+ * Released on: May 3, 2015
  */
 html,
 body {
@@ -72,10 +72,6 @@ p {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
   -webkit-box-lines: multiple;
   -moz-box-lines: multiple;
   -webkit-flex-wrap: wrap;
@@ -2497,6 +2493,11 @@ html.ios-gt-6.pixel-ratio-3 .list-block .item-link.list-button:after {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
+}
+.list-block.media-list .item-content > .item-after,
+.list-block li.media-item .item-content > .item-after {
+  margin-right: 15px;
+  margin-left: 15px;
 }
 .list-block .list-group ul:after,
 .list-block .list-group ul:before {
