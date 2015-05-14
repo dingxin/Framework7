@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 10, 2015
+ * Released on: May 14, 2015
  */
 (function () {
 
@@ -2683,8 +2683,17 @@
                         }
                     }
                     else {
-                        if (pageToRemove.length) pageToRemove.remove();
-                        if (dynamicNavbar && navbarToRemove.length) {
+                        var removeNavbar = dynamicNavbar && navbarToRemove.length;
+                        if (pageToRemove.length) {
+                            app.pageRemoveCallback(view, pageToRemove[0], 'right');
+                            if (removeNavbar) {
+                                app.navbarRemoveCallback(view, pageToRemove[0], navbar[0], navbarToRemove[0]);
+                            }    
+                            pageToRemove.remove();
+                            if (removeNavbar) navbarToRemove.remove();
+                        }
+                        else if (removeNavbar) {
+                            app.navbarRemoveCallback(view, pageToRemove[0], navbar[0], navbarToRemove[0]);
                             navbarToRemove.remove();
                         } 
                     }
@@ -2955,8 +2964,8 @@
                 oldPage.removeClass('page-from-center-to-right').addClass('cached');
             }
             else {
-                oldPage.remove();
                 app.pageRemoveCallback(view, oldPage[0], 'right');
+                oldPage.remove();
             }
                 
             newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
@@ -2988,8 +2997,10 @@
                     var index = page.index();
                     var pageUrl = page[0].f7PageData && page[0].f7PageData.url;
                     if (pageUrl && view.history.indexOf(pageUrl) < 0 && view.initialPages.indexOf(this) < 0) {
-                        if (page[0].f7RelatedNavbar) $(page[0].f7RelatedNavbar).remove();
+                        app.pageRemoveCallback(view, page[0], 'right');
+                        if (page[0].f7RelatedNavbar && view.params.dynamicNavbar) app.navbarRemoveCallback(view, page[0], undefined, page[0].f7RelatedNavbar);
                         page.remove();
+                        if (page[0].f7RelatedNavbar && view.params.dynamicNavbar) $(page[0].f7RelatedNavbar).remove();
                     }
                 });
             }
@@ -3011,11 +3022,11 @@
                     if (preloadUrl && view.pagesCache[preloadUrl]) {
                         // Load by page name
                         previousPage = $(view.container).find('.page[data-page="' + view.pagesCache[preloadUrl] + '"]');
-                        previousPage.insertBefore(newPage);
+                        if (previousPage.next('.page')[0] !== newPage[0]) previousPage.insertBefore(newPage);
                         if (newNavbar) {
                             previousNavbar = $(view.container).find('.navbar-inner[data-page="' + view.pagesCache[preloadUrl] + '"]');
-                            previousNavbar.insertBefore(newNavbar);
                             if(!previousNavbar || previousNavbar.length === 0) previousNavbar = newNavbar.prev('.navbar-inner.cached');
+                            if (previousNavbar.next('.navbar-inner')[0] !== newNavbar[0]) previousNavbar.insertBefore(newNavbar);
                         }
                     }
                     else {
