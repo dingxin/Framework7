@@ -496,7 +496,7 @@ app.openModal = function (modal, hideOverlay) {
         return;
     }
     modal.data('f7-modal-shown', true);
-    modal.on('close', function() {
+    modal.once('close', function() {
        modal.removeData('f7-modal-shown');
     });
     var isPopover = modal.hasClass('popover');
