@@ -85,7 +85,7 @@
                 'src/js/picker.js',
                 'src/js/calendar.js',
                 'src/js/notifications.js',
-                //'src/js/template7-templates.js',
+                'src/js/template7-templates.js',
                 'src/js/plugins.js',
                 'src/js/init.js',
                 'src/js/f7-outro.js',
@@ -97,7 +97,7 @@
                 'src/js/proto-support.js',
                 'src/js/proto-device.js',
                 'src/js/proto-plugins.js',
-                //'src/js/template7.js',
+                'src/js/template7.js',
                 'src/js/swiper.js',
                 'src/js/wrap-end.js'
             ],
