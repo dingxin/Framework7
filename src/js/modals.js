@@ -446,6 +446,10 @@ app.popup = function (modal, removeOnClose, hideOverlay) {
     if (modal.length === 0) return false;
     modal.show();
     if (modal.find('.' + app.params.viewClass).length > 0) {
+    	modal.find('.' + app.params.viewClass).each(function() {
+    		app.addView(this);
+    	});
+    	
         app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
     }
     modal.find('.page:not(.cached)').each(function () {
