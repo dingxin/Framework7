@@ -12,6 +12,10 @@ app.openPanel = function (panelPosition) {
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open');
     if (panel.find('.' + app.params.viewClass).length > 0) {
+    	panel.find('.' + app.params.viewClass).each(function() {
+    		app.addView(this);
+    	});
+    	
         if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
     }
 
