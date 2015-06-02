@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 25, 2015
+ * Released on: May 26, 2015
  */
 (function () {
 
@@ -3667,6 +3667,10 @@
             panel.css({display: 'block'}).addClass('active');
             panel.trigger('open');
             if (panel.find('.' + app.params.viewClass).length > 0) {
+            	panel.find('.' + app.params.viewClass).each(function() {
+            		app.addView(this);
+            	});
+            	
                 if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
             }
         
