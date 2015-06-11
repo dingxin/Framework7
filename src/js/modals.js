@@ -536,6 +536,16 @@ app.openModal = function (modal, hideOverlay) {
         $('body').addClass('with-picker-modal');
     }
 
+    // Init Pages and Navbars in modal
+    if (modal.find('.' + app.params.viewClass).length > 0) {
+        modal.find('.page').each(function () {
+            app.initPageWithCallback(this);
+        });
+        modal.find('.navbar').each(function () {
+            app.initNavbarWithCallback(this); 
+        });
+    }
+
     // Classes for transition in
     if (!isLoginScreen && !isPickerModal && !hideOverlay) overlay.addClass('modal-overlay-visible');
     modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
