@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 26, 2015
+ * Released on: June 11, 2015
  */
 (function () {
 
@@ -776,7 +776,7 @@
         // On Navbar Init Callback
         app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarInnerContainer) {
             if (!navbarContainer && navbarInnerContainer) navbarContainer = $(navbarInnerContainer).parent('.navbar')[0];
-            if (navbarInnerContainer.f7NavbarInitialized && !view.params.domCache) return;
+            if (navbarInnerContainer.f7NavbarInitialized && view && !view.params.domCache) return;
             var navbarData = {
                 container: navbarContainer,
                 innerContainer: navbarInnerContainer
@@ -788,7 +788,7 @@
                 navbar: navbarData
             };
         
-            if (navbarInnerContainer.f7NavbarInitialized && view.params.domCache) {
+            if (navbarInnerContainer.f7NavbarInitialized && ((view && view.params.domCache) || (!view && $(navbarContainer).parents('.popup, .popover, .login-screen, .modal, .actions-modal, .picker-modal').length > 0))) {
                 // Reinit Navbar
                 app.reinitNavbar(navbarContainer, navbarInnerContainer);
         
@@ -1174,7 +1174,7 @@
             // Enable/disalbe
             s.enable = function () {
                 function _enable() {
-                    if (s.searchList.length && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+                    if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
                     s.container.addClass('searchbar-active');
                     if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
                     s.triggerEvent('enableSearch');
@@ -1195,7 +1195,7 @@
                 s.container.removeClass('searchbar-active searchbar-not-empty');
                 if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
                 
-                if (s.searchList.length) s.overlay.removeClass('searchbar-overlay-active');
+                if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
                 function _disable() {
                     s.input.blur();
                     s.triggerEvent('disableSearch');
@@ -1221,7 +1221,7 @@
             s.handleInput = function () {
                 setTimeout(function () {
                     var value = s.input.val().trim();
-                    if (s.searchList.length > 0 && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
+                    if ((s.searchList.length > 0 || s.params.customSearch) && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
                 }, 0);
             };
         
@@ -1463,7 +1463,9 @@
                     m.container.css('height', newBarHeight + 'px');
                     if (m.pageContent.length > 0) {
                         m.pageContent.css('padding-bottom', newBarHeight + 'px');
-                        m.pageContent.scrollTop(m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
+                        if (m.pageContent.find('.messages-new-first').length === 0) {
+                            m.pageContent.scrollTop(m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
+                        }
                     }
                 }
                 else {
@@ -1685,7 +1687,7 @@
         // On Page Init Callback
         app.pageInitCallback = function (view, params) {
             var pageContainer = params.pageContainer;
-            if (pageContainer.f7PageInitialized && !view.params.domCache) return;
+            if (pageContainer.f7PageInitialized && view && !view.params.domCache) return;
         
             // Page Data
             var pageData = {
@@ -1703,7 +1705,7 @@
                 params.fromPage.navbarInnerContainer = params.oldNavbarInnerContainer;
             }
         
-            if (pageContainer.f7PageInitialized && view.params.domCache) {
+            if (pageContainer.f7PageInitialized && ((view && view.params.domCache) || (!view && $(pageContainer).parents('.popup, .popover, .login-screen, .modal, .actions-modal, .picker-modal').length > 0))) {
                 // Reinit Page
                 app.reinitPage(pageContainer);
         
@@ -3582,6 +3584,16 @@
                 $('body').addClass('with-picker-modal');
             }
         
+            // Init Pages and Navbars in modal
+            if (modal.find('.' + app.params.viewClass).length > 0) {
+                modal.find('.page').each(function () {
+                    app.initPageWithCallback(this);
+                });
+                modal.find('.navbar').each(function () {
+                    app.initNavbarWithCallback(this); 
+                });
+            }
+        
             // Classes for transition in
             if (!isLoginScreen && !isPickerModal && !hideOverlay) overlay.addClass('modal-overlay-visible');
             modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
@@ -4145,6 +4157,9 @@
             // Autolayout
             if (m.params.autoLayout) m.container.addClass('messages-auto-layout');
         
+            // New messages first
+            if (m.params.newMessagesFirst) m.container.addClass('messages-new-first');
+        
             // Is In Page
             m.pageContainer = m.container.parents('.page').eq(0);
             m.pageContent = m.pageContainer.find('.page-content');
@@ -4212,9 +4227,16 @@
         
                     newMessagesHTML += m.template(props);
                 }
+                var heightBefore, scrollBefore;
+                if (method === 'prepend') {
+                    heightBefore = m.pageContent[0].scrollHeight;
+                    scrollBefore = m.pageContent[0].scrollTop;
+                }
                 m.container[method](newMessagesHTML);
-        
                 if (m.params.autoLayout) m.layout();
+                if (method === 'prepend') {
+                    m.pageContent[0].scrollTop = scrollBefore + (m.pageContent[0].scrollHeight - heightBefore);
+                }
                 if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
                     m.scrollMessages(animate ? undefined : 0);
                 }
@@ -4257,11 +4279,15 @@
             };
         
             // Scroll
-            m.scrollMessages = function (duration) {
+            m.scrollMessages = function (duration, scrollTop) {
                 if (typeof duration === 'undefined') duration = 400;
                 var currentScroll = m.pageContent[0].scrollTop;
-                var newScroll = m.params.newMessagesFirst ? 0 : m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight;
-                if (newScroll === currentScroll) return;
+                var newScroll;
+                if (typeof scrollTop !== 'undefined') newScroll = scrollTop;
+                else {
+                    newScroll = m.params.newMessagesFirst ? 0 : m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight;
+                    if (newScroll === currentScroll) return;
+                }
                 m.pageContent.scrollTop(newScroll, duration);
             };
         
@@ -6779,7 +6805,7 @@
             function preventScrolling(e) {
                 e.preventDefault();
             }
-            if (app.support.touch) {
+            if (app.support.touch && !app.device.android) {
                 $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling);
             }
         };
@@ -7203,6 +7229,8 @@
                 onLazyImageReady(pb, slide, img)
                 onOpen(pb)
                 onClose(pb)
+                onSlideTransitionStart(swiper)
+                onSlideTransitionEnd(swiper)
                 onSlideChangeStart(swiper)
                 onSlideChangeEnd(swiper)
                 onTap(swiper, e)
@@ -7420,7 +7448,7 @@
                     if ('pause' in previousSlideVideo[0]) previousSlideVideo[0].pause();
                 }
                 // Callback
-                if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(swiper);
+                if (pb.params.onTransitionStart) pb.params.onTransitionStart(swiper);
             };
             pb.onSliderTransitionEnd = function (swiper) {
                 // Reset zoom
@@ -7430,7 +7458,7 @@
                     gestureSlide = gestureImg = gestureImgWrap = undefined;
                     scale = currentScale = 1;
                 }
-                if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(swiper);
+                if (pb.params.onTransitionEnd) pb.params.onTransitionEnd(swiper);
             };
             
             pb.layout = function (index) {
@@ -7479,6 +7507,8 @@
                     onTransitionEnd: function (swiper) {
                         pb.onSliderTransitionEnd(swiper);  
                     },
+                    onSlideChangeStart: pb.params.onSlideChangeStart,
+                    onSlideChangeEnd: pb.params.onSlideChangeEnd,
                     onLazyImageLoad: function (swiper, slide, img) {
                         if (pb.params.onLazyImageLoad) pb.params.onLazyImageLoad(pb, slide, img);
                     },
@@ -9931,6 +9961,14 @@
                 }
                 return this;
             },
+            filter: function (callback) {
+                var matchedItems = [];
+                var dom = this;
+                for (var i = 0; i < dom.length; i++) {
+                    if (callback.call(dom[i], i, dom[i])) matchedItems.push(dom[i]);
+                }
+                return new Dom7(matchedItems);
+            },
             html: function (html) {
                 if (typeof html === 'undefined') {
                     return this[0] ? this[0].innerHTML : undefined;
@@ -10417,7 +10455,8 @@
                             postData = '--' + boundary + '\r\n' + _newData.join('--' + boundary + '\r\n') + '--' + boundary + '--\r\n';
                         }
                         else {
-                            postData = options.contentType === 'application/x-www-form-urlencoded' ? _data : _data.replace(/&/g, '\r\n');
+                            //postData = options.contentType === 'application/x-www-form-urlencoded' ? _data : _data.replace(/&/g, '\r\n');
+                        	postData = _data;
                         }
                     }
                 }
