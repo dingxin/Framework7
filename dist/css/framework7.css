@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: June 11, 2015
+ * Released on: June 18, 2015
  */
 html,
 body {
@@ -927,7 +927,8 @@ html.android .page-from-center-to-right:before {
   font-weight: 500;
 }
 .navbar a.link,
-.toolbar a.link {
+.toolbar a.link,
+.subnavbar a.link {
   line-height: 44px;
   height: 44px;
   text-decoration: none;
@@ -949,24 +950,31 @@ html.android .page-from-center-to-right:before {
 }
 html:not(.watch-active-state) .navbar a.link:active,
 html:not(.watch-active-state) .toolbar a.link:active,
+html:not(.watch-active-state) .subnavbar a.link:active,
 .navbar a.link.active-state,
-.toolbar a.link.active-state {
+.toolbar a.link.active-state,
+.subnavbar a.link.active-state {
   opacity: 0.3;
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
 }
 .navbar a.link i + span,
 .toolbar a.link i + span,
+.subnavbar a.link i + span,
 .navbar a.link i + i,
 .toolbar a.link i + i,
+.subnavbar a.link i + i,
 .navbar a.link span + i,
 .toolbar a.link span + i,
+.subnavbar a.link span + i,
 .navbar a.link span + span,
-.toolbar a.link span + span {
+.toolbar a.link span + span,
+.subnavbar a.link span + span {
   margin-left: 7px;
 }
 .navbar a.icon-only,
-.toolbar a.icon-only {
+.toolbar a.icon-only,
+.subnavbar a.icon-only {
   min-width: 44px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -983,7 +991,8 @@ html:not(.watch-active-state) .toolbar a.link:active,
   margin: 0;
 }
 .navbar i.icon,
-.toolbar i.icon {
+.toolbar i.icon,
+.subnavbar i.icon {
   display: block;
   font-size: 32px;
 }
@@ -2907,6 +2916,9 @@ html:not(.watch-active-state) .button.button-fill:active,
 }
 .buttons-row .button:last-child {
   border-radius: 0 5px 5px 0;
+}
+.buttons-row .button:first-child:last-child {
+  border-radius: 5px;
 }
 .buttons-row .button.button-round:first-child {
   border-radius: 27px 0 0 27px;
@@ -5029,9 +5041,9 @@ body > .photo-browser .toolbar {
   background: none;
 }
 .photo-browser .navbar,
-.view[data-page="photo-browser-slides"] .navbar,
+.views .view[data-page="photo-browser-slides"] .navbar,
 .photo-browser .toolbar,
-.view[data-page="photo-browser-slides"] .toolbar {
+.views .view[data-page="photo-browser-slides"] .toolbar {
   background: rgba(247, 247, 247, 0.95);
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;

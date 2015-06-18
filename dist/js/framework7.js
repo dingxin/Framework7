@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: June 11, 2015
+ * Released on: June 18, 2015
  */
 (function () {
 
@@ -204,6 +204,14 @@
             // Container
             var container = $(selector);
             view.container = container[0];
+        
+            // Fix Selector
+        
+            if (typeof selector !== 'string') {
+                // Supposed to be HTMLElement or Dom7
+                selector = (container.attr('id') ? '#' + container.attr('id') : '') + (container.attr('class') ? '.' + container.attr('class').replace(/ /g, '.').replace('.active', '') : '');
+                view.selector = selector;
+            }
         
             // Is main
             view.main = container.hasClass(app.params.viewMainClass);
@@ -994,7 +1002,14 @@
                 customSearch: false,
                 removeDiacritics: false,
                 searchbarHideDividers: true,
-                searchbarHideGroups: true
+                searchbarHideGroups: true,
+                /* Callbacks
+                onSearch
+                onEnable
+                onDisable
+                onClear
+                */
+        
             };
             params = params || {};
             for (var def in defaults) {
@@ -1166,9 +1181,10 @@
             }
         
             // Trigger
-            s.triggerEvent = function (eventName, eventData) {
+            s.triggerEvent = function (eventName, callbackName, eventData) {
                 s.container.trigger(eventName, eventData);
                 if (s.searchList.length > 0) s.searchList.trigger(eventName, eventData);
+                if (callbackName && s.params[callbackName]) s.params[callbackName](s, eventData);
             };
         
             // Enable/disalbe
@@ -1177,7 +1193,7 @@
                     if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
                     s.container.addClass('searchbar-active');
                     if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-                    s.triggerEvent('enableSearch');
+                    s.triggerEvent('enableSearch', 'onSearch');
                     s.active = true;
                 }
                 if (app.device.ios) {
@@ -1198,7 +1214,7 @@
                 if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
                 function _disable() {
                     s.input.blur();
-                    s.triggerEvent('disableSearch');
+                    s.triggerEvent('disableSearch', 'onDisable');
                     s.active = false;
                 }
                 if (app.device.ios) {
@@ -1214,7 +1230,7 @@
             // Clear
             s.clear = function () {
                 s.input.val('').trigger('change').focus();
-                s.triggerEvent('clearSearch');
+                s.triggerEvent('clearSearch', 'onClear');
             };
         
             // Search
@@ -1239,6 +1255,7 @@
                         s.input.val(query);
                     }
                 }
+                s.query = s.value = query;
                 // Add active/inactive classes on overlay
                 if (query.length === 0) {
                     s.container.removeClass('searchbar-not-empty');
@@ -1250,7 +1267,7 @@
                 }
         
                 if (s.params.customSearch) {
-                    s.triggerEvent('search', {query: query});
+                    s.triggerEvent('search', 'onSearch', {query: query});
                     return;
                 }
                 
@@ -1332,7 +1349,7 @@
                         });
                     }
                 }
-                s.triggerEvent('search', {query: query, foundItems: foundItems});
+                s.triggerEvent('search', 'onSearch', {query: query, foundItems: foundItems});
                 if (foundItems.length === 0) {
                     s.notFound.show();
                     s.found.hide();
@@ -2001,9 +2018,11 @@
                     leftNavbarInner.removeClass(removeClasses).addClass('navbar-from-center-to-left');
                     leftNavbarInner.find('.sliding').each(function () {
                         var sliding = $(this);
+                        var rightText;
                         if (app.params.animateNavBackIcon) {
                             if (sliding.hasClass('center') && rightNavbarInner.find('.sliding.left .back .icon').length > 0) {
-                                this.f7NavbarLeftOffset += rightNavbarInner.find('.sliding.left .back span')[0].offsetLeft;
+                                rightText = rightNavbarInner.find('.sliding.left .back span');
+                                if (rightText.length > 0) this.f7NavbarLeftOffset += rightText[0].offsetLeft;
                             }
                             if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
                                 sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
@@ -4918,11 +4937,16 @@
             var view = smartSelect.parents('.' + app.params.viewClass);
             if (view.length === 0) return;
             view = view[0].f7View;
-            if (!view) return;
         
             // Parameters
             var openIn = smartSelect.attr('data-open-in');
             if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
+            if (openIn === 'popup') {
+                if ($('.popup.smart-select-popup').length > 0) return;
+            }
+            else {
+                if (!view) return;
+            }
         
             var smartSelectData = smartSelect.dataset();
             var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
@@ -8010,6 +8034,30 @@
                     var selectedItem = col.items.eq(activeIndex).addClass('picker-selected').transform('');
                     var prevItems = selectedItem.prevAll().addClass('picker-before-selected');
                     var nextItems = selectedItem.nextAll().addClass('picker-after-selected');
+                        
+                    // Set 3D rotate effect
+                    if (p.params.rotateEffect) {
+                        var percentage = (translate - (Math.floor((translate - maxTranslate)/itemHeight) * itemHeight + maxTranslate)) / itemHeight;
+                        
+                        col.items.each(function () {
+                            var item = $(this);
+                            var itemOffsetTop = item.index() * itemHeight;
+                            var translateOffset = maxTranslate - translate;
+                            var itemOffset = itemOffsetTop - translateOffset;
+                            var percentage = itemOffset / itemHeight;
+        
+                            var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
+                            
+                            var angle = (-18*percentage);
+                            if (angle > 180) angle = 180;
+                            if (angle < -180) angle = -180;
+                            // Far class
+                            if (Math.abs(percentage) > itemsFit) item.addClass('picker-item-far');
+                            else item.removeClass('picker-item-far');
+                            // Set transform
+                            item.transform('translate3d(0, ' + (-translate + maxTranslate) + 'px, ' + (originBug ? -110 : 0) + 'px) rotateX(' + angle + 'deg)');
+                        });
+                    }
         
                     if (valueCallbacks || typeof valueCallbacks === 'undefined') {
                         // Update values
@@ -8023,31 +8071,6 @@
                             p.updateValue();
                         }
                     }
-                        
-                    // Set 3D rotate effect
-                    if (!p.params.rotateEffect) {
-                        return;
-                    }
-                    var percentage = (translate - (Math.floor((translate - maxTranslate)/itemHeight) * itemHeight + maxTranslate)) / itemHeight;
-                    
-                    col.items.each(function () {
-                        var item = $(this);
-                        var itemOffsetTop = item.index() * itemHeight;
-                        var translateOffset = maxTranslate - translate;
-                        var itemOffset = itemOffsetTop - translateOffset;
-                        var percentage = itemOffset / itemHeight;
-        
-                        var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
-                        
-                        var angle = (-18*percentage);
-                        if (angle > 180) angle = 180;
-                        if (angle < -180) angle = -180;
-                        // Far class
-                        if (Math.abs(percentage) > itemsFit) item.addClass('picker-item-far');
-                        else item.removeClass('picker-item-far');
-                        // Set transform
-                        item.transform('translate3d(0, ' + (-translate + maxTranslate) + 'px, ' + (originBug ? -110 : 0) + 'px) rotateX(' + angle + 'deg)');
-                    });
                 };
         
                 function updateDuringScroll() {
