@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.6
+ * Framework7 1.0.7
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: June 18, 2015
+ * Released on: June 21, 2015
  */
 html,
 body {
@@ -5870,3 +5870,52 @@ html.ios-gt-6.pixel-ratio-3 .picker-calendar.picker-modal-inline .picker-calenda
   opacity: 1;
 }
 /* === Color Themes === */
+.list-index {
+  color: #057bf7;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 11px;
+  font-weight: bold;
+  position: absolute;
+  z-index: 199;
+  top: 0%;
+  height: 100%;
+  right: 0;
+  background: #fff;
+  width: 15px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+.list-index li {
+  position: relative;
+  z-index: 10;
+}
+.list-index li:before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  width: 10px;
+  height: 100%;
+  top: 0;
+}
+html[dir="rtl"] .list-index {
+  right: auto;
+  left: 0;
+}
+html[dir="rtl"] .list-index li:before {
+  right: auto;
+  left: 100%;
+}

@@ -99,7 +99,8 @@
                 'src/js/proto-plugins.js',
                 'src/js/template7.js',
                 'src/js/swiper.js',
-                'src/js/wrap-end.js'
+                'src/js/wrap-end.js',
+                'src/js/framework7.indexed-list.js'
             ],
             modules: require('./modules.json'),
             pkg: require('./bower.json'),
@@ -288,8 +289,8 @@
                     .pipe(jade({
                         pretty: true,
                         locals: {
-                            stylesheetFilename: 'framework7.min',
-                            scriptFilename: 'framework7.min',
+                            stylesheetFilename: 'framework7.min-' + f7.pkg.version,
+                            scriptFilename: 'framework7.min-' + f7.pkg.version,
                         }
                     }))
                     .pipe(gulp.dest(paths.dist.root));
@@ -299,7 +300,7 @@
                     .pipe(uglify())
                     .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
                     .pipe(rename(function(path) {
-                        path.basename = f7.filename + '.min';
+                        path.basename = f7.filename + '.min-' + f7.pkg.version;
                     }))
                     .pipe(sourcemaps.write('./'))
                     .pipe(gulp.dest(paths.dist.scripts));
@@ -317,7 +318,7 @@
                     }))
                     .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
                     .pipe(rename(function(path) {
-                        path.basename = path.basename + '.min';
+                        path.basename = path.basename + '.min-' + f7.pkg.version;
                     }))
                     .pipe(gulp.dest(paths.dist.styles));
                 
