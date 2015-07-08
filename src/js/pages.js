@@ -260,6 +260,7 @@ app.pageAnimCallback = function (callback, view, params) {
 // Init Page Events and Manipulations
 app.initPage = function (pageContainer) {
     pageContainer = $(pageContainer);
+    if (pageContainer.length === 0) return;
     // Size navbars on page load
     if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Init messages
@@ -280,11 +281,20 @@ app.initPage = function (pageContainer) {
     if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
     // Init scroll toolbars
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
-    // Init scroll toolbars
+    // Init lazy images
     if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
+    // Init resizeable textareas
+    if (app.initPageResizableTextareas) app.initPageResizableTextareas(pageContainer);
+    // Init Material Preloader
+    if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
+    // Init Material Inputs
+    if (app.params.material && app.initPageMaterialInputs) app.initPageMaterialInputs(pageContainer);
+    // Init Material Tabbar
+    if (app.params.material && app.initPageMaterialTabbar) app.initPageMaterialTabbar(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     pageContainer = $(pageContainer);
+    if (pageContainer.length === 0) return;
     // Size navbars on page reinit
     if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Reinit slider

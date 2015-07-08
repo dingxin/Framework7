@@ -1,7 +1,6 @@
 (function(){
     'use strict';    
     var gulp = require('gulp'),
-        gutil = require('gulp-util'),
         connect = require('gulp-connect'),
         open = require('gulp-open'),
         less = require('gulp-less'),
@@ -35,14 +34,25 @@
                 scripts: 'dist/js/'
             },
             ks: {
-                root: 'kitchen-sink/',
-                css: 'kitchen-sink/css/',
-                jade: 'kitchen-sink/jade/*.jade',
-                less: 'kitchen-sink/less/*.less',
+                ios : {
+                    root: 'kitchen-sink-ios/',
+                    css: 'kitchen-sink-ios/css/',
+                    jade: 'kitchen-sink-ios/jade/*.jade',
+                    less: 'kitchen-sink-ios/less/*.less',
+                },
+                material : {
+                    root: 'kitchen-sink-material/',
+                    css: 'kitchen-sink-material/css/',
+                    jade: 'kitchen-sink-material/jade/*.jade',
+                    less: 'kitchen-sink-material/less/*.less',
+                }
             },
             source: {
                 root: 'src/',
-                styles: 'src/less/',
+                styles: {
+                    ios: 'src/less/ios/',
+                    material: 'src/less/material/'
+                },
                 scripts: 'src/js/*.js'
             },
             examples: {
@@ -73,18 +83,23 @@
                 'src/js/pull-to-refresh.js',
                 'src/js/infinite-scroll.js',
                 'src/js/scroll-toolbars.js',
+                'src/js/material-tabbar.js',
                 'src/js/tabs.js',
                 'src/js/accordion.js',
                 'src/js/fast-clicks.js',
                 'src/js/clicks.js',
                 'src/js/resize.js',
-                'src/js/forms-handler.js',
+                'src/js/forms-storage.js',
+                'src/js/forms-ajax.js',
+                'src/js/forms-textarea.js',
+                'src/js/material-inputs.js',
                 'src/js/push-state.js',
                 'src/js/swiper-init.js',
                 'src/js/photo-browser.js',
                 'src/js/picker.js',
                 'src/js/calendar.js',
                 'src/js/notifications.js',
+                'src/js/material-preloader.js',
                 'src/js/template7-templates.js',
                 'src/js/plugins.js',
                 'src/js/init.js',
@@ -108,7 +123,8 @@
                 '/**',
                 ' * <%= pkg.name %> <%= pkg.version %>',
                 ' * <%= pkg.description %>',
-                ' * ',
+                '<% if(typeof(theme) !== "undefined") {%> * \n * <%= theme %>\n *<% } else { %> * <% } %>',
+                // ' * ',
                 ' * <%= pkg.homepage %>',
                 ' * ',
                 ' * Copyright <%= date.year %>, <%= pkg.author %>',
@@ -191,12 +207,24 @@
             });
         
     });
-    gulp.task('styles', function (cb) {
-        gulp.src([paths.source.styles + 'framework7.less', paths.source.styles + 'framework7.rtl.less', paths.source.styles + 'framework7.themes.less'])
+    gulp.task('styles-ios', function (cb) {
+        gulp.src([paths.source.styles.ios + 'framework7.ios.less', paths.source.styles.ios + 'framework7.ios.rtl.less', paths.source.styles.ios + 'framework7.ios.colors.less'])
             .pipe(less({
                 paths: [ path.join(__dirname, 'less', 'includes') ]
             }))
-            .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
+            .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date, theme: 'iOS Theme' }))
+            .pipe(gulp.dest(paths.build.styles))
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
+    });
+    gulp.task('styles-material', function (cb) {
+        gulp.src([paths.source.styles.material + 'framework7.material.less', paths.source.styles.material + 'framework7.material.rtl.less', paths.source.styles.material + 'framework7.material.colors.less'])
+            .pipe(less({
+                paths: [ path.join(__dirname, 'less', 'includes') ]
+            }))
+            .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date, theme: 'Google Material Theme' }))
             .pipe(gulp.dest(paths.build.styles))
             .pipe(connect.reload())
             .on('end', function () {
@@ -230,30 +258,59 @@
         cb();
     });
 
-    gulp.task('build', ['scripts', 'styles', 'demo-app'], function (cb) {
+    gulp.task('build', ['scripts', 'styles-ios', 'styles-material', 'demo-app'], function (cb) {
         cb();
     });
 
     /* ==================================================================
-    Kitchen Sink
+    Kitchen Sink IOS
     ================================================================== */
-    gulp.task('ks-jade', function (cb) {
-        gulp.src(paths.ks.jade)
+    gulp.task('ks-ios-jade', function (cb) {
+        gulp.src(paths.ks.ios.jade)
             .pipe(jade({
                 pretty: true,
             }))
-            .pipe(gulp.dest(paths.ks.root))
-            .pipe(connect.reload());
-        cb();
+            .pipe(gulp.dest(paths.ks.ios.root))
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
     });
-    gulp.task('ks-less', function (cb) {
-        gulp.src(paths.ks.less)
+    gulp.task('ks-ios-less', function (cb) {
+        gulp.src(paths.ks.ios.less)
             .pipe(less({
                 paths: [ path.join(__dirname, 'less', 'includes') ]
             }))
-            .pipe(gulp.dest(paths.ks.css))
-            .pipe(connect.reload());
-        cb();
+            .pipe(gulp.dest(paths.ks.ios.css))
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
+    });
+    /* ==================================================================
+    Kitchen Sink Material
+    ================================================================== */
+    gulp.task('ks-material-jade', function (cb) {
+        gulp.src(paths.ks.material.jade)
+            .pipe(jade({
+                pretty: true,
+            }))
+            .pipe(gulp.dest(paths.ks.material.root))
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
+    });
+    gulp.task('ks-material-less', function (cb) {
+        gulp.src(paths.ks.material.less)
+            .pipe(less({
+                paths: [ path.join(__dirname, 'less', 'includes') ]
+            }))
+            .pipe(gulp.dest(paths.ks.material.css))
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
     });
 
     /* ==================================================================
@@ -307,9 +364,12 @@
 
                 // Minify CSS
                 var minifiedCSS = [
-                    paths.dist.styles + f7.filename + '.css', 
-                    paths.dist.styles + f7.filename + '.rtl.css', 
-                    paths.dist.styles + f7.filename + '.themes.css'
+                    paths.dist.styles + f7.filename + '.ios.css', 
+                    paths.dist.styles + f7.filename + '.ios.rtl.css', 
+                    paths.dist.styles + f7.filename + '.ios.colors.css',
+                    paths.dist.styles + f7.filename + '.material.css', 
+                    paths.dist.styles + f7.filename + '.material.rtl.css', 
+                    paths.dist.styles + f7.filename + '.material.colors.css'
                 ];
                 gulp.src(minifiedCSS)
                     .pipe(minifyCSS({
@@ -415,14 +475,24 @@
     gulp.task('watch', function () {
         // F7 styles and scripts
         gulp.watch(paths.source.scripts, [ 'scripts' ]);
-        gulp.watch(paths.source.styles + '*.less', [ 'styles' ]);
+        gulp.watch(paths.source.styles.ios + '*.less', [ 'styles-ios' ]);
+        gulp.watch(paths.source.styles.material + '*.less', [ 'styles-material' ]);
+
         // Demo App
         gulp.watch([paths.source.root + 'templates/*.jade', paths.source.root + 'my-app/*.*', paths.source.root + 'img/*.*'], ['demo-app']);
+
         // KS
-        gulp.watch(paths.ks.less, [ 'ks-less' ]);
-        gulp.watch(paths.ks.jade, [ 'ks-jade' ]);
-        gulp.watch(paths.ks.root + 'js/*.js', function () {
-            gulp.src(paths.ks.root)
+        gulp.watch(paths.ks.ios.less, [ 'ks-ios-less' ]);
+        gulp.watch(paths.ks.ios.jade, [ 'ks-ios-jade' ]);
+        gulp.watch(paths.ks.ios.root + 'js/*.js', function () {
+            gulp.src(paths.ks.ios.root)
+                .pipe(connect.reload());
+        });
+        // KS Material
+        gulp.watch(paths.ks.material.less, [ 'ks-material-less' ]);
+        gulp.watch(paths.ks.material.jade, [ 'ks-material-jade' ]);
+        gulp.watch(paths.ks.material.root + 'js/*.js', function () {
+            gulp.src(paths.ks.material.root)
                 .pipe(connect.reload());
         });
         // Examples
@@ -445,7 +515,7 @@
     });
     
     gulp.task('open', function () {
-        return gulp.src(paths.ks.root + 'index.html').pipe(open('', { url: 'http://localhost:3000/' + paths.ks.root + 'index.html'}));
+        return gulp.src('./index.html').pipe(open('', { url: 'http://localhost:3000/index.html'}));
     });
 
     gulp.task('server', [ 'watch', 'connect', 'open' ]);

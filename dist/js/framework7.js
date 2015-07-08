@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: June 21, 2015
+ * Released on: July 8, 2015
  */
 (function () {
 
@@ -19,12 +19,11 @@
     Framework 7
     ===========================*/
     window.Framework7 = function (params) {
-    
         // App
         var app = this;
     
         // Version
-        app.version = '1.0.6';
+        app.version = '1.2.0';
     
         // Default Parameters
         app.params = {
@@ -46,7 +45,7 @@
             pushStatePreventOnLoad: true,
             // Fast clicks
             fastClicks: true,
-            fastClicksDistanceThreshold: 0,
+            fastClicksDistanceThreshold: 10,
             fastClicksDelayBetweenClicks: 50,
             // Tap Hold
             tapHold: false,
@@ -80,10 +79,8 @@
             swipeoutActionsNoFold: false,
             swipeoutNoFollow: false,
             // Smart Select Back link template
-            smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
             smartSelectBackText: 'Back',
             smartSelectInPopup: false,
-            smartSelectPopupCloseTemplate: '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>',
             smartSelectPopupCloseText: 'Close',
             smartSelectSearchbar: false,
             smartSelectBackOnSelect: false,
@@ -119,6 +116,7 @@
             // Notifications defaults
             notificationCloseOnClick: false,
             notificationCloseIcon: true,
+            notificationCloseButtonText: 'Close',
             // Animate Pages
             animatePages: true,
             // Template7
@@ -126,6 +124,11 @@
             template7Data: {},
             template7Pages: false,
             precompileTemplates: false,
+            // Material
+            material: false,
+            materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
+            materialRipple: true,
+            materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .floating-button',
             // Auto init
             init: true,
         };
@@ -1001,8 +1004,8 @@
                 ignore: '.searchbar-ignore',
                 customSearch: false,
                 removeDiacritics: false,
-                searchbarHideDividers: true,
-                searchbarHideGroups: true,
+                hideDividers: true,
+                hideGroups: true,
                 /* Callbacks
                 onSearch
                 onEnable
@@ -1020,6 +1023,9 @@
             
             // Instance
             var s = this;
+        
+            // Material
+            s.material = app.params.material;
         
             // Params
             s.params = params;
@@ -1068,7 +1074,7 @@
         
             // Cancel button
             var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-            if (s.cancelButton.length > 0) {
+            if (s.cancelButton.length > 0 && !s.material) {
                 s.cancelButton.transition(0).show();
                 s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
                 setTimeout(function () {
@@ -1192,8 +1198,8 @@
                 function _enable() {
                     if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
                     s.container.addClass('searchbar-active');
-                    if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-                    s.triggerEvent('enableSearch', 'onSearch');
+                    if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, '0px');
+                    s.triggerEvent('enableSearch', 'onEnable');
                     s.active = true;
                 }
                 if (app.device.ios) {
@@ -1209,7 +1215,7 @@
             s.disable = function () {
                 s.input.val('').trigger('change');
                 s.container.removeClass('searchbar-active searchbar-not-empty');
-                if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+                if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
                 
                 if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
                 function _disable() {
@@ -1228,7 +1234,11 @@
             };
         
             // Clear
-            s.clear = function () {
+            s.clear = function (e) {
+                if (!s.query && e && $(e.target).hasClass('searchbar-clear')) {
+                    s.disable();
+                    return;
+                }
                 s.input.val('').trigger('change').focus();
                 s.triggerEvent('clearSearch', 'onClear');
             };
@@ -1318,7 +1328,7 @@
                         }
                     });
         
-                    if (s.params.searchbarHideDividers) {
+                    if (s.params.hideDividers) {
                         s.searchList.find('.item-divider, .list-group-title').each(function () {
                             var title = $(this);
                             var nextElements = title.nextAll('li');
@@ -1335,7 +1345,7 @@
                             else title.removeClass('hidden-by-searchbar');
                         });
                     }
-                    if (s.params.searchbarHideGroups) {
+                    if (s.params.hideGroups) {
                         s.searchList.find('.list-group').each(function () {
                             var group = $(this);
                             var ignore = s.params.ignore && group.is(s.params.ignore);
@@ -1371,7 +1381,7 @@
             s.attachEvents = function (destroy) {
                 var method = destroy ? 'off' : 'on';
                 s.container[method]('submit', preventSubmit);
-                s.cancelButton[method]('click', s.disable);
+                if (!s.material) s.cancelButton[method]('click', s.disable);
                 s.overlay[method]('click', s.disable);
                 s.input[method]('focus', s.enable);
                 s.input[method]('change keydown keypress keyup', s.handleInput);
@@ -1889,6 +1899,7 @@
         // Init Page Events and Manipulations
         app.initPage = function (pageContainer) {
             pageContainer = $(pageContainer);
+            if (pageContainer.length === 0) return;
             // Size navbars on page load
             if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
             // Init messages
@@ -1909,11 +1920,20 @@
             if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
             // Init scroll toolbars
             if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
-            // Init scroll toolbars
+            // Init lazy images
             if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
+            // Init resizeable textareas
+            if (app.initPageResizableTextareas) app.initPageResizableTextareas(pageContainer);
+            // Init Material Preloader
+            if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
+            // Init Material Inputs
+            if (app.params.material && app.initPageMaterialInputs) app.initPageMaterialInputs(pageContainer);
+            // Init Material Tabbar
+            if (app.params.material && app.initPageMaterialTabbar) app.initPageMaterialTabbar(pageContainer);
         };
         app.reinitPage = function (pageContainer) {
             pageContainer = $(pageContainer);
+            if (pageContainer.length === 0) return;
             // Size navbars on page reinit
             if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
             // Reinit slider
@@ -3149,7 +3169,7 @@
             return app.modal({
                 text: text || '',
                 title: typeof title === 'undefined' ? app.params.modalTitle : title,
-                afterText: '<input type="text" class="modal-text-input">',
+                afterText: '<div class="input-field"><input type="text" class="modal-text-input"></div>',
                 buttons: [
                     {
                         text: app.params.modalButtonCancel
@@ -3174,7 +3194,7 @@
             return app.modal({
                 text: text || '',
                 title: typeof title === 'undefined' ? app.params.modalTitle : title,
-                afterText: '<input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input modal-text-input-double"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input modal-text-input-double">',
+                afterText: '<div class="input-field modal-input-double"><input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input"></div><div class="input-field modal-input-double"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input"></div>',
                 buttons: [
                     {
                         text: app.params.modalButtonCancel
@@ -3201,7 +3221,7 @@
             return app.modal({
                 text: text || '',
                 title: typeof title === 'undefined' ? app.params.modalTitle : title,
-                afterText: '<input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input">',
+                afterText: '<div class="input-field"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input"></div>',
                 buttons: [
                     {
                         text: app.params.modalButtonCancel
@@ -3221,7 +3241,7 @@
         app.showPreloader = function (title) {
             return app.modal({
                 title: title || app.params.modalPreloaderTitle,
-                text: '<div class="preloader"></div>',
+                text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</div>',
                 cssClass: 'modal-preloader'
             });
         };
@@ -3229,7 +3249,7 @@
             app.closeModal('.modal.modal-in');
         };
         app.showIndicator = function () {
-            $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white"></span></div>');
+            $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</span></div>');
         };
         app.hideIndicator = function () {
             $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
@@ -3299,7 +3319,7 @@
                             if (button.color) buttonClass += ' color-' + button.color;
                             if (button.bg) buttonClass += ' bg-' + button.bg;
                             if (button.disabled) buttonClass += ' disabled';
-                            buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
+                            buttonsHTML += '<div class="' + buttonClass + '">' + button.text + '</div>';
                             if (j === params[i].length - 1) buttonsHTML += '</div>';
                         }
                     }
@@ -3369,7 +3389,6 @@
                     modal.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({left: '', top: ''});
                 }
         
-        
                 var targetWidth = target.outerWidth();
                 var targetHeight = target.outerHeight();
                 var targetOffset = target.offset();
@@ -3385,16 +3404,17 @@
                 var modalLeft = 0;
                 var diff = 0;
                 // Top Position
-                var modalPosition = 'top';
+                var modalPosition = 'bottom';
                 if (material) {
-                    if (modalHeight < targetOffset.top) {
-                        // On top
-                        modalTop = targetOffset.top - modalHeight + targetHeight;
-                    }
-                    else if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
+                    if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
                         // On bottom
                         modalPosition = 'bottom';
                         modalTop = targetOffset.top;
+                    }
+                    else if (modalHeight < targetOffset.top) {
+                        // On top
+                        modalTop = targetOffset.top - modalHeight + targetHeight;
+                        modalPosition = 'top';
                     }
                     else {
                         // On middle
@@ -3403,17 +3423,19 @@
                     }
         
                     if (modalTop <= 0) {
-                        modalTop = 5;
+                        modalTop = 8;
                     }
                     else if (modalTop + modalHeight >= windowHeight) {
-                        modalTop = windowHeight - modalHeight - 5;
+                        modalTop = windowHeight - modalHeight - 8;
                     }
         
                     // Horizontal Position
                     modalLeft = targetOffset.left;
-                    if (modalLeft < 5) modalLeft = 5;
-                    if (modalLeft + modalWidth > windowWidth) {
-                        modalLeft = targetOffset.left + targetWidth - modalWidth;
+                    if (modalLeft + modalWidth >= windowWidth - 8) {
+                        modalLeft = targetOffset.left + targetWidth - modalWidth - 8;
+                    }
+                    if (modalLeft < 8) {
+                        modalLeft = 8;
                     }
                     if (modalPosition === 'top') {
                         modal.addClass('popover-on-top');
@@ -3591,6 +3613,14 @@
                 }
                 overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
             }
+            if (app.params.material && isPickerModal) {
+                if (modal.hasClass('picker-calendar')) {
+                    if ($('.picker-modal-overlay').length === 0 && !isPopup) {
+                        $('body').append('<div class="picker-modal-overlay"></div>');
+                    }
+                    overlay = $('.picker-modal-overlay');
+                }
+            }
         
             //Make sure that styles are applied, trigger relayout;
             var clientLeft = modal[0].clientLeft;
@@ -3615,6 +3645,7 @@
         
             // Classes for transition in
             if (!isLoginScreen && !isPickerModal && !hideOverlay) overlay.addClass('modal-overlay-visible');
+            if (app.params.material && isPickerModal && overlay) overlay.addClass('modal-overlay-visible');
             modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
                 if (modal.hasClass('modal-out')) modal.trigger('closed');
                 else modal.trigger('opened');
@@ -3634,13 +3665,13 @@
         
             var removeOnClose = modal.hasClass('remove-on-close');
         
-            var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
+            var overlay = isPopup ? $('.popup-overlay') : (isPickerModal && app.params.material ? $('.picker-modal-overlay') : $('.modal-overlay'));
             if (isPopup){
                 if (modal.length === $('.popup.modal-in').length) {
                     overlay.removeClass('modal-overlay-visible');
                 }
             }
-            else if (!isPickerModal) {
+            else if (overlay && overlay.length > 0) {
                 overlay.removeClass('modal-overlay-visible');
             }
         
@@ -3652,7 +3683,7 @@
                 $('body').addClass('picker-modal-closing');
             }
         
-            if (!isPopover) {
+            if (!(isPopover && !app.params.material)) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
                     if (modal.hasClass('modal-out')) modal.trigger('closed');
                     else modal.trigger('opened');
@@ -3660,7 +3691,7 @@
                     if (isPickerModal) {
                         $('body').removeClass('picker-modal-closing');
                     }
-                    if (isPopup || isLoginScreen || isPickerModal) {
+                    if (isPopup || isLoginScreen || isPickerModal || isPopover) {
                         modal.removeClass('modal-out').hide();
                         if (removeOnClose && modal.length > 0) {
                             modal.remove();
@@ -3697,6 +3728,9 @@
             var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
             panel.css({display: 'block'}).addClass('active');
             panel.trigger('open');
+            if (app.params.material) {
+                $('.panel-overlay').show();
+            }
             if (panel.find('.' + app.params.viewClass).length > 0) {
             	panel.find('.' + app.params.viewClass).each(function() {
             		app.addView(this);
@@ -3721,6 +3755,7 @@
                         else {
                             panel.trigger('closed');
                         }
+                        if (app.params.material) $('.panel-overlay').css({display: ''});
                         app.allowPanelOpen = true;
                     }
                     else panelTransitionEnd();
@@ -3769,7 +3804,7 @@
             }
             
             var panelOverlay = $('.panel-overlay');
-            var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction;
+            var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, overlayOpacity, opened, panelWidth, effect, direction;
             var views = $('.' + app.params.viewsClass);
         
             function handleTouchStart(e) {
@@ -3897,11 +3932,17 @@
                 }
                 if (effect === 'reveal') {
                     views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
-                    panelOverlay.transform('translate3d(' + translate + 'px,0,0)');
+                    panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+                    
                     app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
                 }
                 else {
                     panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+                    if (app.params.material) {
+                        panelOverlay.transition(0);
+                        overlayOpacity = Math.abs(translate/panelWidth);
+                        panelOverlay.css({opacity: overlayOpacity});
+                    }
                     app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
                 }
             }
@@ -3987,7 +4028,7 @@
                     views.transform('');
                 }
                 panel.transition('').transform('');
-                panelOverlay.css({display: ''}).transform('');
+                panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');
             }
             $(document).on(app.touchEvents.start, handleTouchStart);
             $(document).on(app.touchEvents.move, handleTouchMove);
@@ -4151,7 +4192,7 @@
                     '{{/if}}' +
                     '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} {{#if position}}message-appear-from-{{position}}{{/if}}">' +
                         '{{#if name}}<div class="message-name">{{name}}</div>{{/if}}' +
-                        '<div class="message-text">{{text}}</div>' +
+                        '<div class="message-text">{{text}}{{#if date}}<div class="message-date">{{date}}</div>{{/if}}</div>' +
                         '{{#if avatar}}<div class="message-avatar" style="background-image:url({{avatar}})"></div>{{/if}}' +
                         '{{#if label}}<div class="message-label">{{label}}</div>{{/if}}' +
                     '</div>'
@@ -4442,6 +4483,13 @@
                 if (translate > 0 && actionsLeft.length === 0 || translate < 0 && actionsRight.length === 0) {
                     if (!opened) {
                         isTouched = isMoved = false;
+                        swipeOutContent.transform('');
+                        if (buttonsRight && buttonsRight.length > 0) {
+                            buttonsRight.transform('');
+                        }
+                        if (buttonsLeft && buttonsLeft.length > 0) {
+                            buttonsLeft.transform('');
+                        }
                         return;
                     }
                     translate = 0;
@@ -4870,14 +4918,13 @@
         ************   Smart Select   ************
         ===============================================================================*/
         app.initSmartSelects = function (pageContainer) {
-            var page = $(pageContainer);
-            if (page.length === 0) return;
+            pageContainer = $(pageContainer);
             var selects;
-            if (page.is('.smart-select')) {
-                selects = page;
+            if (pageContainer.is('.smart-select')) {
+                selects = pageContainer;
             }
             else {
-                selects = page.find('.smart-select');
+                selects = pageContainer.find('.smart-select');
             }
             if (selects.length === 0) return;
         
@@ -4957,7 +5004,7 @@
             var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
             var virtualList = smartSelectData.virtualList;
             var virtualListHeight = smartSelectData.virtualListHeight;
-        
+            var material = app.params.material;
             // Collect all options/values
             var select = smartSelect.find('select')[0];
             var $select = $(select);
@@ -4970,7 +5017,7 @@
             var inputType = select.multiple ? 'checkbox' : 'radio';
             var inputName = inputType + '-' + id;
             var selectName = select.name;
-            var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName, optionData;
+            var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionIsLabel, previousGroup, optionColor, optionClassName, optionData;
             for (var i = 0; i < select.length; i++) {
                 option = $(select[i]);
                 if (option[0].disabled) continue;
@@ -4978,16 +5025,20 @@
                 optionImage = optionData.optionImage || $selectData.optionImage;
                 optionIcon = optionData.optionIcon || $selectData.optionIcon;
                 optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
-                if (app.params.material) optionHasMedia = optionImage || optionIcon;
+                if (material) optionHasMedia = optionImage || optionIcon;
                 optionColor = optionData.optionColor;
                 optionClassName = optionData.optionClass;
                 optionGroup = option.parent('optgroup')[0];
                 optionGroupLabel = optionGroup && optionGroup.label;
-                optionShowGroupLabel = false;
+                optionIsLabel = false;
                 if (optionGroup) {
                     if (optionGroup !== previousGroup) {
-                        optionShowGroupLabel = true;
+                        optionIsLabel = true;
                         previousGroup = optionGroup;
+                        values.push({
+                            groupLabel: optionGroupLabel,
+                            isLabel: optionIsLabel
+                        });
                     }
                 }
                 values.push({
@@ -4996,7 +5047,6 @@
                     selected: option[0].selected,
                     group: optionGroup,
                     groupLabel: optionGroupLabel,
-                    showGroupLabel: optionShowGroupLabel,
                     image: optionImage,
                     icon: optionIcon,
                     color: optionColor,
@@ -5007,7 +5057,6 @@
                     hasMedia: optionHasMedia,
                     checkbox: inputType === 'checkbox',
                     inputName: inputName,
-                    test: this,
                     material: app.params.material
                 });
             }
@@ -5016,24 +5065,47 @@
             // Item template/HTML
             if (!app._compiledTemplates.smartSelectItem) {
                 app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate || 
-                    '{{#if showGroupLabel}}' +
+                    '{{#if isLabel}}' +
                     '<li class="item-divider">{{groupLabel}}</li>' +
-                    '{{/if}}' +
+                    '{{else}}' +
                     '<li{{#if className}} class="{{className}}"{{/if}}>' +
                         '<label class="label-{{inputType}} item-content">' +
                             '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
-                            '{{#if hasMedia}}' +
-                            '<div class="item-media">' +
-                                '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
-                                '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
-                                '{{#if image}}<img src="{{image}}">{{/if}}' +
-                            '</div>' +
+                            '{{#if material}}' +
+                                '{{#if hasMedia}}' +
+                                '<div class="item-media">' +
+                                    '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                                    '{{#if image}}<img src="{{image}}">{{/if}}' +
+                                '</div>' +
+                                '<div class="item-inner">' +
+                                    '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                                '</div>' +
+                                '<div class="item-after">' +
+                                    '<i class="icon icon-form-{{inputType}}"></i>' +
+                                '</div>' +
+                                '{{else}}' +
+                                '<div class="item-media">' +
+                                    '<i class="icon icon-form-{{inputType}}"></i>' +
+                                '</div>' +
+                                '<div class="item-inner">' +
+                                    '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                                '</div>' +
+                                '{{/if}}' +
+                            '{{else}}' +
+                                '{{#if hasMedia}}' +
+                                '<div class="item-media">' +
+                                    '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
+                                    '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                                    '{{#if image}}<img src="{{image}}">{{/if}}' +
+                                '</div>' +
+                                '{{/if}}' +
+                                '<div class="item-inner">' +
+                                    '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                                '</div>' +
                             '{{/if}}' +
-                            '<div class="item-inner">' +
-                                '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
-                            '</div>' +
                         '</label>' +
-                    '</li>'
+                    '</li>' +
+                    '{{/if}}'
                 );
             }
             var smartSelectItemTemplate = app._compiledTemplates.smartSelectItem;
@@ -5064,9 +5136,10 @@
                 navbarTheme: navbarTheme,
                 inPopup: openIn === 'popup',
                 inPage: openIn === 'page',
-                leftTemplate: openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText)
+                leftTemplate: openIn === 'popup' ? 
+                    (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
+                    (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
             });
-        
             
             // Determine navbar layout type - static/fixed/through
             var noNavbar = '', noToolbar = '', navbarLayout;
@@ -5098,7 +5171,7 @@
                                         '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                         '<a href="#" class="searchbar-clear"></a>' +
                                     '</div>' +
-                                    '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>' +
+                                    (material ? '' : '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>') +
                                   '</form>' +
                                   '<div class="searchbar-overlay"></div>';
         
@@ -5207,7 +5280,7 @@
         var VirtualList = function (listBlock, params) {
             var defaults = {
                 cols: 1,
-                height: 44,
+                height: app.params.material ? 48 : 44,
                 cache: true,
                 dynamicHeightBufferSize: 1
             };
@@ -5664,7 +5737,7 @@
             }
             if (!eventsTarget || eventsTarget.length === 0) return;
         
-            var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance;
+            var touchId, isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance;
             var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
             var hasNavbar = false;
             if (page.find('.navbar').length > 0 || page.parents('.navbar-fixed, .navbar-through').length > 0 || page.hasClass('navbar-fixed') || page.hasClass('navbar-through')) hasNavbar = true;
@@ -5680,7 +5753,7 @@
             else {
                 triggerDistance = 44;   
             }
-        
+            
             function handleTouchStart(e) {
                 if (isTouched) {
                     if (app.device.os === 'android') {
@@ -5688,10 +5761,12 @@
                     }
                     else return;
                 }
+                
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
                 wasScrolled = undefined;
+                if (e.type === 'touchstart') touchId = e.targetTouches[0].identifier;
                 touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
@@ -5701,8 +5776,26 @@
             
             function handleTouchMove(e) {
                 if (!isTouched) return;
-                var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                var pageX, pageY, touch;
+                if (e.type === 'touchmove') {
+                    if (touchId && e.touches) {
+                        for (var i = 0; i < e.touches.length; i++) {
+                            if (e.touches[i].identifier === touchId) {
+                                touch = e.touches[i];
+                            }
+                        }
+                    }
+                    if (!touch) touch = e.targetTouches[0];
+                    pageX = touch.pageX;
+                    pageY = touch.pageY;
+                }
+                else {
+                    pageX = e.pageX;
+                    pageY = e.pageY;
+                }
+                if (!pageX || !pageY) return;
+                    
+        
                 if (typeof isScrolling === 'undefined') {
                     isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
                 }
@@ -5764,6 +5857,9 @@
                 }
             }
             function handleTouchEnd(e) {
+                if (e.type === 'touchend' && e.changedTouches && e.changedTouches.length > 0 && touchId) {
+                    if (e.changedTouches[0].identifier !== touchId) return;
+                }
                 if (!isTouched || !isMoved) {
                     isTouched = false;
                     isMoved = false;
@@ -6007,6 +6103,21 @@
             scrollContent.off('scroll', scrollContent[0].f7ScrollToolbarsHandler);
         };
 
+        /*======================================================
+        ************   Material Preloader   ************
+        ======================================================*/
+        app.initPageMaterialTabbar = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var tabbar = $(pageContainer).find('.tabbar');
+            if (tabbar.find('.tab-link-highlight').length === 0) {
+                tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+                var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                tabbar.find('.tab-link-highlight')
+                    .css({width: tabLinkWidth + '%'})
+                    .transform('translate3d(' + tabbar.find('.tab-link.active').index() * 100 + '%,0,0)');
+            }
+        };
+
         /* ===============================================================================
         ************   Tabs   ************
         =============================================================================== */
@@ -6078,9 +6189,25 @@
                     });
                 }
             }
-        
+            
             // Update links' classes
-            if (tabLink && tabLink.length > 0) tabLink.addClass('active');
+            if (tabLink && tabLink.length > 0) {
+                tabLink.addClass('active');
+                // Material Highlight
+                if (app.params.material) {
+                    var tabbar = tabLink.parents('.tabbar');
+                    if (tabbar.length > 0) {
+                        if (tabbar.find('.tab-link-highlight').length === 0) {
+                            tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+                            var clientLeft = tabbar[0].clientLeft;
+                        }
+                        var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                        tabbar.find('.tab-link-highlight')
+                            .css({width: tabLinkWidth + '%'})
+                            .transform('translate3d(' + tabLink.index() * 100 + '%,0,0)');
+                    }
+                }
+            }
             if (oldTabLink && oldTabLink.length > 0) oldTabLink.removeClass('active');
             
             return true;
@@ -6162,9 +6289,9 @@
         
             var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved, tapHoldFired, tapHoldTimeout;
             var activableElement, activeTimeout, needsFastClick, needsFastClickTimeOut;
-        
-            function findActivableElement(e) {
-                var target = $(e.target);
+            var rippleWave, rippleTarget, rippleTransform, rippleTimeout;
+            function findActivableElement(el) {
+                var target = $(el);
                 var parents = target.parents(app.params.activeStateElements);
                 var activable;
                 if (target.is(app.params.activeStateElements)) {
@@ -6175,8 +6302,8 @@
                 }
                 return activable ? activable : target;
             }
-            function isInsideScrollableView() {
-                var pageContent = activableElement.parents('.page-content, .panel');
+            function isInsideScrollableView(el) {
+                var pageContent = el.parents('.page-content, .panel');
                 
                 if (pageContent.length === 0) {
                     return false;
@@ -6186,6 +6313,7 @@
                 if (pageContent.prop('scrollHandlerSet') !== 'yes') {
                     pageContent.on('scroll', function() {
                       clearTimeout(activeTimeout);
+                      clearTimeout(rippleTimeout);
                     });
                     pageContent.prop('scrollHandlerSet', 'yes');
                 }
@@ -6254,18 +6382,110 @@
         
             // Mouse Handlers
             function handleMouseDown (e) {
-                findActivableElement(e).addClass('active-state');
+                findActivableElement(e.target).addClass('active-state');
                 if ('which' in e && e.which === 3) {
                     setTimeout(function () {
                         $('.active-state').removeClass('active-state');
                     }, 0);
                 }
+                if (app.params.material && app.params.materialRipple) {
+                    touchStartX = e.pageX;
+                    touchStartY = e.pageY;
+                    rippleTouchStart(e.target, e.pageX, e.pageY);
+                }
             }
             function handleMouseMove (e) {
                 $('.active-state').removeClass('active-state');
+                if (app.params.material && app.params.materialRipple) {
+                    rippleTouchMove();
+                }
             }
             function handleMouseUp (e) {
                 $('.active-state').removeClass('active-state');
+                if (app.params.material && app.params.materialRipple) {
+                    rippleTouchEnd();
+                }
+            }
+        
+            // Material Touch Ripple Effect
+            function findRippleElement(el) {
+                var needsRipple = app.params.materialRippleElements;
+                var $el = $(el);
+                if ($el.is(needsRipple)) {
+                    return $el;
+                }
+                else if ($el.parents(needsRipple).length > 0) {
+                    return $el.parents(needsRipple).eq(0);
+                }
+                else return false;
+            }
+            function createRipple(x, y, el) {
+                var box = el[0].getBoundingClientRect();
+                var center = {
+                    x: x - box.left,
+                    y: y - box.top
+                },
+                    height = box.height,
+                    width = box.width;
+                var diameter = Math.max(Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48);
+        
+                rippleWave = $(
+                    '<div class="ripple-wave" style="width: ' + diameter + 'px; height: '+diameter+'px; margin-top:-'+diameter/2+'px; margin-left:-'+diameter/2+'px; left:'+center.x+'px; top:'+center.y+'px;"></div>'
+                );
+                el.prepend(rippleWave);
+                var clientLeft = rippleWave[0].clientLeft;
+                rippleTransform = 'translate3d('+(-center.x + width/2)+'px, '+(-center.y + height/2)+'px, 0) scale(1)';
+                rippleWave.transform(rippleTransform);
+            }
+        
+            function removeRipple() {
+                if (!rippleWave) return;
+                rippleWave
+                    .addClass('ripple-wave-fill')
+                    .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
+                    .transitionEnd(function () {
+                        var rippleWave = $(this)
+                            .addClass('ripple-wave-out')
+                            .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
+                        setTimeout(function () {
+                            rippleWave.transitionEnd(function(){
+                                $(this).remove();
+                            });
+                        }, 0);
+                    });
+                rippleWave = rippleTarget = undefined;
+            }
+            function rippleTouchStart (el, x, y) {
+                rippleTarget = findRippleElement(el);
+                if (!rippleTarget || rippleTarget.length === 0) {
+                    rippleTarget = undefined;
+                    return;
+                }
+                if (!isInsideScrollableView(rippleTarget)) {
+                    createRipple(touchStartX, touchStartY, rippleTarget);
+                }
+                else {
+                    rippleTimeout = setTimeout(function () {
+                        createRipple(touchStartX, touchStartY, rippleTarget);
+                    }, 80);
+                }
+            }
+            function rippleTouchMove() {
+                clearTimeout(rippleTimeout);
+                removeRipple();
+            }
+            function rippleTouchEnd() {
+                if (rippleWave) {
+                    removeRipple();
+                }
+                else if (rippleTarget && !isMoved) {
+                    clearTimeout(rippleTimeout);
+                    createRipple(touchStartX, touchStartY, rippleTarget);
+                    setTimeout(removeRipple, 0);
+                }
+                else {
+                    removeRipple();   
+                }
             }
         
             // Touch Handlers
@@ -6326,16 +6546,20 @@
                 if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
                     e.preventDefault();
                 }
+                
                 if (app.params.activeState) {
-                    activableElement = findActivableElement(e);
+                    activableElement = findActivableElement(targetElement);
                     // If it's inside a scrollable view, we don't trigger active-state yet,
                     // because it can be a scroll instead. Based on the link:
                     // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
-                    if (!isInsideScrollableView(e)) {
+                    if (!isInsideScrollableView(activableElement)) {
                         addActive();
                     } else {
                         activeTimeout = setTimeout(addActive, 80);
                     }
+                }
+                if (app.params.material && app.params.materialRipple) {
+                    rippleTouchStart(targetElement, touchStartX, touchStartY);
                 }
             }
             function handleTouchMove(e) {
@@ -6363,6 +6587,9 @@
         				clearTimeout(activeTimeout);
         				removeActive();
         			}
+                    if (app.params.material && app.params.materialRipple) {
+                        rippleTouchMove();
+                    }
                 }
             }
             function handleTouchEnd(e) {
@@ -6408,6 +6635,10 @@
                     addActive();
                     setTimeout(removeActive, 0);
                 }
+                // Remove Ripple
+                if (app.params.material && app.params.materialRipple) {
+                    rippleTouchEnd();
+                }
         
                 // Trigger focus when required
                 if (targetNeedsFocus(targetElement)) {
@@ -6435,6 +6666,18 @@
             function handleTouchCancel(e) {
                 trackClick = false;
                 targetElement = null;
+                
+                // Remove Active State
+                clearTimeout(activeTimeout);
+                clearTimeout(tapHoldTimeout);
+                if (app.params.activeState) {
+                    removeActive();
+                }
+                
+                // Remove Ripple
+                if (app.params.material && app.params.materialRipple) {
+                    rippleTouchEnd();
+                }
             }
         
             function handleClick(e) {
@@ -6582,7 +6825,7 @@
                 
                 // Check if link is external 
                 if (isLink) {
-                    if (clicked.is(app.params.externalLinks)) {
+                    if (clicked.is(app.params.externalLinks) || url.indexOf('javascript:') >= 0) {
                         if(clicked.attr('target') === '_system') {
                             e.preventDefault();
                             window.open(url, '_system');
@@ -6670,6 +6913,10 @@
                 if (clicked.hasClass('popup-overlay')) {
                     if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
                         app.closeModal('.popup.modal-in');
+                }
+                if (clicked.hasClass('picker-modal-overlay')) {
+                    if ($('.picker-modal.modal-in').length > 0)
+                        app.closeModal('.picker-modal.modal-in');
                 }
         
                 // Picker
@@ -6820,7 +7067,7 @@
                     else view.router.load(options);
                 }
             }
-            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker', handleClicks);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker, .picker-modal-overlay', handleClicks);
             if (app.params.scrollTopOnNavbarClick || app.params.scrollTopOnStatusbarClick) {
                 $(document).on('click', '.statusbar-overlay, .navbar .center', handleScrollTop);
             }
@@ -6996,8 +7243,6 @@
         };
         app.initFormsStorage = function (pageContainer) {
             pageContainer = $(pageContainer);
-            if (pageContainer.length === 0) return;
-        
             var forms = pageContainer.find('form.store-data');
             if (forms.length === 0) return;
             
@@ -7028,7 +7273,10 @@
             }
             pageContainer.on('pageBeforeRemove', pageBeforeRemove);
         };
-        
+
+        /*===============================================================================
+        ************   Ajax submit for forms   ************
+        ===============================================================================*/
         // Ajax submit on forms
         $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', function (e) {
             var form = $(this);
@@ -7063,6 +7311,93 @@
         });
         
         
+
+        /*===============================================================================
+        ************   Resizable textarea   ************
+        ===============================================================================*/
+        app.resizeTextarea = function (textarea) {
+            textarea = $(textarea);
+            if (!textarea.hasClass('resizable')) {
+                return;
+            }
+            textarea.css({'height': ''});
+            var height = textarea[0].offsetHeight;
+            var diff = height - textarea[0].clientHeight;
+            var scrollHeight = textarea[0].scrollHeight;
+        
+            if (scrollHeight + diff > height) {
+                var newAreaHeight = scrollHeight + diff;
+                textarea.css('height', newAreaHeight + 'px');
+            }
+        };
+        app.resizableTextarea = function (textarea) {
+            textarea = $(textarea);
+            if (textarea.length === 0) return;
+            var textareaTimeout;
+            function handleTextarea() {
+                clearTimeout(textareaTimeout);
+                textareaTimeout = setTimeout(function () {
+                    app.resizeTextarea(textarea);
+                }, 0);
+            }
+            return textarea.on('change keydown keypress keyup paste cut', handleTextarea);
+        };
+        app.initPageResizableTextareas = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var textareas = pageContainer.find('textarea.resizable');
+            textareas.each(function () {
+                app.resizableTextarea(this);
+            });
+        };
+
+        /*======================================================
+        ************   Material Text Inputs   ************
+        ======================================================*/
+        app.initPageMaterialInputs = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var textareas = pageContainer.find('textarea.resizable');
+            pageContainer.find('.item-input').each(function () {
+                var i = $(this);
+                var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
+                i.find('input, select, textarea').each(function () {
+                    if (notInputs.indexOf($(this).attr('type')) < 0) {
+                        i.addClass('item-input-field');
+                    }
+                });
+                if (i.parents('.input-item, .inputs-list').length > 0) return;
+                i.parents('.list-block').eq(0).addClass('inputs-list');
+            });
+        };
+        /*======================================================
+        ************   Material Focus Inputs   ************
+        ======================================================*/
+        app.initMaterialWatchInputs = function () {
+            var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
+            function addFocusState(e) {
+                /*jshint validthis:true*/
+                var i = $(this);
+                var type = i.attr('type');
+                if (notInputs.indexOf(type) >= 0) return;
+                var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
+                els.addClass('focus-state');
+            }
+            function removeFocusState(e) {
+                /*jshint validthis:true*/
+                var i = $(this), value = i.val();
+                var type = i.attr('type');
+                if (notInputs.indexOf(type) >= 0) return;
+                var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
+                els.removeClass('focus-state');
+                if (value && value.trim() !== '') {
+                    els.addClass('not-empty-state');
+                }
+                else {
+                    els.removeClass('not-empty-state');
+                }
+            }
+            $(document).on('focus', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', addFocusState, true);
+            $(document).on('blur', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', removeFocusState, true);
+        };
 
         /*======================================================
         ************   Handle Browser's History   ************
@@ -7184,15 +7519,15 @@
             return new Swiper(container, params);
         };
         app.initPageSwiper = function (pageContainer) {
-            var page = $(pageContainer);
-            var swipers = page.find('.swiper-init');
+            pageContainer = $(pageContainer);
+            var swipers = pageContainer.find('.swiper-init');
             if (swipers.length === 0) return;
             function destroySwiperOnRemove(slider) {
                 function destroySwiper() {
                     slider.destroy();
-                    page.off('pageBeforeRemove', destroySwiper);
+                    pageContainer.off('pageBeforeRemove', destroySwiper);
                 }
-                page.on('pageBeforeRemove', destroySwiper);
+                pageContainer.on('pageBeforeRemove', destroySwiper);
             }
             for (var i = 0; i < swipers.length; i++) {
                 var swiper = swipers.eq(i);
@@ -7208,8 +7543,8 @@
             }
         };
         app.reinitPageSwiper = function (pageContainer) {
-            var page = $(pageContainer);
-            var sliders = page.find('.swiper-init');
+            pageContainer = $(pageContainer);
+            var sliders = pageContainer.find('.swiper-init');
             if (sliders.length === 0) return;
             for (var i = 0; i < sliders.length; i++) {
                 var sliderInstance = sliders[0].swiper;
@@ -7247,14 +7582,16 @@
                 lazyLoading: false,
                 lazyLoadingInPrevNext: false,
                 lazyLoadingOnTransitionStart: false,
+                material: app.params.material,
+                materialPreloaderSvg: app.params.materialPreloaderSvg,
                 /*
                 Callbacks:
                 onLazyImageLoad(pb, slide, img)
                 onLazyImageReady(pb, slide, img)
                 onOpen(pb)
                 onClose(pb)
-                onSlideTransitionStart(swiper)
-                onSlideTransitionEnd(swiper)
+                onTransitionStart(swiper)
+                onTransitionEnd(swiper)
                 onSlideChangeStart(swiper)
                 onSlideChangeEnd(swiper)
                 onTap(swiper, e)
@@ -7265,6 +7602,7 @@
             };
             
             params = params || {};
+            if (!params.backLinkText && app.params.material) defaults.backLinkText = '';
             for (var def in defaults) {
                 if (typeof params[def] === 'undefined') {
                     params[def] = defaults[def];
@@ -7272,95 +7610,93 @@
             }
         
             pb.params = params;
-            
-            var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
+            pb.params.iconsColorClass = pb.params.iconsColor ? 'color-' + pb.params.iconsColor : (pb.params.theme === 'dark' ? 'color-white' : '');
+            pb.params.preloaderColorClass = pb.params.theme === 'dark' ? 'preloader-white' : '';
         
+            // Templates
+            var photoTemplate = pb.params.photoTemplate || 
+                '<div class="photo-browser-slide swiper-slide">' +
+                    '<span class="photo-browser-zoom-container">' +
+                        '<img src="{{js "this.url || this"}}">' +
+                    '</span>' +
+                '</div>';
+            var photoLazyTemplate = pb.params.lazyPhotoTemplate ||
+                '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide">' +
+                    '<div class="preloader {{@root.preloaderColorClass}}">{{#if @root.material}}{{@root.materialPreloaderSvg}}{{/if}}</div>' +
+                    '<span class="photo-browser-zoom-container">' +
+                        '<img data-src="{{js "this.url || this"}}" class="swiper-lazy">' +
+                    '</span>' +
+                '</div>';
+            var objectTemplate = pb.params.objectTemplate ||
+                '<div class="photo-browser-slide photo-browser-object-slide swiper-slide">{{js "this.html || this"}}</div>';
+            var captionTemplate = pb.params.captionTemplate ||
+                '<div class="photo-browser-caption" data-caption-index="{{@index}}">' +
+                    '{{caption}}' +
+                '</div>';
             var navbarTemplate = pb.params.navbarTemplate ||
-                                '<div class="navbar">' +
-                                    '<div class="navbar-inner">' +
-                                        '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
-                                        '<div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div>' +
-                                        '<div class="right"></div>' +
-                                    '</div>' +
-                                '</div>';
+                '<div class="navbar">' +
+                    '<div class="navbar-inner">' +
+                        '<div class="left sliding">' +
+                            '<a href="#" class="link close-popup photo-browser-close-link {{#unless backLinkText}}icon-only{{/unless}} {{js "this.type === \'page\' ? \'back\' : \'\'"}}">' +
+                                '<i class="icon icon-back {{iconsColorClass}}"></i>' +
+                                '{{#if backLinkText}}<span>{{backLinkText}}</span>{{/if}}' +
+                            '</a>' +
+                        '</div>' +
+                        '<div class="center sliding">' +
+                            '<span class="photo-browser-current"></span> ' +
+                            '<span class="photo-browser-of">{{ofText}}</span> ' +
+                            '<span class="photo-browser-total"></span>' +
+                        '</div>' +
+                        '<div class="right"></div>' +
+                    '</div>' +
+                '</div>';
             var toolbarTemplate = pb.params.toolbarTemplate ||
-                                '<div class="toolbar tabbar">' +
-                                    '<div class="toolbar-inner">' +
-                                        '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
-                                        '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
-                                    '</div>' +
-                                '</div>';
+                '<div class="toolbar tabbar">' +
+                    '<div class="toolbar-inner">' +
+                        '<a href="#" class="link photo-browser-prev">' +
+                            '<i class="icon icon-prev {{iconsColorClass}}"></i>' +
+                        '</a>' +
+                        '<a href="#" class="link photo-browser-next">' +
+                            '<i class="icon icon-next {{iconsColorClass}}"></i>' +
+                        '</a>' +
+                    '</div>' +
+                '</div>';
         
-            var template = pb.params.template ||
-                            '<div class="photo-browser photo-browser-' + pb.params.theme + '">' +
-                                '<div class="view navbar-fixed toolbar-fixed">' +
-                                    '{{navbar}}' +
-                                    '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
-                                        '{{toolbar}}' +
-                                        '{{captions}}' +
-                                        '<div class="photo-browser-swiper-container swiper-container">' +
-                                            '<div class="photo-browser-swiper-wrapper swiper-wrapper">' +
-                                                '{{photos}}' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
+            var htmlTemplate = t7.compile('<div class="photo-browser photo-browser-{{theme}}">' +
+                    '<div class="view navbar-fixed toolbar-fixed">' +
+                        '{{#unless material}}{{#if navbar}}' +
+                        navbarTemplate +
+                        '{{/if}}{{/unless}}' +
+                        '<div class="page no-toolbar {{#unless navbar}}no-navbar{{/unless}} toolbar-fixed navbar-fixed" data-page="photo-browser-slides">' +
+                            '{{#if material}}{{#if navbar}}' +
+                            navbarTemplate +
+                            '{{/if}}{{/if}}' +
+                            '{{#if toolbar}}' +
+                            toolbarTemplate +
+                            '{{/if}}' +
+                            '<div class="photo-browser-captions photo-browser-captions-{{js "this.captionsTheme || this.theme"}}">' +
+                                '{{#each photos}}{{#if caption}}' +
+                                captionTemplate +
+                                '{{/if}}{{/each}}' +
+                            '</div>' +
+                            '<div class="photo-browser-swiper-container swiper-container">' +
+                                '<div class="photo-browser-swiper-wrapper swiper-wrapper">' +
+                                    '{{#each photos}}' +
+                                    '{{#js_compare "this.html || ((typeof this === \'string\' || this instanceof String) && (this.indexOf(\'<\') >= 0 || this.indexOf(\'>\') >= 0))"}}' +
+                                        objectTemplate +
+                                    '{{else}}' +
+                                        '{{#if @root.lazyLoading}}' +
+                                        photoLazyTemplate +
+                                        '{{else}}' +
+                                        photoTemplate +
+                                        '{{/if}}' +
+                                    '{{/js_compare}}' +
+                                    '{{/each}}' +
                                 '</div>' +
-                            '</div>';
-        
-            var photoTemplate = !pb.params.lazyLoading ? 
-                (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
-                (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
-        
-            var captionsTheme = pb.params.captionsTheme || pb.params.theme;
-            var captionsTemplate = pb.params.captionsTemplate || '<div class="photo-browser-captions photo-browser-captions-' + captionsTheme + '">{{captions}}</div>';
-            var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption" data-caption-index="{{captionIndex}}">{{caption}}</div>';
-        
-            var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide swiper-slide">{{html}}</div>';
-            var photosHtml = '';
-            var captionsHtml = '';
-            for (i = 0; i < pb.params.photos.length; i ++) {
-                var photo = pb.params.photos[i];
-                var thisTemplate = '';
-        
-                //check if photo is a string or string-like object, for backwards compatibility 
-                if (typeof(photo) === 'string' || photo instanceof String) {
-        
-                    //check if "photo" is html object
-                    if (photo.indexOf('<') >= 0 || photo.indexOf('>') >= 0) {
-                        thisTemplate = objectTemplate.replace(/{{html}}/g, photo);
-                    } else {
-                        thisTemplate = photoTemplate.replace(/{{url}}/g, photo);
-                    }
-        
-                    //photo is a string, thus has no caption, so remove the caption template placeholder
-                    //otherwise check if photo is an object with a url property
-                } else if (typeof(photo) === 'object') {
-        
-                    //check if "photo" is html object
-                    if (photo.hasOwnProperty('html') && photo.html.length > 0) {
-                        thisTemplate = objectTemplate.replace(/{{html}}/g, photo.html);
-                    } else if (photo.hasOwnProperty('url') && photo.url.length > 0) {
-                        thisTemplate = photoTemplate.replace(/{{url}}/g, photo.url);
-                    }
-        
-                    //check if photo has a caption
-                    if (photo.hasOwnProperty('caption') && photo.caption.length > 0) {
-                        captionsHtml += captionTemplate.replace(/{{caption}}/g, photo.caption).replace(/{{captionIndex}}/g, i);
-                    } else {
-                        thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
-                    }
-                }
-        
-                photosHtml += thisTemplate;
-        
-            }
-        
-            var htmlTemplate = template
-                                .replace('{{navbar}}', (pb.params.navbar ? navbarTemplate : ''))
-                                .replace('{{noNavbar}}', (pb.params.navbar ? '' : 'no-navbar'))
-                                .replace('{{photos}}', photosHtml)
-                                .replace('{{captions}}', captionsTemplate.replace(/{{captions}}/g, captionsHtml))
-                                .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>')(pb.params);
         
             pb.activeIndex = pb.params.initialSlide;
             pb.openIndex = pb.activeIndex;
@@ -7375,7 +7711,6 @@
                 }
                 pb.opened = true;
                 pb.openIndex = index;
-                // pb.initialLazyLoaded = false;
                 if (pb.params.type === 'standalone') {
                     $('body').append(htmlTemplate);
                 }
@@ -8324,7 +8659,10 @@
             // Open
             function onPickerClose() {
                 p.opened = false;
-                if (p.input && p.input.length > 0) p.input.parents('.page-content').css({'padding-bottom': ''});
+                if (p.input && p.input.length > 0) {
+                    p.input.parents('.page-content').css({'padding-bottom': ''});
+                    if (app.params.material) p.input.trigger('blur');
+                }
                 if (p.params.onClose) p.params.onClose(p);
         
                 // Destroy events
@@ -8382,6 +8720,11 @@
                     }
                     else {
                         if (p.value) p.setValue(p.value, 0);
+                    }
+        
+                    // Material Focus
+                    if (p.input && p.input.length > 0 && app.params.material) {
+                        p.input.trigger('focus');
                     }
                 }
         
@@ -8467,14 +8810,25 @@
                 onlyInPopover: false,
                 toolbar: true,
                 toolbarCloseText: 'Done',
+                headerPlaceholder: 'Select date',
+                header: app.params.material,
+                footer: app.params.material,
                 toolbarTemplate: 
                     '<div class="toolbar">' +
                         '<div class="toolbar-inner">' +
                             '{{monthPicker}}' +
                             '{{yearPicker}}' +
-                            // '<a href="#" class="link close-picker">{{closeText}}</a>' +
                         '</div>' +
                     '</div>',
+                headerTemplate: 
+                    '<div class="picker-header">' +
+                        '<div class="picker-calendar-selected-date">{{placeholder}}</div>' +
+                    '</div>',
+                footerTemplate: 
+                    '<div class="picker-footer">' +
+                        '<a href="#" class="button close-picker">{{closeText}}</a>' +
+                    '</div>',
+                
                 /* Callbacks
                 onMonthAdd
                 onChange
@@ -8541,13 +8895,13 @@
                     .replace(/yyyy/g, year)
                     .replace(/yy/g, (year + '').substring(2))
                     .replace(/mm/g, month1 < 10 ? '0' + month1 : month1)
-                    .replace(/m\W+/g, month1 + '$1')
+                    .replace(/m(\W+)/g, month1 + '$1')
                     .replace(/MM/g, p.params.monthNames[month])
-                    .replace(/M\W+/g, p.params.monthNamesShort[month] + '$1')
+                    .replace(/M(\W+)/g, p.params.monthNamesShort[month] + '$1')
                     .replace(/dd/g, day < 10 ? '0' + day : day)
-                    .replace(/d\W+/g, day + '$1')
+                    .replace(/d(\W+)/g, day + '$1')
                     .replace(/DD/g, p.params.dayNames[weekDay])
-                    .replace(/D\W+/g, p.params.dayNamesShort[weekDay] + '$1');
+                    .replace(/D(\W+)/g, p.params.dayNamesShort[weekDay] + '$1');
             }
         
         
@@ -8578,7 +8932,7 @@
                 p.value = arrValues;
                 p.updateValue();   
             };
-            p.updateValue = function () {
+            p.updateValue = function (onlyHeader) {
                 p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
                 var i, inputValue;
                 for (i = 0; i < p.value.length; i++) {
@@ -8588,7 +8942,7 @@
                 if (p.params.onChange) {
                     p.params.onChange(p, p.value);
                 }
-                if (p.input && p.input.length > 0) {
+                if ((p.input && p.input.length > 0) || (app.params.material && p.params.header)) {
                     if (p.params.formatValue) inputValue = p.params.formatValue(p, p.value);
                     else {
                         inputValue = [];
@@ -8597,8 +8951,14 @@
                         }
                         inputValue = inputValue.join(', ');
                     } 
-                    $(p.input).val(inputValue);
-                    $(p.input).trigger('change');
+                    if (app.params.material && p.params.header) {
+                        p.container.find('.picker-calendar-selected-date').text(inputValue);
+                    }
+                    if (p.input && p.input.length > 0 && !onlyHeader) {
+                        $(p.input).val(inputValue);
+                        $(p.input).trigger('change');
+                    }
+                        
                 }
             };
         
@@ -9084,9 +9444,13 @@
                         .replace(/{{monthPicker}}/g, (p.params.monthPicker ? p.params.monthPickerTemplate : ''))
                         .replace(/{{yearPicker}}/g, (p.params.yearPicker ? p.params.yearPickerTemplate : ''));
                 }
+                var headerHTML = p.params.header ? p.params.headerTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText).replace(/{{placeholder}}/g, p.params.headerPlaceholder) : '';
+                var footerHTML = p.params.footer ? p.params.footerTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText) : '';
         
                 pickerHTML =
                     '<div class="' + (pickerClass) + '">' +
+                        headerHTML +
+                        footerHTML +
                         toolbarHTML +
                         '<div class="picker-modal-inner">' +
                             weekHeaderHTML +
@@ -9103,7 +9467,7 @@
                 e.preventDefault();
                 if (p.opened) return;
                 p.open();
-                if (p.params.scrollToInput && !isPopover()) {
+                if (p.params.scrollToInput && !isPopover() && !app.params.material) {
                     var pageContent = p.input.parents('.page-content');
                     if (pageContent.length === 0) return;
         
@@ -9158,7 +9522,10 @@
             // Open
             function onPickerClose() {
                 p.opened = false;
-                if (p.input && p.input.length > 0) p.input.parents('.page-content').css({'padding-bottom': ''});
+                if (p.input && p.input.length > 0) {
+                    p.input.parents('.page-content').css({'padding-bottom': ''});
+                    if (app.params.material) p.input.trigger('blur');
+                }
                 if (p.params.onClose) p.params.onClose(p);
         
                 // Destroy events
@@ -9222,6 +9589,12 @@
         
                     // Update input value
                     if (updateValue) p.updateValue();
+                    else if (app.params.material && p.value) p.updateValue(true);
+        
+                    // Material Focus
+                    if (p.input && p.input.length > 0 && app.params.material) {
+                        p.input.trigger('focus');
+                    }
                     
                 }
         
@@ -9282,43 +9655,75 @@
             if (typeof params.closeIcon === 'undefined') params.closeIcon = app.params.notificationCloseIcon;
             if (typeof params.hold === 'undefined') params.hold = app.params.notificationHold;
             if (typeof params.closeOnClick === 'undefined') params.closeOnClick = app.params.notificationCloseOnClick;
+            if (typeof params.button === 'undefined') params.button = app.params.notificationCloseButtonText && {
+                text: app.params.notificationCloseButtonText,
+                close: true
+            };
         
             if (!_tempNotificationElement) _tempNotificationElement = document.createElement('div');
         
+            params.material = app.params.material;
+        
             var container = $('.notifications');
             if (container.length === 0) {
-                $('body').append('<div class="notifications list-block media-list"><ul></ul></div>');
+                $('body').append('<div class="notifications list-block' + (params.material ? '' : ' media-list') + '"><ul></ul></div>');
                 container = $('.notifications');
             }
             var list = container.children('ul');
-        
-            var itemHTML;
-            if (params.custom) {
-                itemHTML = '<li>' + params.custom + '</li>';
-            }
-            else {
-                itemHTML = '<li class="notification-item notification-hidden"><div class="item-content">' +
-                                (params.media ?
-                                '<div class="item-media">' +
-                                    params.media +
-                                '</div>' : '') +
-                                '<div class="item-inner">' +
-                                    '<div class="item-title-row">' +
-                                        (params.title ? '<div class="item-title">' + params.title + '</div>' : '') +
-                                        (params.closeIcon ? '<div class="item-after"><a href="#" class="close-notification"><span></span></a></div>' : '') +
-                                    '</div>' +
-                                    (params.subtitle ? '<div class="item-subtitle">' + params.subtitle + '</div>' : '') +
-                                    (params.message ? '<div class="item-text">' + params.message + '</div>' : '') +
+            
+            var notificationTemplate = app.params.notificationTemplate || 
+                '{{#if custom}}' +
+                '<li>{{custom}}</li>' +
+                '{{else}}' +
+                '<li class="notification-item notification-hidden">' +
+                    '<div class="item-content">' +
+                        '{{#if material}}' +
+                            '<div class="item-inner">' +
+                                '<div class="item-title">{{js "this.message || this.title || this.subtitle"}}</div>' +
+                                '{{#if ../button}}{{#button}}' +
+                                '<div class="item-after">' +
+                                    '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#js_compare "this.close !== false"}}close-notification{{/js_compare}}">{{text}}</a>' +
                                 '</div>' +
-                            '</div></li>';
+                                '{{/button}}{{/if}}' +
+                            '</div>' +
+                        '{{else}}' +
+                            '{{#if media}}' +
+                            '<div class="item-media">{{media}}</div>' +
+                            '{{/if}}' +
+                            '<div class="item-inner">' +
+                                '<div class="item-title-row">' +
+                                    '{{#if title}}' +
+                                    '<div class="item-title">{{title}}</div>' +
+                                    '{{/if}}' +
+                                    '{{#if closeIcon}}' +
+                                    '<div class="item-after"><a href="#" class="close-notification"><span></span></a></div>' +
+                                    '{{/if}}' +
+                                '</div>' +
+                                '{{#if subtitle}}' +
+                                '<div class="item-subtitle">{{subtitle}}</div>' +
+                                '{{/if}}' +
+                                '{{#if message}}' +
+                                '<div class="item-text">{{message}}</div>' +
+                                '</div>' +
+                            '{{/if}}' +
+                        '{{/if}}' +
+                    '</div>' +
+                '</li>' +
+                '{{/if}}';
+            if (!app._compiledTemplates.notification) {
+                app._compiledTemplates.notification = t7.compile(notificationTemplate);
             }
-            _tempNotificationElement.innerHTML = itemHTML;
+            _tempNotificationElement.innerHTML = app._compiledTemplates.notification(params);
         
             var item = $(_tempNotificationElement).children();
         
             item.on('click', function (e) {
                 var close = false;
-                if ($(e.target).is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
+                var target = $(e.target);
+                if (params.material && target.hasClass('button')) {
+                    if (params.button && params.button.onClick) params.button.onClick.call(target[0], e, item[0]);
+                }
+                if (target.is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
                     close = true;
                 }
                 else {
@@ -9341,16 +9746,28 @@
                 }, params.hold);
             }
         
-            list.prepend(item[0]);
+            list[params.material ? 'append' : 'prepend'](item[0]);
             container.show();
             
-            var itemHeight = item.outerHeight();
-            item.css('marginTop', -itemHeight + 'px');
-            item.transition(0);
+            var itemHeight = item.outerHeight(), clientLeft;
+            if (params.material) {
+                container.transform('translate3d(0, '+itemHeight+'px, 0)');
+                container.transition(0);
         
-            var clientLeft = item[0].clientLeft;
-            item.transition('');
-            item.css('marginTop', '0px');
+                clientLeft = item[0].clientLeft;
+        
+                container.transform('translate3d(0, 0, 0)');
+                container.transition('');
+            }
+            else {
+                item.css('marginTop', -itemHeight + 'px');
+                item.transition(0);
+        
+                clientLeft = item[0].clientLeft;
+        
+                item.transition('');
+                item.css('marginTop', '0px');
+            }
         
             container.transform('translate3d(0, 0,0)');
             item.removeClass('notification-hidden');
@@ -9378,6 +9795,17 @@
                 item.remove();
                 if (container.find('.notification-item').length === 0) {
                     container.hide();
+                }
+            });
+        };
+
+        /*======================================================
+        ************   Material Preloader   ************
+        ======================================================*/
+        app.initPageMaterialPreloader = function (pageContainer) {
+            $(pageContainer).find('.preloader').each(function () {
+                if ($(this).children('svg').length === 0) {
+                    $(this).html(app.params.materialPreloaderSvg);
                 }
             });
         };
@@ -9488,6 +9916,9 @@
         
             // Init Live Swipe Panels
             if (app.initSwipePanels && (app.params.swipePanel || app.params.swipePanelOnlyClose)) app.initSwipePanels();
+            
+            // Init Material Inputs
+            if (app.params.material && app.initMaterialWatchInputs) app.initMaterialWatchInputs();
             
             // App Init callback
             if (app.params.onAppInit) app.params.onAppInit();
@@ -11065,6 +11496,7 @@
                     // Helpers
                     var helperSlices = helperToSlices(block);
                     var helperName = helperSlices[0];
+                    var isPartial = helperName === '>';
                     var helperContext = [];
                     var helperHash = {};
                     for (j = 1; j < helperSlices.length; j++) {
@@ -11132,6 +11564,10 @@
                         }
                     }
                     else if (block.indexOf(' ') > 0) {
+                        if (isPartial) {
+                            helperName = '_partial';
+                            if (helperContext[0]) helperContext[0] = '"' + helperContext[0].replace(/"|'/g, '') + '"';
+                        }
                         blocks.push({
                             type: 'helper',
                             helperName: helperName,
@@ -11278,7 +11714,30 @@
         };
         Template7.prototype = {
             options: {},
+            partials: {},
             helpers: {
+                '_partial' : function (partialName, options) {
+                    var p = Template7.prototype.partials[partialName];
+                    if (!p || (p && !p.template)) return '';
+                    if (!p.compiled) {
+                        p.compiled = t7.compile(p.template);
+                    }
+                    var ctx = this;
+                    for (var hashName in options.hash) {
+                        ctx[hashName] = options.hash[hashName];
+                    }
+                    return p.compiled(ctx);
+                },
+                'escape': function (context, options) {
+                    if (typeof context !== 'string') {
+                        throw new Error('Template7: Passed context to "escape" helper should be a string');
+                    }
+                    return context
+                            .replace(/&/g, '&amp;')
+                            .replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;')
+                            .replace(/"/g, '&quot;');
+                },
                 'if': function (context, options) {
                     if (isFunction(context)) { context = context.call(this); }
                     if (context) {
@@ -11372,6 +11831,15 @@
             Template7.prototype.helpers[name] = undefined;  
             delete Template7.prototype.helpers[name];
         };
+        t7.registerPartial = function (name, template) {
+            Template7.prototype.partials[name] = {template: template};
+        };
+        t7.unregisterPartial = function (name, template) {
+            if (Template7.prototype.partials[name]) {
+                Template7.prototype.partials[name] = undefined;
+                delete Template7.prototype.partials[name];
+            }
+        };
         
         t7.compile = function (template, options) {
             var instance = new Template7(template, options);
@@ -11380,6 +11848,7 @@
         
         t7.options = Template7.prototype.options;
         t7.helpers = Template7.prototype.helpers;
+        t7.partials = Template7.prototype.partials;
         return t7;
     })();
 
@@ -11433,6 +11902,8 @@
             // Keyboard Mousewheel
             keyboardControl: false,
             mousewheelControl: false,
+            mousewheelReleaseOnEdges: false,
+            mousewheelInvert: false,
             mousewheelForceToAxis: false,
             // Hash Navigation
             hashnav: false,
@@ -11517,7 +11988,7 @@
             firstSlideMessage: 'This is the first slide',
             lastSlideMessage: 'This is the last slide',
             // Callbacks
-            runCallbacksOnInit: true,
+            runCallbacksOnInit: true
             /*
             Callbacks:
             onInit: function (swiper)
@@ -11567,7 +12038,7 @@
         var s = this;
         
         // Version
-        s.version = '3.0.7';
+        s.version = '3.0.8';
         
         // Params
         s.params = params;
@@ -11904,6 +12375,9 @@
         
             // Calc slides
             var slideSize;
+            var slidesPerColumn = s.params.slidesPerColumn;
+            var slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
+            var numFullColumns = slidesPerRow - (s.params.slidesPerColumn * slidesPerRow - s.slides.length);
             for (i = 0; i < s.slides.length; i++) {
                 slideSize = 0;
                 var slide = s.slides.eq(i);
@@ -11911,11 +12385,15 @@
                     // Set slides order
                     var newSlideOrderIndex;
                     var column, row;
-                    var slidesPerColumn = s.params.slidesPerColumn;
-                    var slidesPerRow;
                     if (s.params.slidesPerColumnFill === 'column') {
                         column = Math.floor(i / slidesPerColumn);
                         row = i - column * slidesPerColumn;
+                        if (column > numFullColumns || (column === numFullColumns && row === slidesPerColumn-1)) {
+                            if (++row >= slidesPerColumn) {
+                                row = 0;
+                                column++;
+                            }
+                        }
                         newSlideOrderIndex = column + row * slidesNumberEvenToRows / slidesPerColumn;
                         slide
                             .css({
@@ -11927,10 +12405,8 @@
                             });
                     }
                     else {
-                        slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
                         row = Math.floor(i / slidesPerRow);
                         column = i - row * slidesPerRow;
-        
                     }
                     slide
                         .css({
@@ -12359,7 +12835,7 @@
         s.preventClicks = function (e) {
             if (!s.allowClick) {
                 if (s.params.preventClicks) e.preventDefault();
-                if (s.params.preventClicksPropagation) {
+                if (s.params.preventClicksPropagation && s.animating) {
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                 }
@@ -12412,7 +12888,7 @@
                     if (s.slides[i] === slide) slideFound = true;
                 }
             }
-            
+        
             if (slide && slideFound) {
                 s.clickedSlide = slide;
                 s.clickedIndex = $(slide).index();
@@ -12705,7 +13181,7 @@
         
             lastClickTime = Date.now();
             setTimeout(function () {
-                if (s && s.allowClick) s.allowClick = true;
+                if (s) s.allowClick = true;
             }, 0);
         
             if (!isTouched || !isMoved || !s.swipeDirection || s.touches.diff === 0 || currentTranslate === startTranslate) {
@@ -12728,7 +13204,7 @@
                 }
                 else if (currentPos > -s.maxTranslate()) {
                     if (s.slides.length < s.snapGrid.length) {
-                        s.slideTo(s.snapGrid.length - 1);    
+                        s.slideTo(s.snapGrid.length - 1);
                     }
                     else {
                         s.slideTo(s.slides.length - 1);
@@ -12799,7 +13275,7 @@
                                 nextSlide = j;
                                 break;
                             }
-                                
+        
                         }
                         if (Math.abs(s.snapGrid[nextSlide] - newPosition) < Math.abs(s.snapGrid[nextSlide - 1] - newPosition) || s.swipeDirection === 'next') {
                             newPosition = s.snapGrid[nextSlide];
@@ -12930,17 +13406,16 @@
             if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
         
             var translate = - s.snapGrid[s.snapIndex];
-        
+            
             // Directions locks
-            if (!s.params.allowSwipeToNext && translate < s.translate) {
+            if (!s.params.allowSwipeToNext && translate < s.translate && translate < s.minTranslate()) {
                 return false;
             }
-            if (!s.params.allowSwipeToPrev && translate > s.translate) {
+            if (!s.params.allowSwipeToPrev && translate > s.translate && translate > s.maxTranslate()) {
                 return false;
             }
         
             // Stop autoplay
-        
             if (s.params.autoplay && s.autoplaying) {
                 if (internal || !s.params.autoplayDisableOnInteraction) {
                     s.pauseAutoplay(speed);
@@ -13320,7 +13795,7 @@
             else {
                 s.slideTo(newActiveIndex, 0, false);
             }
-                
+        
         };
         s.removeAllSlides = function () {
             var slidesIndexes = [];
@@ -13336,7 +13811,6 @@
           ===========================*/
         s.effects = {
             fade: {
-                fadeIndex: null,
                 setTranslate: function () {
                     for (var i = 0; i < s.slides.length; i++) {
                         var slide = s.slides.eq(i);
@@ -13351,9 +13825,6 @@
                         var slideOpacity = s.params.fade.crossFade ?
                                 Math.max(1 - Math.abs(slide[0].progress), 0) :
                                 1 + Math.min(Math.max(slide[0].progress, -1), 0);
-                        if (slideOpacity > 0 && slideOpacity < 1) {
-                            s.effects.fade.fadeIndex = i;
-                        }
                         slide
                             .css({
                                 opacity: slideOpacity
@@ -13361,16 +13832,17 @@
                             .transform('translate3d(' + tx + 'px, ' + ty + 'px, 0px)');
         
                     }
+        
                 },
                 setTransition: function (duration) {
                     s.slides.transition(duration);
                     if (s.params.virtualTranslate && duration !== 0) {
-                        var fadeIndex = s.effects.fade.fadeIndex !== null ? s.effects.fade.fadeIndex : s.activeIndex;
-                        if (!(s.params.loop || s.params.fade.crossFade) && fadeIndex === 0) {
-                            fadeIndex = s.slides.length - 1;
-                        }
-                        s.slides.eq(fadeIndex).transitionEnd(function () {
+                        var eventTriggered = false;
+                        s.slides.transitionEnd(function () {
+                            if (eventTriggered) return;
                             if (!s) return;
+                            eventTriggered = true;
+                            s.animating = false;
                             var triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
                             for (var i = 0; i < triggerEvents.length; i++) {
                                 s.wrapper.trigger(triggerEvents[i]);
@@ -13601,6 +14073,7 @@
                     
             },
             load: function () {
+                var i;
                 if (s.params.watchSlidesVisibility) {
                     s.wrapper.children('.' + s.params.slideVisibleClass).each(function () {
                         s.lazy.loadImageInSlide($(this).index());
@@ -13608,7 +14081,7 @@
                 }
                 else {
                     if (s.params.slidesPerView > 1) {
-                        for (var i = s.activeIndex; i < s.activeIndex + s.params.slidesPerView ; i++) {
+                        for (i = s.activeIndex; i < s.activeIndex + s.params.slidesPerView ; i++) {
                             if (s.slides[i]) s.lazy.loadImageInSlide(i);
                         }
                     }
@@ -13617,11 +14090,23 @@
                     }
                 }
                 if (s.params.lazyLoadingInPrevNext) {
-                    var nextSlide = s.wrapper.children('.' + s.params.slideNextClass);
-                    if (nextSlide.length > 0) s.lazy.loadImageInSlide(nextSlide.index());
+                    if (s.params.slidesPerView > 1) {
+                        // Next Slides
+                        for (i = s.activeIndex + s.params.slidesPerView; i < s.activeIndex + s.params.slidesPerView + s.params.slidesPerView; i++) {
+                            if (s.slides[i]) s.lazy.loadImageInSlide(i);
+                        }
+                        // Prev Slides
+                        for (i = s.activeIndex - s.params.slidesPerView; i < s.activeIndex ; i++) {
+                            if (s.slides[i]) s.lazy.loadImageInSlide(i);
+                        }
+                    }
+                    else {
+                        var nextSlide = s.wrapper.children('.' + s.params.slideNextClass);
+                        if (nextSlide.length > 0) s.lazy.loadImageInSlide(nextSlide.index());
         
-                    var prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
-                    if (prevSlide.length > 0) s.lazy.loadImageInSlide(prevSlide.index());
+                        var prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
+                        if (prevSlide.length > 0) s.lazy.loadImageInSlide(prevSlide.index());
+                    }
                 }
             },
             onTransitionStart: function () {
