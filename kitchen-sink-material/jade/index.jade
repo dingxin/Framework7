@@ -7,10 +7,12 @@ html
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     meta(name="theme-color", content="#2196f3")
-    title Framework7
+    title Framework7 Material
     link(rel="stylesheet", href="../build/css/framework7.material.css")
     link(rel="stylesheet", href="../build/css/framework7.material.colors.css")
+    link(href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700', rel='stylesheet', type='text/css')
     link(rel="stylesheet", href="css/kitchen-sink.css")
+    link(rel="icon", href="img/icon.png")
   body
     .statusbar-overlay
     .panel-overlay
@@ -31,83 +33,75 @@ html
               .list-block
                 ul
                   li
-                    a(href="modals.html").close-panel.item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Modals
-                  li
-                    a(href="popover.html").close-panel.item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Popover
-                  
-                  li
-                    a(href="tabs.html").close-panel.item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Tabs
-                  li
-                    a(href="panels.html").close-panel.item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Side Panels
-                  li
-                    a(href="list-view.html").close-panel.item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title List View
-                  li
-                    a(href="swipe-delete.html").close-panel.item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Swipe To Delete
-                  li
-                    a(href="forms.html").close-panel.item-link
+                    a(href="forms.html").item-link.close-panel 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
                           .item-title Forms
                   li
-                    a(href="messages.html").close-panel.item-link
+                    a(href="list-view.html").item-link.close-panel 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Messages
+                          .item-title List View
                   li
-                    a(href="grid.html").close-panel.item-link
+                    a(href="media-lists.html").item-link.close-panel 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Grid
+                          .item-title Media Lists
                   li
-                    a(href="preloader.html").close-panel.item-link
+                    a(href="modals.html").item-link.close-panel 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Preloader
+                          .item-title Modals
                   li
-                    a(href="bars.html").close-panel.item-link 
+                    a(href="bars.html").item-link.close-panel 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
                           .item-title Navbars And Toolbars
+                  li
+                    a(href="popover.html").item-link.close-panel 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Popover
+                  li
+                    a(href="panels.html").item-link.close-panel 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Side Panels
+                  li
+                    a(href="swipe-delete.html").item-link.close-panel 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Swipe To Delete
+                  li
+                    a(href="swiper.html").item-link.close-panel 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Swiper Slider
+                  li
+                    a(href="tabs.html").item-link.close-panel 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Tabs
               .content-block
                 p Long text block goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem urna, gravida non scelerisque id, fringilla ac velit. Phasellus elementum a ipsum at ornare. Mauris sagittis rhoncus euismod. Integer convallis augue eu lacus ultrices, in dictum elit consequat. Nulla faucibus massa id felis egestas eleifend. Proin consequat dignissim magna ut scelerisque. Vestibulum ac lorem semper, posuere sapien nec, pharetra massa. Nulla a tellus facilisis, sollicitudin quam porta, aliquam lorem. Fusce dignissim eros ac diam molestie, ut ultrices lorem tristique. Ut facilisis augue ac nisi egestas malesuada. Nunc posuere tortor quis eleifend mollis. Aliquam erat volutpat. Donec feugiat elit tellus, nec convallis orci elementum in. Sed urna mi, vestibulum id tempus id, pretium et ante. Pellentesque eget sollicitudin ligula. Phasellus pellentesque velit eu porta suscipit.
     .panel.panel-right.panel-reveal
@@ -153,81 +147,6 @@ html
               .list-block
                 ul
                   li
-                    a(href="modals.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Modals
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="popover.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Popover
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="tabs.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Tabs
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="panels.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Side Panels
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="list-view.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title List View
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="media-lists.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Media Lists
-                  li
-                    a(href="contacts.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Contacts List
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="swipe-delete.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Swipe To Delete
-                  li
-                    a(href="sortable-list.html").item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Sortable List
-                  li
                     a(href="accordion.html").item-link 
                       .item-content
                         .item-media
@@ -235,21 +154,28 @@ html
                         .item-inner 
                           .item-title Accordion
                   li
-                    a(href="pull-to-refresh.html").item-link 
+                    a(href="calendar.html").item-link
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Pull To Refresh
+                          .item-title Calendar / Datepicker
                           .item-after
                             span.badge.bg-green NEW
                   li
-                    a(href="forms.html").item-link 
+                    a(href="cards.html").item-link
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Forms
+                          .item-title Cards
+                  li
+                    a(href="contacts.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Contacts List
                           .item-after
                             span.badge.bg-green NEW
                   li
@@ -262,37 +188,12 @@ html
                           .item-after
                             span.badge.bg-green NEW
                   li
-                    a(href="cards.html").item-link
+                    a(href="forms.html").item-link 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Cards
-                  li
-                    a(href="picker.html").item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Picker
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="calendar.html").item-link
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Calendar / Datepicker
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="messages.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Messages
+                          .item-title Forms
                           .item-after
                             span.badge.bg-green NEW
                   li
@@ -303,12 +204,60 @@ html
                         .item-inner 
                           .item-title Grid
                   li
-                    a(href="preloader.html").item-link 
+                    a(href="infinite-scroll.html").item-link 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Preloader
+                          .item-title Infinite Scroll
+                  li
+                    a(href="lazy-load.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Lazy Load Images
+                  li
+                    a(href="list-view.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title List View
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="login-screen.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Login Screen
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="media-lists.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Media Lists
+                  li
+                    a(href="messages.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Messages
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="modals.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Modals
                           .item-after
                             span.badge.bg-green NEW
                   li
@@ -321,21 +270,14 @@ html
                           .item-after
                             span.badge.bg-green NEW
                   li
-                    a(href="searchbar.html").item-link 
+                    a(href="notifications.html").item-link 
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Search Bar
+                          .item-title Notifications
                           .item-after
                             span.badge.bg-green NEW
-                  li
-                    a(href="swiper.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Swiper Slider
                   li
                     a(href="photo-browser.html").item-link 
                       .item-content
@@ -346,12 +288,90 @@ html
                           .item-after
                             span.badge.bg-green NEW
                   li
-                    a(href="infinite-scroll.html").item-link 
+                    a(href="picker.html").item-link
                       .item-content
                         .item-media
                           i.icon.icon-f7
                         .item-inner 
-                          .item-title Infinite Scroll
+                          .item-title Picker
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="popover.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Popover
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="preloader.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Preloader
+                          .item-after
+                            span.badge.bg-green NEW
+                  
+                  li
+                    a(href="pull-to-refresh.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Pull To Refresh
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="searchbar.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Search Bar
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="panels.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Side Panels
+                          .item-after
+                            span.badge.bg-green NEW
+                  li
+                    a(href="sortable-list.html").item-link
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Sortable List
+                  li
+                    a(href="swipe-delete.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Swipe To Delete
+                  li
+                    a(href="swiper.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Swiper Slider
+                  li
+                    a(href="tabs.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Tabs
+                          .item-after
+                            span.badge.bg-green NEW
                   li
                     a(href="virtual-list.html").item-link 
                       .item-content
@@ -359,31 +379,9 @@ html
                           i.icon.icon-f7
                         .item-inner 
                           .item-title Virtual List
-                  li
-                    a(href="notifications.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Notifications
-                          .item-after
-                            span.badge.bg-green NEW
-                  li
-                    a(href="lazy-load.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Lazy Load Images
-                  li
-                    a(href="login-screen.html").item-link 
-                      .item-content
-                        .item-media
-                          i.icon.icon-f7
-                        .item-inner 
-                          .item-title Login Screen
-                          .item-after
-                            span.badge.bg-green NEW
+                  
+              .list-block
+                ul
                   li
                     a(href="color-themes.html").item-link 
                       .item-content
@@ -400,10 +398,15 @@ html
                           i.icon.icon-f7
                         .item-inner 
                           .item-title Dynamically Generated Content
-                  
-              .content-block-title Core Features
-              .content-block
-                a(href="core-features.html").button.button-raised Read About Core Features
+              .list-block
+                ul    
+                  li
+                    a(href="core-features.html").item-link.ks-generate-page
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Core Features
     .popup.demo-popup
       .view.navbar-fixed
         .pages

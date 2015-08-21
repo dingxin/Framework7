@@ -1,6 +1,6 @@
 /**
- * Framework7 1.0.7
- * Full Featured Mobile HTML Framework For Building iOS Apps
+ * Framework7 1.2.0
+ * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * iOS Theme
  *
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: July 8, 2015
+ * Released on: August 21, 2015
  */
 /*==========================
 Framework7 Color Themes
@@ -1494,7 +1494,7 @@ Framework7 Layouts Themes
 .photo-browser.layout-dark .toolbar,
 .layout-dark .view[data-page="photo-browser-slides"] .toolbar,
 .view[data-page="photo-browser-slides"].layout-dark .toolbar {
-  background: rgba(19, 19, 19, 0.95);
+  background: rgba(30, 30, 30, 0.8);
 }
 .layout-dark .tabbar a:not(.active) {
   color: #ffffff;
@@ -1706,6 +1706,13 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-white .view[data-page="photo-browser-slides"] .toolbar,
 .view[data-page="photo-browser-slides"].layout-white .toolbar {
   background: rgba(255, 255, 255, 0.95);
+}
+.layout-white .photo-browser-dark .navbar,
+.photo-browser-dark.layout-white .navbar,
+.layout-white .photo-browser-dark .toolbar,
+.photo-browser-dark.layout-white .toolbar {
+  color: #fff;
+  background: rgba(30, 30, 30, 0.8);
 }
 .layout-white .tabbar a:not(.active) {
   color: #777777;

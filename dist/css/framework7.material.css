@@ -1,6 +1,6 @@
 /**
- * Framework7 1.0.7
- * Full Featured Mobile HTML Framework For Building iOS Apps
+ * Framework7 1.2.0
+ * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
  *
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: July 8, 2015
+ * Released on: August 21, 2015
  */
 html,
 body {
@@ -677,6 +677,8 @@ p {
   transform: translate3d(0, 0, 0);
 }
 .page-on-right {
+  opacity: 0;
+  pointer-events: none;
   -webkit-transform: translate3d(0, 56px, 0);
   transform: translate3d(0, 56px, 0);
 }
@@ -693,10 +695,12 @@ p {
   transition-duration: 300ms;
 }
 .page-from-right-to-center {
+  pointer-events: none;
   -webkit-animation: pageFromRightToCenter 300ms forwards;
   animation: pageFromRightToCenter 300ms forwards;
 }
 .page-from-center-to-right {
+  pointer-events: none;
   -webkit-animation: pageFromCenterToRight 300ms forwards;
   animation: pageFromCenterToRight 300ms forwards;
 }
@@ -1450,7 +1454,7 @@ html:not(.watch-active-state) .searchbar a:active:before,
   padding-top: 104px;
 }
 /* === Message Bar === */
-.messagebar {
+.toolbar.messagebar {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transition-duration: 0ms;
@@ -1462,7 +1466,7 @@ html:not(.watch-active-state) .searchbar a:active:before,
   font-size: 16px;
   overflow: hidden;
 }
-.messagebar:before {
+.toolbar.messagebar:before {
   content: '';
   position: absolute;
   left: 0;
@@ -1477,18 +1481,18 @@ html:not(.watch-active-state) .searchbar a:active:before,
   -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
 }
-html.pixel-ratio-2 .messagebar:before {
+html.pixel-ratio-2 .toolbar.messagebar:before {
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
-html.pixel-ratio-3 .messagebar:before {
+html.pixel-ratio-3 .toolbar.messagebar:before {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
-.messagebar.toolbar {
+.toolbar.messagebar.toolbar {
   background: #fff;
 }
-.messagebar textarea {
+.toolbar.messagebar textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -1514,7 +1518,7 @@ html.pixel-ratio-3 .messagebar:before {
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
 }
-.messagebar a.link {
+.toolbar.messagebar a.link {
   color: #333;
   -ms-flex-item-align: flex-end;
   -webkit-align-self: flex-end;
@@ -1522,22 +1526,22 @@ html.pixel-ratio-3 .messagebar:before {
   height: 48px;
   line-height: 48px;
 }
-.messagebar a.link:before {
+.toolbar.messagebar a.link:before {
   background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
 }
-.messagebar .link {
+.toolbar.messagebar .link {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
 }
-.messagebar ~ .page-content {
+.toolbar.messagebar ~ .page-content {
   padding-bottom: 48px;
 }
-.page.no-toolbar .messagebar ~ .page-content {
+.page.no-toolbar .toolbar.messagebar ~ .page-content {
   padding-bottom: 48px;
 }
-.hidden-toolbar .messagebar {
+.hidden-toolbar .toolbar.messagebar {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transition-duration: 0ms;
@@ -1647,12 +1651,12 @@ i.icon.icon-plus {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23FFFFFF'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M19%2013h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
 }
 .badge {
-  font-size: 12px;
+  font-size: 10px;
   display: inline-block;
   color: #fff;
   background: #8e8e93;
   border-radius: 3px;
-  padding: 1px 7px;
+  padding: 1px 6px;
   box-sizing: border-box;
 }
 .icon .badge {
@@ -2193,10 +2197,10 @@ html:not(.watch-active-state) .list-block .item-link:active,
 .list-block .item-text {
   font-size: 14px;
   color: #757575;
-  line-height: 19px;
+  line-height: 20px;
   position: relative;
   overflow: hidden;
-  max-height: 38px;
+  max-height: 40px;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -2535,6 +2539,7 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 }
 .list-block .focus-state .floating-label,
 .list-block .not-empty-state .floating-label {
+  color: rgba(0, 0, 0, 0.65);
   -webkit-transform: scale(1) translateY(0);
   transform: scale(1) translateY(0);
 }

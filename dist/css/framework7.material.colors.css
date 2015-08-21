@@ -1,6 +1,6 @@
 /**
- * Framework7 1.0.7
- * Full Featured Mobile HTML Framework For Building iOS Apps
+ * Framework7 1.2.0
+ * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
  *
@@ -12,8 +12,150 @@
  * 
  * Licensed under MIT
  * 
- * Released on: July 8, 2015
+ * Released on: August 21, 2015
  */
+/*==========================
+Framework7 Layouts Themes
+==========================*/
+/* === Dark layout === */
+.layout-dark .page,
+.layout-dark .login-screen-content,
+.page.layout-dark,
+.layout-dark .panel,
+.panel.layout-dark {
+  background-color: #222222;
+  color: rgba(255, 255, 255, 0.87);
+}
+.layout-dark .content-block-title {
+  color: rgba(255, 255, 255, 0.87);
+}
+.layout-dark .content-block-inner:before {
+  background-color: #393939;
+}
+.layout-dark .content-block-inner:after {
+  background-color: #393939;
+}
+.layout-dark .popover .list-block ul {
+  background: none;
+}
+.layout-dark .card {
+  background: #1c1c1c;
+}
+.layout-dark .card-header:after {
+  background-color: #393939;
+}
+.layout-dark .card-footer {
+  color: #bbbbbb;
+}
+.layout-dark .card-footer:before {
+  background-color: #393939;
+}
+.layout-dark .list-block ul:before,
+.list-block.layout-dark ul:before {
+  background-color: #393939;
+}
+.layout-dark .list-block ul:after,
+.list-block.layout-dark ul:after {
+  background-color: #393939;
+}
+.layout-dark .list-block.inset ul,
+.list-block.layout-dark.inset ul {
+  background: #1c1c1c;
+}
+.layout-dark .list-block.notifications > ul,
+.list-block.layout-dark.notifications > ul {
+  background: none;
+}
+.layout-dark li.sorting {
+  background-color: rgba(34, 34, 34, 0.8);
+}
+.layout-dark .swipeout-actions-left a,
+.layout-dark .swipeout-actions-right a {
+  background-color: #444444;
+}
+.layout-dark .item-inner:after,
+.layout-dark .list-block ul ul li:last-child .item-inner:after {
+  background-color: #393939;
+}
+.layout-dark .item-after,
+.layout-dark .item-text {
+  color: rgba(255, 255, 255, 0.7);
+}
+.layout-dark .list-block-label {
+  color: #bbbbbb;
+}
+.layout-dark .item-divider,
+.layout-dark .list-group-title {
+  background: #1a1a1a;
+  color: #bbbbbb;
+}
+.layout-dark .item-divider:before,
+.layout-dark .list-group-title:before {
+  background-color: #393939;
+}
+html:not(.watch-active-state) .layout-dark .item-link:active,
+html:not(.watch-active-state) .layout-dark label.label-checkbox:active,
+html:not(.watch-active-state) .layout-dark label.label-radio:active,
+.layout-dark .item-link.active-state,
+.layout-dark label.label-checkbox.active-state,
+.layout-dark label.label-radio.active-state {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.layout-dark .list-block input[type="text"],
+.layout-dark .list-block input[type="password"],
+.layout-dark .list-block input[type="search"],
+.layout-dark .list-block input[type="email"],
+.layout-dark .list-block input[type="tel"],
+.layout-dark .list-block input[type="url"],
+.layout-dark .list-block input[type="date"],
+.layout-dark .list-block input[type="datetime-local"],
+.layout-dark .list-block input[type="time"],
+.layout-dark .list-block input[type="number"],
+.layout-dark .list-block select,
+.layout-dark .list-block textarea {
+  color: #ffffff;
+}
+.layout-dark .list-block input[type="text"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="password"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="search"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="email"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="tel"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="url"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="date"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="datetime-local"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="time"]::-webkit-input-placeholder,
+.layout-dark .list-block input[type="number"]::-webkit-input-placeholder,
+.layout-dark .list-block select::-webkit-input-placeholder,
+.layout-dark .list-block textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.layout-dark .label-switch .checkbox {
+  background: rgba(255, 255, 255, 0.3);
+}
+.layout-dark .item-inner:not(.focus-state) .label,
+.layout-dark .item-inner:not(.focus-state) .floating-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+.layout-dark .item-inner:not(.focus-state):not(.not-empty-state) .item-input-field:after,
+.layout-dark .item-inner:not(.focus-state):not(.not-empty-state) .input-field:after {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.layout-dark label.label-checkbox i.icon-form-checkbox {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.layout-dark label.label-radio i.icon-form-radio {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.layout-dark .item-link.list-button:after {
+  background-color: #393939;
+}
+.layout-dark .page-content .ripple-wave {
+  background: rgba(255, 255, 255, 0.3);
+}
+html:not(.watch-active-state) .layout-dark .button:not(.button-fill):active,
+.layout-dark .button:not(.button-fill).active-state {
+  background: rgba(255, 255, 255, 0.1);
+}
 /*==========================
 Framework7 Color Themes
 ==========================*/
@@ -4930,145 +5072,4 @@ html:not(.watch-active-state) .floating-button.color-black:active,
 }
 .ripple-black .ripple-wave {
   background-color: rgba(0, 0, 0, 0.3);
-}
-/*==========================
-Framework7 Layouts Themes
-==========================*/
-/* === Dark layout === */
-.layout-dark .page,
-.layout-dark .login-screen-content,
-.page.layout-dark,
-.layout-dark .panel,
-.panel.layout-dark {
-  background-color: #222222;
-  color: rgba(255, 255, 255, 0.87);
-}
-.layout-dark .content-block-title {
-  color: rgba(255, 255, 255, 0.87);
-}
-.layout-dark .content-block-inner:before {
-  background-color: #393939;
-}
-.layout-dark .content-block-inner:after {
-  background-color: #393939;
-}
-.layout-dark .popover .list-block ul {
-  background: none;
-}
-.layout-dark .card {
-  background: #1c1c1c;
-}
-.layout-dark .card-header:after {
-  background-color: #393939;
-}
-.layout-dark .card-footer {
-  color: #bbbbbb;
-}
-.layout-dark .card-footer:before {
-  background-color: #393939;
-}
-.layout-dark .list-block ul:before,
-.list-block.layout-dark ul:before {
-  background-color: #393939;
-}
-.layout-dark .list-block ul:after,
-.list-block.layout-dark ul:after {
-  background-color: #393939;
-}
-.layout-dark .list-block.inset ul,
-.list-block.layout-dark.inset ul {
-  background: #1c1c1c;
-}
-.layout-dark .list-block.notifications > ul,
-.list-block.layout-dark.notifications > ul {
-  background: none;
-}
-.layout-dark li.sorting {
-  background-color: rgba(34, 34, 34, 0.8);
-}
-.layout-dark .swipeout-actions-left a,
-.layout-dark .swipeout-actions-right a {
-  background-color: #444444;
-}
-.layout-dark .item-inner:after,
-.layout-dark .list-block ul ul li:last-child .item-inner:after {
-  background-color: #393939;
-}
-.layout-dark .item-after,
-.layout-dark .item-text {
-  color: rgba(255, 255, 255, 0.7);
-}
-.layout-dark .list-block-label {
-  color: #bbbbbb;
-}
-.layout-dark .item-divider,
-.layout-dark .list-group-title {
-  background: #1a1a1a;
-  color: #bbbbbb;
-}
-.layout-dark .item-divider:before,
-.layout-dark .list-group-title:before {
-  background-color: #393939;
-}
-html:not(.watch-active-state) .layout-dark .item-link:active,
-html:not(.watch-active-state) .layout-dark label.label-checkbox:active,
-html:not(.watch-active-state) .layout-dark label.label-radio:active,
-.layout-dark .item-link.active-state,
-.layout-dark label.label-checkbox.active-state,
-.layout-dark label.label-radio.active-state {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-.layout-dark .list-block input[type="text"],
-.layout-dark .list-block input[type="password"],
-.layout-dark .list-block input[type="search"],
-.layout-dark .list-block input[type="email"],
-.layout-dark .list-block input[type="tel"],
-.layout-dark .list-block input[type="url"],
-.layout-dark .list-block input[type="date"],
-.layout-dark .list-block input[type="datetime-local"],
-.layout-dark .list-block input[type="time"],
-.layout-dark .list-block input[type="number"],
-.layout-dark .list-block select,
-.layout-dark .list-block textarea {
-  color: #ffffff;
-}
-.layout-dark .list-block input[type="text"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="password"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="search"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="email"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="tel"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="url"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="date"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="datetime-local"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="time"]::-webkit-input-placeholder,
-.layout-dark .list-block input[type="number"]::-webkit-input-placeholder,
-.layout-dark .list-block select::-webkit-input-placeholder,
-.layout-dark .list-block textarea::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.35);
-}
-.layout-dark .label-switch .checkbox {
-  background: rgba(255, 255, 255, 0.3);
-}
-.layout-dark .item-inner:not(.focus-state) .label,
-.layout-dark .item-inner:not(.focus-state) .floating-label {
-  color: rgba(255, 255, 255, 0.7);
-}
-.layout-dark .item-inner:not(.focus-state):not(.not-empty-state) .item-input-field:after,
-.layout-dark .item-inner:not(.focus-state):not(.not-empty-state) .input-field:after {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-.layout-dark label.label-checkbox i.icon-form-checkbox {
-  border-color: rgba(255, 255, 255, 0.7);
-}
-.layout-dark label.label-radio i.icon-form-radio {
-  border-color: rgba(255, 255, 255, 0.7);
-}
-.layout-dark .item-link.list-button:after {
-  background-color: #393939;
-}
-.layout-dark .searchbar {
-  background: #333333;
-}
-.layout-dark .searchbar:after {
-  background-color: #333333;
 }

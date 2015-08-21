@@ -1,6 +1,6 @@
 /**
- * Framework7 1.0.7
- * Full Featured Mobile HTML Framework For Building iOS Apps
+ * Framework7 1.2.0
+ * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * http://www.idangero.us/framework7
  * 
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: July 8, 2015
+ * Released on: August 21, 2015
  */
 (function () {
 
@@ -126,6 +126,7 @@
             precompileTemplates: false,
             // Material
             material: false,
+            materialPageLoadDelay: 0,
             materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
             materialRipple: true,
             materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .floating-button',
@@ -191,7 +192,13 @@
             };
             var i;
         
+            // Params
             params = params || {};
+        
+            // Disable dynamic navbar for material theme
+            if (params.dynamicNavbar && app.params.material) params.dynamicNavbar = false;
+        
+            // Extend params with defaults
             for (var def in defaults) {
                 if (typeof params[def] === 'undefined') {
                     params[def] = defaults[def];
@@ -1488,9 +1495,10 @@
                     }
                     m.textarea.css('height', newAreaHeight + 'px');
                     m.container.css('height', newBarHeight + 'px');
+                    var onBottom = (m.pageContent[0].scrollTop === m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
                     if (m.pageContent.length > 0) {
                         m.pageContent.css('padding-bottom', newBarHeight + 'px');
-                        if (m.pageContent.find('.messages-new-first').length === 0) {
+                        if (m.pageContent.find('.messages-new-first').length === 0 && onBottom) {
                             m.pageContent.scrollTop(m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
                         }
                     }
@@ -2500,7 +2508,14 @@
             }
             if (animatePages) {
                 // Set pages before animation
-                app.router.animatePages(oldPage, newPage, 'to-left', view);
+                if (app.params.material && app.params.materialPageLoadDelay) {
+                    setTimeout(function () {
+                        app.router.animatePages(oldPage, newPage, 'to-left', view);            
+                    }, app.params.materialPageLoadDelay);
+                }
+                else {
+                    app.router.animatePages(oldPage, newPage, 'to-left', view);    
+                }
         
                 // Dynamic navbar animation
                 if (dynamicNavbar) {
@@ -3404,7 +3419,7 @@
                 var modalLeft = 0;
                 var diff = 0;
                 // Top Position
-                var modalPosition = 'bottom';
+                var modalPosition = material ? 'bottom' : 'top';
                 if (material) {
                     if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
                         // On bottom
@@ -4014,11 +4029,13 @@
                         }
                         else {
                             var target = effect === 'reveal' ? views : panel;
+                            panel.trigger('close');
                             $('body').addClass('panel-closing');
                             target.transitionEnd(function () {
-                                app.allowPanelOpen = true;
+                                panel.trigger('closed');
                                 panel.css({display: ''});
                                 $('body').removeClass('panel-closing');
+                                app.allowPanelOpen = true;
                             });
                         }
                     }
@@ -4120,6 +4137,9 @@
                 lazyLoadImages = pageContainer.find('.lazy');
                 lazyLoadImages.each(function(index, el) {
                     el = $(el);
+                    if (el.parents('.tab:not(.active)').length > 0) {
+                        return;
+                    }
                     if (isElementInViewport(el[0])) {
                         loadImage(el);
                     }
@@ -4140,6 +4160,7 @@
             function attachEvents(destroy) {
                 var method = destroy ? 'off' : 'on';
                 lazyLoadImages[method]('lazy', lazyHandler);
+                lazyLoadImages.parents('.tab')[method]('show', lazyHandler);
                 pageContainer[method]('lazy', lazyHandler);
                 pageContent[method]('lazy', lazyHandler);
                 pageContent[method]('scroll', lazyHandler);
@@ -4177,6 +4198,17 @@
             if (pageContainer.length > 0) {
                 pageContainer.trigger('lazy');
             }
+        };
+
+        /*======================================================
+        ************   Material Preloader   ************
+        ======================================================*/
+        app.initPageMaterialPreloader = function (pageContainer) {
+            $(pageContainer).find('.preloader').each(function () {
+                if ($(this).children('svg').length === 0) {
+                    $(this).html(app.params.materialPreloaderSvg);
+                }
+            });
         };
 
         /*======================================================
@@ -6412,10 +6444,17 @@
                 var needsRipple = app.params.materialRippleElements;
                 var $el = $(el);
                 if ($el.is(needsRipple)) {
+                    if ($el.hasClass('no-ripple')) {
+                        return false;
+                    }
                     return $el;
                 }
                 else if ($el.parents(needsRipple).length > 0) {
-                    return $el.parents(needsRipple).eq(0);
+                    var rippleParent = $el.parents(needsRipple).eq(0);
+                    if (rippleParent.hasClass('no-ripple')) {
+                        return false;
+                    }
+                    return rippleParent;
                 }
                 else return false;
             }
@@ -6606,6 +6645,10 @@
                 }
         
                 if (document.activeElement === e.target) {
+                    if (app.params.activeState) removeActive();
+                    if (app.params.material && app.params.materialRipple) {
+                        rippleTouchEnd();
+                    }
                     return true;
                 }
         
@@ -6751,6 +6794,12 @@
                     document.addEventListener('mouseup', handleMouseUp);
                 }
             }
+            if (app.params.material && app.params.materialRipple) {
+                document.addEventListener('contextmenu', function (e) {
+                    removeActive();
+                    rippleTouchEnd();
+                });
+            }
                 
         };
         
@@ -6825,8 +6874,8 @@
                 
                 // Check if link is external 
                 if (isLink) {
-                    if (clicked.is(app.params.externalLinks) || url.indexOf('javascript:') >= 0) {
-                        if(clicked.attr('target') === '_system') {
+                    if (clicked.is(app.params.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
+                        if(url && clicked.attr('target') === '_system') {
                             e.preventDefault();
                             window.open(url, '_system');
                         }
@@ -7160,7 +7209,7 @@
                 var tag = this.nodeName.toLowerCase();
                 if (skipTypes.indexOf(type) >= 0) return;
                 if (skipNames.indexOf(name) >= 0 || !name) return;
-                if (tag === 'select' && input.attr('multiple')) {
+                if (tag === 'select' && input.prop('multiple')) {
                     skipNames.push(name);
                     formData[name] = [];
                     form.find('select[name="' + name + '"] option').each(function () {
@@ -7209,7 +7258,7 @@
                 if (!formData[name]) return;
                 if (skipTypes.indexOf(type) >= 0) return;
                 if (skipNames.indexOf(name) >= 0 || !name) return;
-                if (tag === 'select' && input.attr('multiple')) {
+                if (tag === 'select' && input.prop('multiple')) {
                     skipNames.push(name);
                     form.find('select[name="' + name + '"] option').each(function () {
                         if (formData[name].indexOf(this.value) >= 0) this.selected = true;
@@ -7357,15 +7406,19 @@
             pageContainer = $(pageContainer);
             var textareas = pageContainer.find('textarea.resizable');
             pageContainer.find('.item-input').each(function () {
-                var i = $(this);
+                var itemInput = $(this);
                 var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
-                i.find('input, select, textarea').each(function () {
-                    if (notInputs.indexOf($(this).attr('type')) < 0) {
-                        i.addClass('item-input-field');
+                itemInput.find('input, select, textarea').each(function () {
+                    var input = $(this);
+                    if (notInputs.indexOf(input.attr('type')) < 0) {
+                        itemInput.addClass('item-input-field');
+                        if (input.val().trim() !== '') {
+                            input.parents('.item-input, .input-field').add(input.parents('.item-inner')).addClass('not-empty-state');
+                        }
                     }
                 });
-                if (i.parents('.input-item, .inputs-list').length > 0) return;
-                i.parents('.list-block').eq(0).addClass('inputs-list');
+                if (itemInput.parents('.input-item, .inputs-list').length > 0) return;
+                itemInput.parents('.list-block').eq(0).addClass('inputs-list');
             });
         };
         /*======================================================
@@ -8180,6 +8233,7 @@
                 momentumRatio: 7,
                 freeMode: false,
                 // Common settings
+                closeByOutsideClick: true,
                 scrollToInput: true,
                 inputReadOnly: true,
                 convertToPopover: true,
@@ -8363,12 +8417,11 @@
                     if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
                     var previousActiveIndex = col.activeIndex;
                     col.activeIndex = activeIndex;
-                    col.wrapper.find('.picker-selected, .picker-after-selected, .picker-before-selected').removeClass('picker-selected picker-after-selected picker-before-selected');
+                    col.wrapper.find('.picker-selected').removeClass('picker-selected');
         
                     col.items.transition(transition);
+                    
                     var selectedItem = col.items.eq(activeIndex).addClass('picker-selected').transform('');
-                    var prevItems = selectedItem.prevAll().addClass('picker-before-selected');
-                    var nextItems = selectedItem.nextAll().addClass('picker-after-selected');
                         
                     // Set 3D rotate effect
                     if (p.params.rotateEffect) {
@@ -8654,7 +8707,7 @@
                     
             }
             
-            if (!p.inline) $('html').on('click', closeOnHTMLClick);
+            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
         
             // Open
             function onPickerClose() {
@@ -8804,6 +8857,7 @@
                     '</div>',
                 weekHeader: true,
                 // Common settings
+                closeByOutsideClick: true,
                 scrollToInput: true,
                 inputReadOnly: true,
                 convertToPopover: true,
@@ -9517,7 +9571,7 @@
                     
             }
             
-            if (!p.inline) $('html').on('click', closeOnHTMLClick);
+            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
         
             // Open
             function onPickerClose() {
@@ -9795,17 +9849,6 @@
                 item.remove();
                 if (container.find('.notification-item').length === 0) {
                     container.hide();
-                }
-            });
-        };
-
-        /*======================================================
-        ************   Material Preloader   ************
-        ======================================================*/
-        app.initPageMaterialPreloader = function (pageContainer) {
-            $(pageContainer).find('.preloader').each(function () {
-                if ($(this).children('svg').length === 0) {
-                    $(this).html(app.params.materialPreloaderSvg);
                 }
             });
         };
@@ -10093,10 +10136,16 @@
                 if (typeof value === 'undefined') {
                     // Get value
                     if (this[0]) {
-                        var dataKey = this[0].getAttribute('data-' + key);
-                        if (dataKey) return dataKey;
-                        else if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
-                        else return undefined;
+                        if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) {
+                            return this[0].dom7ElementDataStorage[key];
+                        }
+                        else {
+                            var dataKey = this[0].getAttribute('data-' + key);    
+                            if (dataKey) {
+                                return dataKey;
+                            }
+                            else return undefined;
+                        }
                     }
                     else return undefined;
                 }
@@ -10241,9 +10290,9 @@
             once: function (eventName, targetSelector, listener, capture) {
                 var dom = this;
                 if (typeof targetSelector === 'function') {
-                    targetSelector = false;
                     listener = arguments[1];
                     capture = arguments[2];
+                    targetSelector = false;
                 }
                 function proxy(e) {
                     listener(e);
@@ -10532,6 +10581,10 @@
                 }
                 return this;
             },
+            appendTo: function (parent) {
+                $(parent).append(this);
+                return this;
+            },
             prepend: function (newChild) {
                 var i, j;
                 for (i = 0; i < this.length; i++) {
@@ -10552,6 +10605,10 @@
                         this[i].insertBefore(newChild, this[i].childNodes[0]);
                     }
                 }
+                return this;
+            },
+            prependTo: function (parent) {
+                $(parent).prepend(this);
                 return this;
             },
             insertBefore: function (selector) {
@@ -10716,9 +10773,9 @@
             var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
             var notTrigger = ('resize scroll').split(' ');
             function createMethod(name) {
-                Dom7.prototype[name] = function (handler) {
+                Dom7.prototype[name] = function (targetSelector, listener, capture) {
                     var i;
-                    if (typeof handler === 'undefined') {
+                    if (typeof targetSelector === 'undefined') {
                         for (i = 0; i < this.length; i++) {
                             if (notTrigger.indexOf(name) < 0) {
                                 if (name in this[i]) this[i][name]();
@@ -10730,7 +10787,7 @@
                         return this;
                     }
                     else {
-                        return this.on(name, handler);
+                        return this.on(name, targetSelector, listener, capture);
                     }
                 };
             }
@@ -10816,7 +10873,10 @@
                     // Should be key=value object
                     stringData = $.serializeObject(options.data);
                 }
-                options.url += paramsPrefix + stringData;
+                if (stringData.length) {
+                    options.url += paramsPrefix + stringData;
+                    if (paramsPrefix === '?') paramsPrefix = '&';
+                }
             }
             // JSONP
             if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
@@ -11914,6 +11974,10 @@
             slidesPerColumnFill: 'column',
             slidesPerGroup: 1,
             centeredSlides: false,
+            slidesOffsetBefore: 0, // in px
+            slidesOffsetAfter: 0, // in px
+            // Round length
+            roundLengths: false,
             // Touches
             touchRatio: 1,
             touchAngle: 45,
@@ -11928,6 +11992,7 @@
             touchMoveStopPropagation: true,
             // Pagination
             pagination: null,
+            paginationElement: 'span',
             paginationClickable: false,
             paginationHide: false,
             paginationBulletRender: null,
@@ -11960,6 +12025,7 @@
             // Control
             control: undefined,
             controlInverse: false,
+            controlBy: 'slide', //or 'container'
             // Swiping/no swiping
             allowSwipeToPrev: true,
             allowSwipeToNext: true,
@@ -11987,6 +12053,7 @@
             nextSlideMessage: 'Next slide',
             firstSlideMessage: 'This is the first slide',
             lastSlideMessage: 'This is the last slide',
+            paginationBulletMessage: 'Go to slide {{index}}',
             // Callbacks
             runCallbacksOnInit: true
             /*
@@ -12038,7 +12105,7 @@
         var s = this;
         
         // Version
-        s.version = '3.0.8';
+        s.version = '3.1.0';
         
         // Params
         s.params = params;
@@ -12048,17 +12115,21 @@
         /*=========================
           Dom Library and plugins
           ===========================*/
-        var $;
-        if (typeof Dom7 === 'undefined') {
-            $ = window.Dom7 || window.Zepto || window.jQuery;
-        }
-        else {
+        if (typeof $ !== 'undefined' && typeof Dom7 !== 'undefined'){
             $ = Dom7;
+        }  
+        if (typeof $ === 'undefined') {
+            if (typeof Dom7 === 'undefined') {
+                $ = window.Dom7 || window.Zepto || window.jQuery;
+            }
+            else {
+                $ = Dom7;
+            }
+            if (!$) return;
         }
-        if (!$) return;
-        
         // Export it to Swiper instance
         s.$ = $;
+        
         /*=========================
           Preparation - Define Container, Wrapper and Pagination
           ===========================*/
@@ -12176,7 +12247,9 @@
         // Velocity
         s.velocity = 0;
         
-        // Locks, unlocks
+        /*=========================
+          Locks, unlocks
+          ===========================*/
         s.lockSwipeToNext = function () {
             s.params.allowSwipeToNext = false;
         };
@@ -12196,7 +12269,12 @@
             s.params.allowSwipeToNext = s.params.allowSwipeToPrev = true;
         };
         
-        
+        /*=========================
+          Round helper
+          ===========================*/
+        function round(a) {
+            return Math.floor(a);
+        }  
         /*=========================
           Set grab cursor
           ===========================*/
@@ -12338,6 +12416,12 @@
             if (width === 0 && isH() || height === 0 && !isH()) {
                 return;
             }
+            
+            //Subtract paddings
+            width = width - parseInt(s.container.css('padding-left'), 10) - parseInt(s.container.css('padding-right'), 10);
+            height = height - parseInt(s.container.css('padding-top'), 10) - parseInt(s.container.css('padding-bottom'), 10);
+            
+            // Store values
             s.width = width;
             s.height = height;
             s.size = isH() ? s.width : s.height;
@@ -12350,7 +12434,7 @@
             s.slidesSizesGrid = [];
         
             var spaceBetween = s.params.spaceBetween,
-                slidePosition = 0,
+                slidePosition = -s.params.slidesOffsetBefore,
                 i,
                 prevSlideSize = 0,
                 index = 0;
@@ -12419,9 +12503,12 @@
                 if (slide.css('display') === 'none') continue;
                 if (s.params.slidesPerView === 'auto') {
                     slideSize = isH() ? slide.outerWidth(true) : slide.outerHeight(true);
+                    if (s.params.roundLengths) slideSize = round(slideSize);
                 }
                 else {
                     slideSize = (s.size - (s.params.slidesPerView - 1) * spaceBetween) / s.params.slidesPerView;
+                    if (s.params.roundLengths) slideSize = round(slideSize);
+        
                     if (isH()) {
                         s.slides[i].style.width = slideSize + 'px';
                     }
@@ -12452,7 +12539,7 @@
         
                 index ++;
             }
-            s.virtualSize = Math.max(s.virtualSize, s.size);
+            s.virtualSize = Math.max(s.virtualSize, s.size) + s.params.slidesOffsetAfter;
         
             var newSlidesGrid;
         
@@ -12681,11 +12768,14 @@
                         bulletsHTML += s.params.paginationBulletRender(i, s.params.bulletClass);
                     }
                     else {
-                        bulletsHTML += '<span class="' + s.params.bulletClass + '"></span>';
+                        bulletsHTML += '<' + s.params.paginationElement+' class="' + s.params.bulletClass + '"></' + s.params.paginationElement + '>';
                     }
                 }
                 s.paginationContainer.html(bulletsHTML);
                 s.bullets = s.paginationContainer.find('.' + s.params.bulletClass);
+                if (s.params.paginationClickable && s.params.a11y && s.a11y) {
+                    s.a11y.initPagination();
+                }
             }
         };
         /*=========================
@@ -12708,11 +12798,14 @@
             }
             if (updateTranslate) {
                 var translated, newTranslate;
+                if (s.controller && s.controller.spline) {
+                    s.controller.spline = undefined;
+                }
                 if (s.params.freeMode) {
                     forceSetTranslate();
                 }
                 else {
-                    if (s.params.slidesPerView === 'auto' && s.isEnd && !s.params.centeredSlides) {
+                    if ((s.params.slidesPerView === 'auto' || s.params.slidesPerView > 1) && s.isEnd && !s.params.centeredSlides) {
                         translated = s.slideTo(s.slides.length - 1, 0, false, true);
                     }
                     else {
@@ -12730,12 +12823,19 @@
           Resize Handler
           ===========================*/
         s.onResize = function (forceUpdatePagination) {
+            // Disable locks on resize
+            var allowSwipeToPrev = s.params.allowSwipeToPrev;
+            var allowSwipeToNext = s.params.allowSwipeToNext;
+            s.params.allowSwipeToPrev = s.params.allowSwipeToNext = true;
+        
             s.updateContainerSize();
             s.updateSlidesSize();
-            s.updateProgress();
             if (s.params.slidesPerView === 'auto' || s.params.freeMode || forceUpdatePagination) s.updatePagination();
             if (s.params.scrollbar && s.scrollbar) {
                 s.scrollbar.set();
+            }
+            if (s.controller && s.controller.spline) {
+                s.controller.spline = undefined;
             }
             if (s.params.freeMode) {
                 var newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
@@ -12745,14 +12845,16 @@
             }
             else {
                 s.updateClasses();
-                if (s.params.slidesPerView === 'auto' && s.isEnd && !s.params.centeredSlides) {
+                if ((s.params.slidesPerView === 'auto' || s.params.slidesPerView > 1) && s.isEnd && !s.params.centeredSlides) {
                     s.slideTo(s.slides.length - 1, 0, false, true);
                 }
                 else {
                     s.slideTo(s.activeIndex, 0, false, true);
                 }
             }
-        
+            // Return locks after resize
+            s.params.allowSwipeToPrev = allowSwipeToPrev;
+            s.params.allowSwipeToNext = allowSwipeToNext;
         };
         
         /*=========================
@@ -12815,6 +12917,7 @@
             }
             if (s.params.pagination && s.params.paginationClickable) {
                 $(s.paginationContainer)[actionDom]('click', '.' + s.params.bulletClass, s.onClickIndex);
+                if (s.params.a11y && s.a11y) $(s.paginationContainer)[actionDom]('keydown', '.' + s.params.bulletClass, s.a11y.onEnterKey);
             }
         
             // Prevent Links Clicks
@@ -12844,10 +12947,12 @@
         // Clicks
         s.onClickNext = function (e) {
             e.preventDefault();
+            if (s.isEnd && !s.params.loop) return;
             s.slideNext();
         };
         s.onClickPrev = function (e) {
             e.preventDefault();
+            if (s.isBeginning && !s.params.loop) return;
             s.slidePrev();
         };
         s.onClickIndex = function (e) {
@@ -12997,8 +13102,13 @@
             if (isTouchEvent && e.type === 'mousemove') return;
             if (e.preventedByNestedSwiper) return;
             if (s.params.onlyExternal) {
-                isMoved = true;
+                // isMoved = true;
                 s.allowClick = false;
+                if (isTouched) {
+                    s.touches.startX = s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                    s.touches.startY = s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                    touchStartTime = Date.now();
+                }
                 return;
             }
             if (isTouchEvent && document.activeElement) {
@@ -13072,7 +13182,7 @@
             isMoved = true;
         
             var diff = s.touches.diff = isH() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
-        
+            
             diff = diff * s.params.touchRatio;
             if (s.rtl) diff = -diff;
         
@@ -13429,11 +13539,10 @@
         
             // Normalize slideIndex
             for (var i = 0; i < s.slidesGrid.length; i++) {
-                if (- translate >= s.slidesGrid[i]) {
+                if (- Math.floor(translate * 100) >= Math.floor(s.slidesGrid[i] * 100)) {
                     slideIndex = i;
                 }
             }
-        
             if (typeof speed === 'undefined') speed = s.params.speed;
             s.previousIndex = s.activeIndex || 0;
             s.activeIndex = slideIndex;
@@ -14227,30 +14336,88 @@
           Controller
           ===========================*/
         s.controller = {
+            LinearSpline: function (x, y) {
+                this.x = x;
+                this.y = y;
+                this.lastIndex = x.length - 1;
+                // Given an x value (x2), return the expected y2 value:
+                // (x1,y1) is the known point before given value,
+                // (x3,y3) is the known point after given value.
+                var i1, i3;
+                var l = this.x.length;
+        
+                this.interpolate = function (x2) {
+                    if (!x2) return 0;
+        
+                    // Get the indexes of x1 and x3 (the array indexes before and after given x2):
+                    i3 = binarySearch(this.x, x2);
+                    i1 = i3 - 1;
+        
+                    // We have our indexes i1 & i3, so we can calculate already:
+                    // y2 := ((x2−x1) × (y3−y1)) ÷ (x3−x1) + y1
+                    return ((x2 - this.x[i1]) * (this.y[i3] - this.y[i1])) / (this.x[i3] - this.x[i1]) + this.y[i1];
+                };
+        
+                var binarySearch = (function() {
+                    var maxIndex, minIndex, guess;
+                    return function(array, val) {
+                        minIndex = -1;
+                        maxIndex = array.length;
+                        while (maxIndex - minIndex > 1)
+                            if (array[guess = maxIndex + minIndex >> 1] <= val) {
+                                minIndex = guess;
+                            } else {
+                                maxIndex = guess;
+                            }
+                        return maxIndex;
+                    };
+                })();
+            },
+            //xxx: for now i will just save one spline function to to 
+            getInterpolateFunction: function(c){
+                if(!s.controller.spline) s.controller.spline = s.params.loop ? 
+                    new s.controller.LinearSpline(s.slidesGrid, c.slidesGrid) :
+                    new s.controller.LinearSpline(s.snapGrid, c.snapGrid);
+            },
             setTranslate: function (translate, byController) {
-                var controlled = s.params.control;
-                var multiplier, controlledTranslate;
-                function setControlledTranslate(c) {
+               var controlled = s.params.control;
+               var multiplier, controlledTranslate;
+               function setControlledTranslate(c) {
+                    // this will create an Interpolate function based on the snapGrids
+                    // x is the Grid of the scrolled scroller and y will be the controlled scroller
+                    // it makes sense to create this only once and recall it for the interpolation
+                    // the function does a lot of value caching for performance 
                     translate = c.rtl && c.params.direction === 'horizontal' ? -s.translate : s.translate;
-                    multiplier = (c.maxTranslate() - c.minTranslate()) / (s.maxTranslate() - s.minTranslate());
-                    controlledTranslate = (translate - s.minTranslate()) * multiplier + c.minTranslate();
+                    if (s.params.controlBy === 'slide') {
+                        s.controller.getInterpolateFunction(c);
+                        // i am not sure why the values have to be multiplicated this way, tried to invert the snapGrid
+                        // but it did not work out
+                        controlledTranslate = -s.controller.spline.interpolate(-translate);
+                    }
+                        
+                    if(!controlledTranslate || s.params.controlBy === 'container'){
+                        multiplier = (c.maxTranslate() - c.minTranslate()) / (s.maxTranslate() - s.minTranslate());
+                        controlledTranslate = (translate - s.minTranslate()) * multiplier + c.minTranslate();
+                    }
+                   
                     if (s.params.controlInverse) {
                         controlledTranslate = c.maxTranslate() - controlledTranslate;
                     }
                     c.updateProgress(controlledTranslate);
                     c.setWrapperTranslate(controlledTranslate, false, s);
                     c.updateActiveIndex();
-                }
-                if (s.isArray(controlled)) {
-                    for (var i = 0; i < controlled.length; i++) {
-                        if (controlled[i] !== byController && controlled[i] instanceof Swiper) {
-                            setControlledTranslate(controlled[i]);
-                        }
-                    }
-                }
-                else if (controlled instanceof Swiper && byController !== controlled) {
-                    setControlledTranslate(controlled);
-                }
+               }
+               if (s.isArray(controlled)) {
+                   for (var i = 0; i < controlled.length; i++) {
+                       if (controlled[i] !== byController && controlled[i] instanceof Swiper) {
+                           setControlledTranslate(controlled[i]);
+                       }
+                   }
+               }
+               else if (controlled instanceof Swiper && byController !== controlled) {
+        
+                   setControlledTranslate(controlled);
+               }
             },
             setTransition: function (duration, byController) {
                 var controlled = s.params.control;
@@ -14261,7 +14428,11 @@
                         c.onTransitionStart();
                         c.wrapper.transitionEnd(function(){
                             if (!controlled) return;
+                            if (c.params.loop && s.params.controlBy === 'slide') {
+                                c.fixLoop();
+                            }
                             c.onTransitionEnd();
+                            
                         });
                     }
                 }
@@ -14424,7 +14595,7 @@
         // Accessibility tools
         s.a11y = {
             makeFocusable: function ($el) {
-                $el[0].tabIndex = '0';
+                $el.attr('tabIndex', '0');
                 return $el;
             },
             addRole: function ($el, role) {
@@ -14452,20 +14623,23 @@
                 if ($(event.target).is(s.params.nextButton)) {
                     s.onClickNext(event);
                     if (s.isEnd) {
-                        s.a11y.notify(s.params.lastSlideMsg);
+                        s.a11y.notify(s.params.lastSlideMessage);
                     }
                     else {
-                        s.a11y.notify(s.params.nextSlideMsg);
+                        s.a11y.notify(s.params.nextSlideMessage);
                     }
                 }
                 else if ($(event.target).is(s.params.prevButton)) {
                     s.onClickPrev(event);
                     if (s.isBeginning) {
-                        s.a11y.notify(s.params.firstSlideMsg);
+                        s.a11y.notify(s.params.firstSlideMessage);
                     }
                     else {
-                        s.a11y.notify(s.params.prevSlideMsg);
+                        s.a11y.notify(s.params.prevSlideMessage);
                     }
+                }
+                if ($(event.target).is('.' + s.params.bulletClass)) {
+                    $(event.target)[0].click();
                 }
             },
         
@@ -14483,16 +14657,26 @@
                     var nextButton = $(s.params.nextButton);
                     s.a11y.makeFocusable(nextButton);
                     s.a11y.addRole(nextButton, 'button');
-                    s.a11y.addLabel(nextButton, s.params.nextSlideMsg);
+                    s.a11y.addLabel(nextButton, s.params.nextSlideMessage);
                 }
                 if (s.params.prevButton) {
                     var prevButton = $(s.params.prevButton);
                     s.a11y.makeFocusable(prevButton);
                     s.a11y.addRole(prevButton, 'button');
-                    s.a11y.addLabel(prevButton, s.params.prevSlideMsg);
+                    s.a11y.addLabel(prevButton, s.params.prevSlideMessage);
                 }
         
                 $(s.container).append(s.a11y.liveRegion);
+            },
+            initPagination: function () {
+                if (s.params.pagination && s.params.paginationClickable && s.bullets && s.bullets.length) {
+                    s.bullets.each(function () {
+                        var bullet = $(this);
+                        s.a11y.makeFocusable(bullet);
+                        s.a11y.addRole(bullet, 'button');
+                        s.a11y.addLabel(bullet, s.params.paginationBulletMessage.replace(/{{index}}/, bullet.index() + 1));
+                    });
+                }
             },
             destroy: function () {
                 if (s.a11y.liveRegion && s.a11y.liveRegion.length > 0) s.a11y.liveRegion.remove();
@@ -14660,7 +14844,7 @@
             var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
             var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
             return {
-                ios: ipad || iphone || ipad,
+                ios: ipad || iphone || ipod,
                 android: android
             };
         })(),
