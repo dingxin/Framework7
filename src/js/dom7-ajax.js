@@ -175,6 +175,9 @@ $.ajax = function (options) {
             }
         }
         else {
+        	if(options.contentType) {
+        		xhr.setRequestHeader('Content-Type', options.contentType);
+        	}
             postData = options.data;
         }
 
