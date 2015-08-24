@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: August 21, 2015
+ * Released on: August 24, 2015
  */
 (function () {
 
@@ -10974,6 +10974,9 @@
                     }
                 }
                 else {
+                	if(options.contentType) {
+                		xhr.setRequestHeader('Content-Type', options.contentType);
+                	}
                     postData = options.data;
                 }
         
