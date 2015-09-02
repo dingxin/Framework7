@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: August 24, 2015
+ * Released on: September 2, 2015
  */
 (function () {
 
@@ -2130,7 +2130,7 @@
                 var t7_ctx, t7_template;
                 if (typeof content === 'string') {
                     if (url) {
-                        if (app.template7Cache[url]) t7_template = t7.cache[url];
+                        if (app.template7Cache[url] && !options.ignoreCache) t7_template = t7.cache[url];
                         else {
                             t7_template = t7.compile(content);
                             t7.cache[url] = t7_template;
@@ -3128,8 +3128,8 @@
                 var textHTML = params.text ? '<div class="modal-text">' + params.text + '</div>' : '';
                 var afterTextHTML = params.afterText ? params.afterText : '';
                 var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
-                var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical' : '';
-                modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
+                var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
+                modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
             }
         
             _modalTemplateTempDiv.innerHTML = modalHTML;
@@ -5052,7 +5052,6 @@
             var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionIsLabel, previousGroup, optionColor, optionClassName, optionData;
             for (var i = 0; i < select.length; i++) {
                 option = $(select[i]);
-                if (option[0].disabled) continue;
                 optionData = option.dataset();
                 optionImage = optionData.optionImage || $selectData.optionImage;
                 optionIcon = optionData.optionIcon || $selectData.optionIcon;
@@ -5060,6 +5059,7 @@
                 if (material) optionHasMedia = optionImage || optionIcon;
                 optionColor = optionData.optionColor;
                 optionClassName = optionData.optionClass;
+                if (option[0].disabled) optionClassName += ' disabled';
                 optionGroup = option.parent('optgroup')[0];
                 optionGroupLabel = optionGroup && optionGroup.label;
                 optionIsLabel = false;
@@ -9208,6 +9208,7 @@
                         var col = j;
                         dayIndex ++;
                         var dayNumber = dayIndex - firstDayOfMonthIndex;
+                        var weekDayIndex = (col - 1 + p.params.firstDay > 6) ? (col - 1 - 7 + p.params.firstDay) : (col - 1 + p.params.firstDay);
                         var addClass = '';
                         if (dayNumber < 0) {
                             dayNumber = daysInPrevMonth + dayNumber + 1;
@@ -9230,7 +9231,7 @@
                         // Selected
                         if (currentValues.indexOf(dayDate) >= 0) addClass += ' picker-calendar-day-selected';
                         // Weekend
-                        if (p.params.weekendDays.indexOf(col - 1) >= 0) {
+                        if (p.params.weekendDays.indexOf(weekDayIndex) >= 0) {
                             addClass += ' picker-calendar-day-weekend';
                         }
                         // Disabled
@@ -9906,7 +9907,7 @@
             return prevent;
         };
         // Preprocess content by plugin
-        app.pluginProcess = function (action, data) {
+        app.pluginProcess = function (process, data) {
             var processed = data;
             for (var i = 0; i < _plugins.length; i++) {
                 if (_plugins[i].preprocess && process in _plugins[i].preprocess) {
@@ -11020,7 +11021,8 @@
                         }
                     }
                     else {
-                        fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', xhr.responseText, xhr.status, xhr);
+                        responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
+                        fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
                     }
                 }
                 else {
@@ -11927,6 +11929,9 @@
             // autoplay
             autoplay: false,
             autoplayDisableOnInteraction: true,
+            // To support iOS's swipe-to-go-back gesture (when being used in-app, with UIWebView).
+            iOSEdgeSwipeDetection: false,
+            iOSEdgeSwipeThreshold: 20,
             // Free mode
             freeMode: false,
             freeModeMomentum: true,
@@ -11967,6 +11972,7 @@
             mousewheelReleaseOnEdges: false,
             mousewheelInvert: false,
             mousewheelForceToAxis: false,
+            mousewheelSensitivity: 1,
             // Hash Navigation
             hashnav: false,
             // Slides grid
@@ -12609,8 +12615,8 @@
             if (s.slides.length === 0) return;
             if (typeof s.slides[0].swiperSlideOffset === 'undefined') s.updateSlidesOffset();
         
-            var offsetCenter = s.params.centeredSlides ? -translate + s.size / 2 : -translate;
-            if (s.rtl) offsetCenter = s.params.centeredSlides ? translate - s.size / 2 : translate;
+            var offsetCenter = -translate;
+            if (s.rtl) offsetCenter = translate;
         
             // Visible Slides
             var containerBox = s.container[0].getBoundingClientRect();
@@ -12619,10 +12625,9 @@
             s.slides.removeClass(s.params.slideVisibleClass);
             for (var i = 0; i < s.slides.length; i++) {
                 var slide = s.slides[i];
-                var slideCenterOffset = (s.params.centeredSlides === true) ? slide.swiperSlideSize / 2 : 0;
-                var slideProgress = (offsetCenter - slide.swiperSlideOffset - slideCenterOffset) / (slide.swiperSlideSize + s.params.spaceBetween);
+                var slideProgress = (offsetCenter - slide.swiperSlideOffset) / (slide.swiperSlideSize + s.params.spaceBetween);
                 if (s.params.watchSlidesVisibility) {
-                    var slideBefore = -(offsetCenter - slide.swiperSlideOffset - slideCenterOffset);
+                    var slideBefore = -(offsetCenter - slide.swiperSlideOffset);
                     var slideAfter = slideBefore + s.slidesSizesGrid[i];
                     var isVisible =
                         (slideBefore >= 0 && slideBefore < s.size) ||
@@ -13075,12 +13080,21 @@
             if (s.params.swipeHandler) {
                 if (!findElementInEvent(e, s.params.swipeHandler)) return;
             }
+        
+            var startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+            var startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+            
+            // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
+            if(s.device.ios && s.params.iOSEdgeSwipeDetection && startX <= s.params.iOSEdgeSwipeThreshold) {
+                return;
+            }
+        
             isTouched = true;
             isMoved = false;
             isScrolling = undefined;
             startMoving = undefined;
-            s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-            s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+            s.touches.startX = startX;
+            s.touches.startY = startY;
             touchStartTime = Date.now();
             s.allowClick = true;
             s.updateContainerSize();
@@ -13518,14 +13532,6 @@
             if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
         
             var translate = - s.snapGrid[s.snapIndex];
-            
-            // Directions locks
-            if (!s.params.allowSwipeToNext && translate < s.translate && translate < s.minTranslate()) {
-                return false;
-            }
-            if (!s.params.allowSwipeToPrev && translate > s.translate && translate > s.maxTranslate()) {
-                return false;
-            }
         
             // Stop autoplay
             if (s.params.autoplay && s.autoplaying) {
@@ -13545,6 +13551,16 @@
                     slideIndex = i;
                 }
             }
+        
+            // Directions locks
+            if (!s.params.allowSwipeToNext && translate < s.translate && translate < s.minTranslate()) {
+                return false;
+            }
+            if (!s.params.allowSwipeToPrev && translate > s.translate && translate > s.maxTranslate()) {
+                if ((s.activeIndex || 0) !== slideIndex ) return false;
+            }
+        
+            // Update Index
             if (typeof speed === 'undefined') speed = s.params.speed;
             s.previousIndex = s.activeIndex || 0;
             s.activeIndex = slideIndex;
@@ -13788,6 +13804,9 @@
             s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
         
             var slides = s.wrapper.children('.' + s.params.slideClass);
+        
+            if(s.params.slidesPerView === 'auto' && !s.params.loopedSlides) s.params.loopedSlides = slides.length;
+        
             s.loopedSlides = parseInt(s.params.loopedSlides || s.params.slidesPerView, 10);
             s.loopedSlides = s.loopedSlides + s.params.loopAdditionalSlides;
             if (s.loopedSlides > slides.length) {
