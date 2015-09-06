@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: September 2, 2015
+ * Released on: September 6, 2015
  */
 html,
 body {
@@ -2685,7 +2685,8 @@ textarea.resizable {
   transform: translate3d(0, 0, 0);
 }
 input[type="submit"].button,
-input[type="button"].button {
+input[type="button"].button,
+button.button {
   width: 100%;
 }
 html:not(.watch-active-state) .button:active,
@@ -3231,7 +3232,9 @@ html.android-4 .accordion-item-content {
 input[type="submit"].card-header a.link,
 input[type="submit"].card-footer a.link,
 input[type="button"].card-header a.link,
-input[type="button"].card-footer a.link {
+input[type="button"].card-footer a.link,
+button.card-header a.link,
+button.card-footer a.link {
   width: 100%;
 }
 html:not(.watch-active-state) .card-header a.link:active,
@@ -3535,7 +3538,9 @@ html.pixel-ratio-3 .card-footer:before {
 input[type="submit"].modal-button,
 input[type="submit"].modal-buttons .button,
 input[type="button"].modal-button,
-input[type="button"].modal-buttons .button {
+input[type="button"].modal-buttons .button,
+button.modal-button,
+button.modal-buttons .button {
   width: 100%;
 }
 html:not(.watch-active-state) .modal-button:active,
