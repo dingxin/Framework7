@@ -212,13 +212,12 @@ $.ajax = function (options) {
         if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
             var responseData;
             if (options.dataType === 'json') {
-                try {
-                    responseData = JSON.parse(xhr.responseText);
-                    fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
-                }
-                catch (err) {
-                    fireAjaxCallback('ajaxError', {xhr: xhr, parseerror: true}, 'error', xhr, 'parseerror');
-                }
+            	if(xhr.responseText) {
+            		responseData = JSON.parse(xhr.responseText);
+            	} else {
+            		responseData = null;
+            	}
+            	fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
             }
             else {
                 responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;

@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: September 6, 2015
+ * Released on: September 24, 2015
  */
 (function () {
 
@@ -79,9 +79,10 @@
             swipeoutActionsNoFold: false,
             swipeoutNoFollow: false,
             // Smart Select Back link template
+            smartSelectOpenIn: 'page', // or 'popup' or 'picker'
             smartSelectBackText: 'Back',
-            smartSelectInPopup: false,
             smartSelectPopupCloseText: 'Close',
+            smartSelectPickerCloseText: 'Done',
             smartSelectSearchbar: false,
             smartSelectBackOnSelect: false,
             // Tap Navbar or Statusbar to scroll to top
@@ -3498,7 +3499,7 @@
                         }
                         diff = diff - modalLeft;
                         modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
-                        modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
+                        modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 13), 13);
                         modalAngle.css({left: modalAngleLeft + 'px'});
         
                     }
@@ -3511,7 +3512,7 @@
                             modalAngle.removeClass('on-right').addClass('on-left');
                         }
                         modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
-                        modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
+                        modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 13), 13);
                         modalAngle.css({top: modalAngleTop + 'px'});
                     }
                 }
@@ -4578,6 +4579,12 @@
                         $button = $(buttonsRight[i]);
                         if (overswipeRightButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
                             $button.css({left: (overswipeRight ? -buttonOffset : 0) + 'px'});
+                            if (overswipeRight) {
+                                $button.addClass('swipeout-overswipe-active');
+                            }
+                            else {
+                                $button.removeClass('swipeout-overswipe-active');   
+                            }
                         }
                         $button.transform('translate3d(' + (translate - buttonOffset * (1 + Math.max(progress, -1))) + 'px,0,0)');
                     }
@@ -4599,6 +4606,12 @@
                         $button = $(buttonsLeft[i]);
                         if (overswipeLeftButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
                             $button.css({left: (overswipeLeft ? buttonOffset : 0) + 'px'});
+                            if (overswipeLeft) {
+                                $button.addClass('swipeout-overswipe-active');
+                            }
+                            else {
+                                $button.removeClass('swipeout-overswipe-active');   
+                            }
                         }
                         if (buttonsLeft.length > 1) {
                             $button.css('z-index', buttonsLeft.length - i); 
@@ -4771,12 +4784,14 @@
             var closeTO;
             function onSwipeoutClose() {
                 app.allowSwipeout = true;
+                if (el.hasClass('swipeout-opened')) return;
+                el.removeClass('transitioning');
                 buttons.transform('');
                 el.trigger('closed');
                 if (callback) callback.call(el[0]);
                 if (closeTO) clearTimeout(closeTO);
             }
-            el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(onSwipeoutClose);
+            el.find('.swipeout-content').transform('').transitionEnd(onSwipeoutClose);
             closeTO = setTimeout(onSwipeoutClose, 500);
             
             for (var i = 0; i < buttons.length; i++) {
@@ -4786,7 +4801,7 @@
                 else {
                     $(buttons[i]).transform('translate3d(' + (swipeOutActionsWidth - buttons[i].offsetWidth - buttons[i].offsetLeft) + 'px,0,0)');
                 }
-                $(buttons[i]).css({left:0 + 'px'});
+                $(buttons[i]).css({left:0 + 'px'}).removeClass('swipeout-overswipe-active');
             }
             if (app.swipeoutOpenedEl && app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
         };
@@ -5018,10 +5033,15 @@
             view = view[0].f7View;
         
             // Parameters
-            var openIn = smartSelect.attr('data-open-in');
-            if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
+            var openIn = smartSelect.attr('data-open-in') || app.params.smartSelectOpenIn;
             if (openIn === 'popup') {
                 if ($('.popup.smart-select-popup').length > 0) return;
+            }
+            else if (openIn === 'picker') {
+                if ($('.picker-modal.modal-in').length > 0 && !reLayout){
+                    if (smartSelect[0].f7SmartSelectPicker !== $('.picker-modal.modal-in:not(.modal-out)')[0]) app.closeModal($('.picker-modal.modal-in:not(.modal-out)'));
+                    else return;
+                }
             }
             else {
                 if (!view) return;
@@ -5030,10 +5050,17 @@
             var smartSelectData = smartSelect.dataset();
             var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
             var backText = smartSelectData.backText || app.params.smartSelectBackText;
-            var closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;
+            var closeText;
+            if (openIn === 'picker') {
+                closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;   
+            }
+            else {
+                closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;      
+            }
             var backOnSelect = smartSelectData.backOnSelect !== undefined ? smartSelectData.backOnSelect : app.params.smartSelectBackOnSelect;
             var formTheme = smartSelectData.formTheme || app.params.smartSelectFormTheme;
             var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
+            var toolbarTheme = smartSelectData.toolbarTheme || app.params.smartSelectToolbarTheme;
             var virtualList = smartSelectData.virtualList;
             var virtualListHeight = smartSelectData.virtualListHeight;
             var material = app.params.material;
@@ -5149,41 +5176,65 @@
                 }
             }
         
-            // Navbar HTML
-            if (!app._compiledTemplates.smartSelectNavbar) {
-                app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
-                    '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
-                        '<div class="navbar-inner">' +
-                            '{{leftTemplate}}' +
-                            '<div class="center sliding">{{pageTitle}}</div>' +
-                        '</div>' +
-                    '</div>'
-                );
-            }
-            var navbarHTML = app._compiledTemplates.smartSelectNavbar({
-                pageTitle: pageTitle,
-                backText: backText,
-                closeText: closeText,
-                openIn: openIn,
-                navbarTheme: navbarTheme,
-                inPopup: openIn === 'popup',
-                inPage: openIn === 'page',
-                leftTemplate: openIn === 'popup' ? 
-                    (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
-                    (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
-            });
-            
-            // Determine navbar layout type - static/fixed/through
+            // Toolbar / Navbar
+            var toolbarHTML = '', navbarHTML;
             var noNavbar = '', noToolbar = '', navbarLayout;
-            if (openIn === 'page') {
-                navbarLayout = 'static';
-                if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
-                if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
-                noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
-                noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+        
+            if (openIn === 'picker') {
+                if (!app._compiledTemplates.smartSelectToolbar) {
+                    app._compiledTemplates.smartSelectToolbar = t7.compile(app.params.smartSelectToolbarTemplate || 
+                        '<div class="toolbar {{#if toolbarTheme}}theme-{{toolbarTheme}}{{/if}}">' +
+                          '<div class="toolbar-inner">' +
+                            '<div class="left"></div>' +
+                            '<div class="right"><a href="#" class="link close-picker"><span>{{closeText}}</span></a></div>' +
+                        '</div>' +
+                      '</div>'
+                    );
+                }
+        
+                toolbarHTML = app._compiledTemplates.smartSelectToolbar({
+                    pageTitle: pageTitle,
+                    closeText: closeText,
+                    openIn: openIn,
+                    toolbarTheme: toolbarTheme,
+                    inPicker: openIn === 'picker'              
+                });
             }
             else {
-                navbarLayout = 'fixed';
+                // Navbar HTML
+                if (!app._compiledTemplates.smartSelectNavbar) {
+                    app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
+                        '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
+                            '<div class="navbar-inner">' +
+                                '{{leftTemplate}}' +
+                                '<div class="center sliding">{{pageTitle}}</div>' +
+                            '</div>' +
+                        '</div>'
+                    );
+                }
+                navbarHTML = app._compiledTemplates.smartSelectNavbar({
+                    pageTitle: pageTitle,
+                    backText: backText,
+                    closeText: closeText,
+                    openIn: openIn,
+                    navbarTheme: navbarTheme,
+                    inPopup: openIn === 'popup',
+                    inPage: openIn === 'page',
+                    leftTemplate: openIn === 'popup' ? 
+                        (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
+                        (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
+                });
+                // Determine navbar layout type - static/fixed/through
+                if (openIn === 'page') {
+                    navbarLayout = 'static';
+                    if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
+                    if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
+                    noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
+                    noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+                }
+                else {
+                    navbarLayout = 'fixed';
+                }
             }
                 
         
@@ -5208,13 +5259,13 @@
                                   '<div class="searchbar-overlay"></div>';
         
             var pageHTML =
-                (navbarLayout === 'through' ? navbarHTML : '') +
+                (openIn !== 'picker' && navbarLayout === 'through' ? navbarHTML : '') +
                 '<div class="pages">' +
                 '  <div data-page="' + pageName + '" data-select-name="' + selectName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
-                     (navbarLayout === 'fixed' ? navbarHTML : '') +
+                     (openIn !== 'picker' && navbarLayout === 'fixed' ? navbarHTML : '') +
                      (useSearchbar ? searchbarHTML : '') +
                 '    <div class="page-content">' +
-                       (navbarLayout === 'static' ? navbarHTML : '') +
+                       (openIn !== 'picker' && navbarLayout === 'static' ? navbarHTML : '') +
                 '      <div class="list-block ' + (virtualList ? 'virtual-list' : '') + ' smart-select-list-' + id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
                 '        <ul>' +
                             (virtualList ? '' : inputsHTML) +
@@ -5224,8 +5275,44 @@
                 '  </div>' +
                 '</div>';
         
-            // Define popup
-            var popup;
+            // Define popup and picker
+            var popup, picker;
+        
+            // Scroll SS Picker To Input
+            function scrollToInput() {
+                var pageContent = smartSelect.parents('.page-content');
+                if (pageContent.length === 0) return;
+                var paddingTop = parseInt(pageContent.css('padding-top'), 10),
+                    paddingBottom = parseInt(pageContent.css('padding-bottom'), 10),
+                    pageHeight = pageContent[0].offsetHeight - paddingTop - picker.height(),
+                    pageScrollHeight = pageContent[0].scrollHeight - paddingTop - picker.height(),
+                    newPaddingBottom;
+                var inputTop = smartSelect.offset().top - paddingTop + smartSelect[0].offsetHeight;
+                if (inputTop > pageHeight) {
+                    var scrollTop = pageContent.scrollTop() + inputTop - pageHeight;
+                    if (scrollTop + pageHeight > pageScrollHeight) {
+                        newPaddingBottom = scrollTop + pageHeight - pageScrollHeight + paddingBottom;
+                        if (pageHeight === pageScrollHeight) {
+                            newPaddingBottom = picker.height();
+                        }
+                        pageContent.css({'padding-bottom': (newPaddingBottom) + 'px'});
+                    }
+                    pageContent.scrollTop(scrollTop, 300);
+                }
+            }
+            // Close SS Picker on HTML Click
+            function closeOnHTMLClick(e) {
+                var close = true;
+                if (e.target === smartSelect[0] || $(e.target).parents(smartSelect[0]).length > 0) {
+                    close = false;
+                }
+                if ($(e.target).parents('.picker-modal').length > 0) {
+                    close = false;
+                }
+                if (close) {
+                    app.closeModal('.smart-select-picker.modal-in');   
+                }
+            }
         
             // Event Listeners on new page
             function handleInputs(container) {
@@ -5239,10 +5326,11 @@
                             return false;
                         }
                     });
-                    $(container).once(openIn === 'popup' ? 'closed': 'pageBeforeRemove', function () {
+                    $(container).once(openIn === 'popup' || openIn === 'picker' ? 'closed': 'pageBeforeRemove', function () {
                         if (virtualListInstance && virtualListInstance.destroy) virtualListInstance.destroy();
                     });
                 }
+                
                 $(container).on('change', 'input[name="' + inputName + '"]', function () {
                     var input = this;
                     var value = input.value;
@@ -5268,6 +5356,7 @@
                     smartSelect.find('.item-after').text(optionText.join(', '));
                     if (backOnSelect && inputType === 'radio') {
                         if (openIn === 'popup') app.closeModal(popup);
+                        else if (openIn === 'picker') app.closeModal(picker);
                         else view.router.back();
                     }
                 });
@@ -5295,6 +5384,52 @@
                 }
                 app.initPage(popup.find('.page'));
                 handleInputs(popup);
+            }
+            else if (openIn === 'picker') {
+                if (reLayout) {
+                    picker = $('.picker-modal.smart-select-picker .view');
+                    picker.html(pageHTML);
+                }
+                else {
+                    picker = app.pickerModal(
+                        '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '">' +
+                            toolbarHTML +
+                            '<div class="picker-modal-inner">' +
+                                '<div class="view">' +
+                                    pageHTML +
+                                '</div>' +
+                            '</div>' +
+                        '</div>'
+                        );
+                    picker = $(picker);
+        
+                    // Scroll To Input
+                    scrollToInput();
+        
+                    // Close On Click
+                    $('html').on('click', closeOnHTMLClick);
+        
+                    // On Close
+                    picker.once('close', function () {
+                        // Reset linked picker
+                        smartSelect[0].f7SmartSelectPicker = undefined;
+                        
+                        // Detach html click
+                        $('html').off('click', closeOnHTMLClick);    
+                        
+                        // Restore page padding bottom
+                        smartSelect.parents('.page-content').css({paddingBottom: ''});
+                    });
+        
+                    // Link Picker
+                    smartSelect[0].f7SmartSelectPicker = picker[0];
+                }
+        
+                // Init Page
+                app.initPage(picker.find('.page'));
+        
+                // Attach events
+                handleInputs(picker);
             }
             else {
                 $(document).once('pageInit', '.smart-select-page', pageInit);
@@ -5794,6 +5929,13 @@
                     else return;
                 }
                 
+                /*jshint validthis:true */
+                container = $(this);
+        
+                if (container.hasClass('refreshing')) {
+                    return;
+                }
+                
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
@@ -5802,8 +5944,7 @@
                 touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
-                /*jshint validthis:true */
-                container = $(this);
+                
             }
             
             function handleTouchMove(e) {
@@ -6141,12 +6282,14 @@
         app.initPageMaterialTabbar = function (pageContainer) {
             pageContainer = $(pageContainer);
             var tabbar = $(pageContainer).find('.tabbar');
-            if (tabbar.find('.tab-link-highlight').length === 0) {
+        
+            if (tabbar.length > 0 && tabbar.find('.tab-link-highlight').length === 0) {
                 tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
                 var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                var highlightTranslate = (app.rtl ? - tabbar.find('.tab-link.active').index(): tabbar.find('.tab-link.active').index()) * 100;
                 tabbar.find('.tab-link-highlight')
                     .css({width: tabLinkWidth + '%'})
-                    .transform('translate3d(' + tabbar.find('.tab-link.active').index() * 100 + '%,0,0)');
+                    .transform('translate3d(' + highlightTranslate + '%,0,0)');
             }
         };
 
@@ -6174,7 +6317,8 @@
             // Animated tabs
             var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
             if (isAnimatedTabs) {
-                tabs.transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
+                var tabTranslate = (app.rtl ? newTab.index() : -newTab.index()) * 100;
+                tabs.transform('translate3d(' + tabTranslate + '%,0,0)');
             }
         
             // Remove active class from old tabs
@@ -6234,9 +6378,10 @@
                             var clientLeft = tabbar[0].clientLeft;
                         }
                         var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                        var highlightTranslate = (app.rtl ? - tabLink.index() : tabLink.index()) * 100;
                         tabbar.find('.tab-link-highlight')
                             .css({width: tabLinkWidth + '%'})
-                            .transform('translate3d(' + tabLink.index() * 100 + '%,0,0)');
+                            .transform('translate3d(' + highlightTranslate + '%,0,0)');
                     }
                 }
             }
@@ -6527,6 +6672,19 @@
                 }
             }
         
+            // Send Click
+            function sendClick(e) {
+                var touch = e.changedTouches[0];
+                var evt = document.createEvent('MouseEvents');
+                var eventType = 'click';
+                if (app.device.android && targetElement.nodeName.toLowerCase() === 'select') {
+                    eventType = 'mousedown';
+                }
+                evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+                evt.forwardedTouchEvent = true;
+                targetElement.dispatchEvent(evt);
+            }
+        
             // Touch Handlers
             function handleTouchStart(e) {
                 isMoved = false;
@@ -6685,7 +6843,17 @@
         
                 // Trigger focus when required
                 if (targetNeedsFocus(targetElement)) {
-                    targetElement.focus();
+                    if (app.device.ios && app.device.webView) {
+                        if ((event.timeStamp - touchStartTime) > 159) {
+                            targetElement = null;
+                            return false;
+                        }
+                        targetElement.focus();
+                        return false;
+                    }
+                    else {
+                        targetElement.focus();
+                    }
                 }
         
                 // Blur active elements
@@ -6695,15 +6863,7 @@
         
                 // Send click
                 e.preventDefault();
-                var touch = e.changedTouches[0];
-                var evt = document.createEvent('MouseEvents');
-                var eventType = 'click';
-                if (app.device.android && targetElement.nodeName.toLowerCase() === 'select') {
-                    eventType = 'mousedown';
-                }
-                evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-                evt.forwardedTouchEvent = true;
-                targetElement.dispatchEvent(evt);
+                sendClick(e);
                 return false;
             }
             function handleTouchCancel(e) {
@@ -6796,7 +6956,7 @@
             }
             if (app.params.material && app.params.materialRipple) {
                 document.addEventListener('contextmenu', function (e) {
-                    removeActive();
+                    if (activableElement) removeActive();
                     rippleTouchEnd();
                 });
             }
@@ -7910,7 +8070,7 @@
                         if (pb.params.onClick) pb.params.onClick(swiper, e);
                     },
                     onDoubleTap: function (swiper, e) {
-                        pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
+                        pb.toggleZoom(e);
                         if (pb.params.onDoubleTap) pb.params.onDoubleTap(swiper, e);
                     },
                     onTransitionStart: function (swiper) {
@@ -8017,21 +8177,73 @@
                 isScaling = false;
                 if (scale === 1) gestureSlide = undefined;
             };
-            pb.toggleZoom = function () {
+            pb.toggleZoom = function (e) {
                 if (!gestureSlide) {
                     gestureSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
                     gestureImg = gestureSlide.find('img, svg, canvas');
                     gestureImgWrap = gestureImg.parent('.photo-browser-zoom-container');
                 }
                 if (!gestureImg || gestureImg.length === 0) return;
-                gestureImgWrap.transition(300).transform('translate3d(0,0,0)');
+                
+                var touchX, touchY, offsetX, offsetY, diffX, diffY, translateX, translateY, imageWidth, imageHeight, scaledWidth, scaledHeight, translateMinX, translateMinY, translateMaxX, translateMaxY;
+        
+                if (typeof imageTouchesStart.x === 'undefined' && e) {
+                    touchX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
+                    touchY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
+                }
+                else {
+                    touchX = imageTouchesStart.x;
+                    touchY = imageTouchesStart.y;
+                }
+                
                 if (scale && scale !== 1) {
+                    // Zoom Out
                     scale = currentScale = 1;
+                    gestureImgWrap.transition(300).transform('translate3d(0,0,0)');
                     gestureImg.transition(300).transform('translate3d(0,0,0) scale(1)');
                     gestureSlide = undefined;
                 }
                 else {
+                    // Zoom In
                     scale = currentScale = pb.params.maxZoom;
+                    if (e) {
+                        offsetX = pb.container.offset().left;
+                        offsetY = pb.container.offset().top;
+                        diffX = offsetX + pb.container[0].offsetWidth/2 - touchX;
+                        diffY = offsetY + pb.container[0].offsetHeight/2 - touchY;
+        
+                        imageWidth = gestureImg[0].offsetWidth;
+                        imageHeight = gestureImg[0].offsetHeight;
+                        scaledWidth = imageWidth * scale;
+                        scaledHeight = imageHeight * scale;
+        
+                        translateMinX = Math.min((pb.swiper.width / 2 - scaledWidth / 2), 0);
+                        translateMinY = Math.min((pb.swiper.height / 2 - scaledHeight / 2), 0);
+                        translateMaxX = -translateMinX;
+                        translateMaxY = -translateMinY;
+        
+                        translateX = diffX * scale;
+                        translateY = diffY * scale;
+                        
+                        if (translateX < translateMinX) {
+                            translateX =  translateMinX;
+                        }
+                        if (translateX > translateMaxX) {
+                            translateX = translateMaxX;
+                        }
+                        
+                        if (translateY < translateMinY) {
+                            translateY =  translateMinY;
+                        }
+                        if (translateY > translateMaxY) {
+                            translateY = translateMaxY;
+                        }
+                    }
+                    else {
+                        translateX = 0;
+                        translateY = 0;
+                    }
+                    gestureImgWrap.transition(300).transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
                     gestureImg.transition(300).transform('translate3d(0,0,0) scale(' + scale + ')');
                 }
             };
@@ -8291,6 +8503,11 @@
             // Value
             p.setValue = function (arrValues, transition) {
                 var valueIndex = 0;
+                if (p.cols.length === 0) {
+                    p.value = arrValues;
+                    p.updateValue(arrValues);
+                    return;
+                }
                 for (var i = 0; i < p.cols.length; i++) {
                     if (p.cols[i] && !p.cols[i].divider) {
                         p.cols[i].setValue(arrValues[valueIndex], transition);
@@ -8298,8 +8515,8 @@
                     }
                 }
             };
-            p.updateValue = function () {
-                var newValue = [];
+            p.updateValue = function (forceValues) {
+                var newValue = forceValues || [];
                 var newDisplayValue = [];
                 for (var i = 0; i < p.cols.length; i++) {
                     if (!p.cols[i].divider) {
@@ -8767,7 +8984,8 @@
                     
                     // Set value
                     if (!p.initialized) {
-                        if (p.params.value) {
+                        if (p.value) p.setValue(p.value, 0);
+                        else if (p.params.value) {
                             p.setValue(p.params.value, 0);
                         }
                     }
@@ -8813,6 +9031,9 @@
         
             if (p.inline) {
                 p.open();
+            }
+            else {
+                if (!p.initialized && p.params.value) p.setValue(p.params.value);
             }
         
             return p;
@@ -11012,13 +11233,12 @@
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
                     var responseData;
                     if (options.dataType === 'json') {
-                        try {
-                            responseData = JSON.parse(xhr.responseText);
-                            fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
-                        }
-                        catch (err) {
-                            fireAjaxCallback('ajaxError', {xhr: xhr, parseerror: true}, 'error', xhr, 'parseerror');
-                        }
+                    	if(xhr.responseText) {
+                    		responseData = JSON.parse(xhr.responseText);
+                    	} else {
+                    		responseData = null;
+                    	}
+                    	fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
                     }
                     else {
                         responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
@@ -11122,27 +11342,50 @@
             }
             return unique;
         };
-        $.serializeObject = function (obj) {
+        $.serializeObject = function (obj, parents) {
             if (typeof obj === 'string') return obj;
             var resultArray = [];
             var separator = '&';
+            parents = parents || [];
+            function var_name(name) {
+                if (parents.length > 0) {
+                    var _parents = '';
+                    for (var j = 0; j < parents.length; j++) {
+                        if (j === 0) _parents += parents[j];
+                        else _parents += '[' + encodeURIComponent(parents[j]) + ']';
+                    }
+                    return _parents + '[' + encodeURIComponent(name) + ']';
+                }
+                else {
+                    return encodeURIComponent(name);
+                }
+            }
+            function var_value(value) {
+                return encodeURIComponent(value);
+            }
             for (var prop in obj) {
                 if (obj.hasOwnProperty(prop)) {
+                    var toPush;
                     if ($.isArray(obj[prop])) {
-                        var toPush = [];
+                        toPush = [];
                         for (var i = 0; i < obj[prop].length; i ++) {
-                            toPush.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop][i]));
+                            toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
                         }
                         if (toPush.length > 0) resultArray.push(toPush.join(separator));
                     }
-                    else {
-                        // Should be string
-                        resultArray.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop]));
+                    else if (typeof obj[prop] === 'object') {
+                        // Object, convert to named array
+                        var _newParents = parents.slice();
+                        _newParents.push(prop);
+                        toPush = $.serializeObject(obj[prop], _newParents);
+                        if (toPush !== '') resultArray.push(toPush);
+                    }
+                    else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+                        // Should be string or plain value
+                        resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
                     }
                 }
-                    
             }
-        
             return resultArray.join(separator);
         };
         $.toCamelCase = function (string) {

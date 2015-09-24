@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: September 6, 2015
+ * Released on: September 24, 2015
  */
 html,
 body {
@@ -928,15 +928,6 @@ html.ios-gt-8 .toolbar b {
 .toolbar,
 .subnavbar {
   background: #f7f7f8;
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .navbar,
-  .toolbar,
-  .subnavbar {
-    background: rgba(248, 248, 249, 0.85);
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
-  }
 }
 .navbar a.link,
 .toolbar a.link,
@@ -2905,6 +2896,7 @@ html.android .label-switch input[type="checkbox"] + .checkbox:before {
   font-size: 14px;
   font-family: inherit;
   cursor: pointer;
+  outline: 0;
 }
 input[type="submit"].button,
 input[type="button"].button,
@@ -3545,7 +3537,7 @@ html.pixel-ratio-3 .card-footer:before {
   padding: 15px;
   border-radius: 13px 13px 0 0;
   position: relative;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.95);
 }
 .modal-inner:after {
   content: '';
@@ -3569,13 +3561,6 @@ html.pixel-ratio-2 .modal-inner:after {
 html.pixel-ratio-3 .modal-inner:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .modal-inner {
-    background: rgba(255, 255, 255, 0.9);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
 }
 .modal-title {
   font-weight: 500;
@@ -3604,24 +3589,6 @@ html.ios-gt-8 .modal-title {
   display: block;
   height: auto;
 }
-.modal-buttons.modal-buttons-vertical.modal-buttons-1 {
-  height: 44px;
-}
-.modal-buttons.modal-buttons-vertical.modal-buttons-2 {
-  height: 88px;
-}
-.modal-buttons.modal-buttons-vertical.modal-buttons-3 {
-  height: 132px;
-}
-.modal-buttons.modal-buttons-vertical.modal-buttons-4 {
-  height: 176px;
-}
-.modal-buttons.modal-buttons-vertical.modal-buttons-5 {
-  height: 220px;
-}
-.modal-buttons.modal-buttons-vertical.modal-buttons-6 {
-  height: 264px;
-}
 .modal-button {
   width: 100%;
   padding: 0 5px;
@@ -3639,7 +3606,7 @@ html.ios-gt-8 .modal-title {
   box-sizing: border-box;
   -webkit-box-flex: 1;
   -ms-flex: 1;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
 }
 .modal-button:after {
   content: '';
@@ -3684,18 +3651,7 @@ html.ios-gt-8 .modal-button.modal-button-bold {
 }
 html:not(.watch-active-state) .modal-button:active,
 .modal-button.active-state {
-  background: #eaeaea;
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .modal-button {
-    background: rgba(255, 255, 255, 0.9);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-  html:not(.watch-active-state) .modal-button:active,
-  .modal-button.active-state {
-    background: rgba(255, 255, 255, 0.75);
-  }
+  background: rgba(230, 230, 230, 0.95);
 }
 .modal-buttons-vertical .modal-button {
   border-radius: 0;
@@ -3819,14 +3775,6 @@ html.pixel-ratio-3 .actions-modal-label:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .actions-modal-button,
-  .actions-modal-label {
-    background: rgba(255, 255, 255, 0.9);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-}
 .actions-modal-button a,
 .actions-modal-label a {
   text-decoration: none;
@@ -3885,13 +3833,7 @@ html.ios-gt-8 .actions-modal-label.actions-modal-button-bold {
 }
 html:not(.watch-active-state) .actions-modal-button:active,
 .actions-modal-button.active-state {
-  background: #eaeaea;
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  html:not(.watch-active-state) .actions-modal-button:active,
-  .actions-modal-button.active-state {
-    background: rgba(255, 255, 255, 0.75);
-  }
+  background: rgba(230, 230, 230, 0.9);
 }
 .actions-modal-label {
   font-size: 13px;
@@ -4238,7 +4180,6 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   position: relative;
   width: 100%;
   background: #f7f7f8;
-  -webkit-backdrop-filter: none;
 }
 .picker-modal .toolbar:before {
   content: '';
@@ -4312,7 +4253,32 @@ html.pixel-ratio-3 .popover .picker-modal .toolbar:after {
 }
 .popover .picker-modal .toolbar {
   background: none;
-  -webkit-backdrop-filter: none;
+}
+.picker-modal.smart-select-picker .toolbar:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: auto;
+  top: auto;
+  height: 1px;
+  width: 100%;
+  background-color: #c4c4c4;
+  display: block;
+  z-index: 15;
+  -webkit-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+}
+html.pixel-ratio-2 .picker-modal.smart-select-picker .toolbar:after {
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+html.pixel-ratio-3 .picker-modal.smart-select-picker .toolbar:after {
+  -webkit-transform: scaleY(0.33);
+  transform: scaleY(0.33);
+}
+.picker-modal.smart-select-picker .list-block {
+  margin: 0;
 }
 /* === Panels === */
 .panel-overlay {
@@ -5234,14 +5200,6 @@ body > .photo-browser .toolbar {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .photo-browser .navbar,
-  .views .view[data-page="photo-browser-slides"] .navbar,
-  .photo-browser .toolbar,
-  .views .view[data-page="photo-browser-slides"] .toolbar {
-    background: rgba(247, 247, 247, 0.8);
-  }
-}
 .view[data-page="photo-browser-slides"] .page[data-page="photo-browser-slides"] .navbar,
 .view[data-page="photo-browser-slides"] .page[data-page="photo-browser-slides"] .toolbar {
   -webkit-transform: translate3d(0, 0, 0);
@@ -5313,19 +5271,6 @@ body > .photo-browser .toolbar {
 .photo-browser-exposed .photo-browser-caption {
   color: #fff;
   background: rgba(0, 0, 0, 0.8);
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .photo-browser-caption {
-    background: rgba(30, 30, 30, 0.6);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-  .photo-browser-captions-light .photo-browser-caption {
-    background: rgba(247, 247, 247, 0.6);
-  }
-  .photo-browser-exposed .photo-browser-caption {
-    background: rgba(30, 30, 30, 0.6);
-  }
 }
 .photo-browser-swiper-container {
   position: absolute;
@@ -5938,13 +5883,6 @@ html.pixel-ratio-3 .picker-calendar.picker-modal-inline .picker-calendar-week-da
   background: rgba(0, 0, 0, 0.85);
   -webkit-perspective: 1200px;
   perspective: 1200px;
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .notifications {
-    background: rgba(0, 0, 0, 0.75);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
 }
 .notifications.list-block > ul {
   background: none;

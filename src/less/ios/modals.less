@@ -1,19 +1,14 @@
 /* === Modals === */
-@modalBg: rgba(255,255,255,0.9);
-@modalBgNoBlur: #fff;
+@modalBg: rgba(255,255,255,0.95);
 @modalButonColor : @themeColor;
-@modalButonActiveBg: rgba(255,255,255,0.75);
-@modalButonActiveBgNoBlur: #eaeaea;
+@modalButonActiveBg: rgba(230,230,230,0.95);
 @modalHairlineColor: rgba(0,0,0,0.2);
 @modalDuration: 400ms;
 
-@actionsModalBg: rgba(255,255,255,0.9);
-@actionsModalBgNoBlur: rgba(255,255,255,0.95);
-@actionsModalButtonActiveBg: rgba(255,255,255,0.75);
-@actionsModalButtonActiveBgNoBlur: #eaeaea;
+@actionsModalBg: rgba(255,255,255,0.95);
+@actionsModalButtonActiveBg: rgba(230,230,230,0.9);
 @actionsModalHairlineColor: rgba(0,0,0,0.2);
 @actionsModalDuration: 300ms;
-
 
 @popoverBg: rgba(255,255,255,0.95);
 
@@ -76,12 +71,8 @@
     padding: 15px;
     border-radius: 13px 13px 0 0;
     position: relative;
-    background: #fff;
+    background: @modalBg;
     .hairline(bottom, @modalHairlineColor);
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @modalBg;
-        .backdrop-blur(10px);
-    }
         
 }
 .modal-title {
@@ -103,24 +94,6 @@
     &.modal-buttons-vertical {
         display: block;
         height: auto;
-        &.modal-buttons-1 {
-            height: 44px;
-        }
-        &.modal-buttons-2 {
-            height: 44px * 2;
-        }
-        &.modal-buttons-3 {
-            height: 44px * 3;
-        }
-        &.modal-buttons-4 {
-            height: 44px * 4;
-        }
-        &.modal-buttons-5 {
-            height: 44px * 5;
-        }
-        &.modal-buttons-6 {
-            height: 44px * 6;
-        }
     }
 }
 .modal-button {
@@ -140,7 +113,7 @@
     box-sizing: border-box;
     -webkit-box-flex:1;
     -ms-flex:1;
-    background: @modalBgNoBlur;
+    background: @modalBg;
     .hairline(right, @modalHairlineColor);
     &:first-child {
         border-radius: 0 0 0 13px;
@@ -159,14 +132,7 @@
         }
     }
     html:not(.watch-active-state) &:active, &.active-state {
-        background: @modalButonActiveBgNoBlur;
-    }
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @modalBg;
-        .backdrop-blur(10px);
-        html:not(.watch-active-state) &:active, &.active-state {
-            background: @modalButonActiveBg;
-        }
+        background: @modalButonActiveBg;
     }
     .modal-buttons-vertical & {
         border-radius: 0;
@@ -223,16 +189,12 @@
     text-align: center;
     font-weight: normal;
     margin: 0;
-    background: @actionsModalBgNoBlur;
+    background: @actionsModalBg;
     box-sizing: border-box;
     display: block;
     position: relative;
     overflow: hidden;
     .hairline(bottom, @actionsModalHairlineColor);
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @actionsModalBg;
-        .backdrop-blur(10px);
-    }
     a {
         text-decoration: none;
         color: inherit;
@@ -277,12 +239,7 @@
     white-space: normal;
     text-overflow: ellipsis;
     html:not(.watch-active-state) &:active, &.active-state {
-        background: @actionsModalButtonActiveBgNoBlur;
-    }
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        html:not(.watch-active-state) &:active, &.active-state {
-            background: @actionsModalButtonActiveBg;
-        }
+        background: @actionsModalButtonActiveBg;
     }
 }
 .actions-modal-label {
@@ -594,7 +551,6 @@ html.with-statusbar-overlay {
         position: relative;
         width: 100%;
         background: #f7f7f8;
-        -webkit-backdrop-filter: none;
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
@@ -616,7 +572,14 @@ html.with-statusbar-overlay {
         width: auto;
         .toolbar {
             background: none;
-            -webkit-backdrop-filter: none;
+        }
+    }
+    &.smart-select-picker {
+        .toolbar {
+            .hairline(bottom, #c4c4c4);
+        }
+        .list-block {
+            margin: 0;
         }
     }
 }

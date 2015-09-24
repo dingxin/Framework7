@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: September 6, 2015
+ * Released on: September 24, 2015
  */
 /*==========================
 Framework7 Color Themes
@@ -1473,16 +1473,6 @@ Framework7 Layouts Themes
 .toolbar.layout-dark:before {
   background-color: #333333;
 }
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .layout-dark .navbar,
-  .navbar.layout-dark,
-  .layout-dark .subnavbar,
-  .subnavbar.layout-dark,
-  .layout-dark .toolbar,
-  .toolbar.layout-dark {
-    background: rgba(20, 20, 20, 0.8);
-  }
-}
 .layout-dark .picker-modal .toolbar {
   background-color: #131313;
 }
@@ -1548,14 +1538,6 @@ Framework7 Layouts Themes
 .layout-dark .views .view[data-page="photo-browser-slides"] .toolbar {
   color: #000;
   background: rgba(247, 247, 247, 0.95);
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .layout-dark .photo-browser .navbar,
-  .layout-dark .views .view[data-page="photo-browser-slides"] .navbar,
-  .layout-dark .photo-browser .toolbar,
-  .layout-dark .views .view[data-page="photo-browser-slides"] .toolbar {
-    background: rgba(247, 247, 247, 0.8);
-  }
 }
 .layout-dark .photo-browser-dark .navbar,
 .layout-dark .photo-browser-dark .toolbar {
@@ -1743,16 +1725,6 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .toolbar.layout-white:before {
   background-color: #dddddd;
 }
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .layout-white .navbar,
-  .navbar.layout-white,
-  .layout-white .subnavbar,
-  .subnavbar.layout-white,
-  .layout-white .toolbar,
-  .toolbar.layout-white {
-    background: rgba(255, 255, 255, 0.85);
-  }
-}
 .layout-white .picker-modal .toolbar {
   background-color: #ffffff;
 }
@@ -1788,14 +1760,6 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-white .views .view[data-page="photo-browser-slides"] .toolbar {
   color: #000;
   background: rgba(247, 247, 247, 0.95);
-}
-@supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-  .layout-white .photo-browser .navbar,
-  .layout-white .views .view[data-page="photo-browser-slides"] .navbar,
-  .layout-white .photo-browser .toolbar,
-  .layout-white .views .view[data-page="photo-browser-slides"] .toolbar {
-    background: rgba(247, 247, 247, 0.8);
-  }
 }
 .layout-white .photo-browser-dark .navbar,
 .layout-white .photo-browser-dark .toolbar {
