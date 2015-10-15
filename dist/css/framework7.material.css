@@ -1,5 +1,5 @@
 /**
- * Framework7 1.2.0
+ * Framework7 1.3.1
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
@@ -12,7 +12,11 @@
  * 
  * Licensed under MIT
  * 
+<<<<<<< HEAD
  * Released on: September 24, 2015
+=======
+ * Released on: October 12, 2015
+>>>>>>> refs/remotes/f7/master
  */
 html,
 body {
@@ -910,6 +914,7 @@ html:not(.watch-active-state) .subnavbar a.link:active:before,
 .toolbar a.icon-only,
 .subnavbar a.icon-only {
   min-width: 0;
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -930,6 +935,7 @@ html:not(.watch-active-state) .subnavbar a.link:active:before,
   text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 56px;
+  -webkit-box-flex: 10;
   -webkit-flex-shrink: 10;
   -ms-flex: 0 10 auto;
   flex-shrink: 10;
@@ -946,6 +952,7 @@ html:not(.watch-active-state) .subnavbar a.link:active:before,
 .subnavbar .left,
 .navbar .right,
 .subnavbar .right {
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -1062,6 +1069,7 @@ html:not(.watch-active-state) .subnavbar a.link:active:before,
   height: 48px;
 }
 .toolbar a {
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -1101,7 +1109,6 @@ html:not(.watch-active-state) .subnavbar a.link:active:before,
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  -webkit-box-flex: 1;
   -ms-flex: 1;
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
@@ -1372,6 +1379,7 @@ html:not(.watch-active-state) .searchbar a:active:before,
   width: 100%;
   height: 32px;
   position: relative;
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -1546,6 +1554,7 @@ html.pixel-ratio-3 .toolbar.messagebar:before {
   line-height: 22px;
   font-family: inherit;
   resize: none;
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -1563,6 +1572,7 @@ html.pixel-ratio-3 .toolbar.messagebar:before {
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
 }
 .toolbar.messagebar .link {
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -1680,6 +1690,7 @@ i.icon.icon-prev {
 i.icon.icon-plus {
   width: 24px;
   height: 24px;
+  font-size: 0;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23FFFFFF'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M19%2013h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
 }
 .badge {
@@ -1975,6 +1986,7 @@ html.pixel-ratio-3 .list-block ul:after {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -2010,12 +2022,12 @@ html.pixel-ratio-3 .list-block ul:after {
   padding-bottom: 8px;
   min-height: 48px;
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
@@ -2052,6 +2064,7 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   transform: scaleY(0.33);
 }
 .list-block .item-title {
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -2064,6 +2077,7 @@ html.pixel-ratio-3 .list-block .item-inner:after {
 .list-block .item-after {
   white-space: nowrap;
   color: #757575;
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -2486,6 +2500,7 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
   -webkit-transition-duration: 200ms;
   transition-duration: 200ms;
   width: 35%;
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -2512,8 +2527,8 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 }
 .list-block .item-input {
   width: 100%;
-  -webkit-box-flex: 1;
   -ms-flex: 1;
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -4070,6 +4085,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   height: calc(100% - 48px);
 }
 .picker-modal .toolbar a.link {
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -4155,6 +4171,15 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
 }
 .picker-modal.smart-select-picker .list-block {
   margin: 0;
+<<<<<<< HEAD
+=======
+}
+.picker-modal.smart-select-picker .list-block ul:before {
+  display: none;
+}
+.picker-modal.smart-select-picker .list-block ul:after {
+  display: none;
+>>>>>>> refs/remotes/f7/master
 }
 /* === Panels === */
 .panel-overlay {
@@ -4311,6 +4336,7 @@ body.panel-closing .views {
 .tabs-animated-wrap > .tabs > .tab {
   width: 100%;
   display: block;
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -5251,6 +5277,7 @@ body > .photo-browser .toolbar {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
@@ -5601,6 +5628,7 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   color: rgba(0, 0, 0, 0.54);
 }
 .picker-calendar-week-days .picker-calendar-week-day {
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -5665,6 +5693,7 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -5672,6 +5701,7 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   position: relative;
 }
 .picker-calendar-day {
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
@@ -5711,6 +5741,20 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   background: #2196f3;
   color: #fff;
 }
+.picker-calendar-day.picker-calendar-day-has-events span:after {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #2196f3;
+  position: absolute;
+  margin-left: -2px;
+  left: 50%;
+  bottom: 2px;
+}
+.picker-calendar-day.picker-calendar-day-has-events.picker-calendar-day-selected span:after {
+  display: none;
+}
 .picker-calendar-day span {
   display: inline-block;
   border-radius: 100%;
@@ -5735,12 +5779,14 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   justify-content: space-between;
   width: 50%;
   max-width: 200px;
+  -webkit-box-flex: 10;
   -webkit-flex-shrink: 10;
   -ms-flex: 0 10 auto;
   flex-shrink: 10;
 }
 .picker-calendar-month-picker span,
 .picker-calendar-year-picker span {
+  -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
