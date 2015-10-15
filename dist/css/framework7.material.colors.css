@@ -12,11 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: September 24, 2015
-=======
- * Released on: October 12, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: October 15, 2015
  */
 /*==========================
 Framework7 Layouts Themes
@@ -257,18 +253,6 @@ i.icon-bars.theme-red {
 }
 .theme-red .range-slider input[type="range"]::-webkit-slider-thumb,
 .range-slider.theme-red input[type="range"]::-webkit-slider-thumb {
-  background-color: #f44336;
-}
-.theme-red .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-red input[type="range"]::-ms-thumb {
-  background-color: #f44336;
-}
-.theme-red .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-red input[type="range"]::-ms-fill-lower {
-  background-color: #f44336;
-}
-.theme-red .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-red input[type="range"]::-moz-range-thumb {
   background-color: #f44336;
 }
 .theme-red .range-slider input[type="range"]::-ms-thumb,
@@ -781,18 +765,6 @@ i.icon-bars.theme-purple {
 .range-slider.theme-purple input[type="range"]::-moz-range-thumb {
   background-color: #9c27b0;
 }
-.theme-purple .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-purple input[type="range"]::-ms-thumb {
-  background-color: #9c27b0;
-}
-.theme-purple .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-purple input[type="range"]::-ms-fill-lower {
-  background-color: #9c27b0;
-}
-.theme-purple .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-purple input[type="range"]::-moz-range-thumb {
-  background-color: #9c27b0;
-}
 .theme-purple .label-switch input[type="checkbox"]:checked + .checkbox,
 .label-switch.theme-purple input[type="checkbox"]:checked + .checkbox {
   background-color: rgba(156, 39, 176, 0.5);
@@ -1277,18 +1249,6 @@ i.icon-bars.theme-indigo {
 }
 .theme-indigo .range-slider input[type="range"]::-webkit-slider-thumb,
 .range-slider.theme-indigo input[type="range"]::-webkit-slider-thumb {
-  background-color: #3f51b5;
-}
-.theme-indigo .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-indigo input[type="range"]::-ms-thumb {
-  background-color: #3f51b5;
-}
-.theme-indigo .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-indigo input[type="range"]::-ms-fill-lower {
-  background-color: #3f51b5;
-}
-.theme-indigo .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-indigo input[type="range"]::-moz-range-thumb {
   background-color: #3f51b5;
 }
 .theme-indigo .range-slider input[type="range"]::-ms-thumb,
@@ -1801,18 +1761,6 @@ i.icon-bars.theme-lightblue {
 .range-slider.theme-lightblue input[type="range"]::-moz-range-thumb {
   background-color: #03a9f4;
 }
-.theme-lightblue .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-lightblue input[type="range"]::-ms-thumb {
-  background-color: #03a9f4;
-}
-.theme-lightblue .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-lightblue input[type="range"]::-ms-fill-lower {
-  background-color: #03a9f4;
-}
-.theme-lightblue .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-lightblue input[type="range"]::-moz-range-thumb {
-  background-color: #03a9f4;
-}
 .theme-lightblue .label-switch input[type="checkbox"]:checked + .checkbox,
 .label-switch.theme-lightblue input[type="checkbox"]:checked + .checkbox {
   background-color: rgba(3, 169, 244, 0.5);
@@ -2297,18 +2245,6 @@ i.icon-bars.theme-teal {
 }
 .theme-teal .range-slider input[type="range"]::-webkit-slider-thumb,
 .range-slider.theme-teal input[type="range"]::-webkit-slider-thumb {
-  background-color: #009688;
-}
-.theme-teal .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-teal input[type="range"]::-ms-thumb {
-  background-color: #009688;
-}
-.theme-teal .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-teal input[type="range"]::-ms-fill-lower {
-  background-color: #009688;
-}
-.theme-teal .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-teal input[type="range"]::-moz-range-thumb {
   background-color: #009688;
 }
 .theme-teal .range-slider input[type="range"]::-ms-thumb,
@@ -2821,18 +2757,6 @@ i.icon-bars.theme-lightgreen {
 .range-slider.theme-lightgreen input[type="range"]::-moz-range-thumb {
   background-color: #8bc34a;
 }
-.theme-lightgreen .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-lightgreen input[type="range"]::-ms-thumb {
-  background-color: #8bc34a;
-}
-.theme-lightgreen .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-lightgreen input[type="range"]::-ms-fill-lower {
-  background-color: #8bc34a;
-}
-.theme-lightgreen .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-lightgreen input[type="range"]::-moz-range-thumb {
-  background-color: #8bc34a;
-}
 .theme-lightgreen .label-switch input[type="checkbox"]:checked + .checkbox,
 .label-switch.theme-lightgreen input[type="checkbox"]:checked + .checkbox {
   background-color: rgba(139, 195, 74, 0.5);
@@ -3317,18 +3241,6 @@ i.icon-bars.theme-yellow {
 }
 .theme-yellow .range-slider input[type="range"]::-webkit-slider-thumb,
 .range-slider.theme-yellow input[type="range"]::-webkit-slider-thumb {
-  background-color: #ffeb3b;
-}
-.theme-yellow .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-yellow input[type="range"]::-ms-thumb {
-  background-color: #ffeb3b;
-}
-.theme-yellow .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-yellow input[type="range"]::-ms-fill-lower {
-  background-color: #ffeb3b;
-}
-.theme-yellow .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-yellow input[type="range"]::-moz-range-thumb {
   background-color: #ffeb3b;
 }
 .theme-yellow .range-slider input[type="range"]::-ms-thumb,
@@ -3841,18 +3753,6 @@ i.icon-bars.theme-orange {
 .range-slider.theme-orange input[type="range"]::-moz-range-thumb {
   background-color: #ff9800;
 }
-.theme-orange .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-orange input[type="range"]::-ms-thumb {
-  background-color: #ff9800;
-}
-.theme-orange .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-orange input[type="range"]::-ms-fill-lower {
-  background-color: #ff9800;
-}
-.theme-orange .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-orange input[type="range"]::-moz-range-thumb {
-  background-color: #ff9800;
-}
 .theme-orange .label-switch input[type="checkbox"]:checked + .checkbox,
 .label-switch.theme-orange input[type="checkbox"]:checked + .checkbox {
   background-color: rgba(255, 152, 0, 0.5);
@@ -4351,18 +4251,6 @@ i.icon-bars.theme-brown {
 .range-slider.theme-brown input[type="range"]::-moz-range-thumb {
   background-color: #795548;
 }
-.theme-brown .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-brown input[type="range"]::-ms-thumb {
-  background-color: #795548;
-}
-.theme-brown .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-brown input[type="range"]::-ms-fill-lower {
-  background-color: #795548;
-}
-.theme-brown .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-brown input[type="range"]::-moz-range-thumb {
-  background-color: #795548;
-}
 .theme-brown .label-switch input[type="checkbox"]:checked + .checkbox,
 .label-switch.theme-brown input[type="checkbox"]:checked + .checkbox {
   background-color: rgba(121, 85, 72, 0.5);
@@ -4847,18 +4735,6 @@ i.icon-bars.theme-bluegray {
 }
 .theme-bluegray .range-slider input[type="range"]::-webkit-slider-thumb,
 .range-slider.theme-bluegray input[type="range"]::-webkit-slider-thumb {
-  background-color: #607d8b;
-}
-.theme-bluegray .range-slider input[type="range"]::-ms-thumb,
-.range-slider.theme-bluegray input[type="range"]::-ms-thumb {
-  background-color: #607d8b;
-}
-.theme-bluegray .range-slider input[type="range"]::-ms-fill-lower,
-.range-slider.theme-bluegray input[type="range"]::-ms-fill-lower {
-  background-color: #607d8b;
-}
-.theme-bluegray .range-slider input[type="range"]::-moz-range-thumb,
-.range-slider.theme-bluegray input[type="range"]::-moz-range-thumb {
   background-color: #607d8b;
 }
 .theme-bluegray .range-slider input[type="range"]::-ms-thumb,

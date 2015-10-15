@@ -10,11 +10,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: September 24, 2015
-=======
- * Released on: October 12, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: October 15, 2015
  */
 (function () {
 
@@ -3155,12 +3151,8 @@
                 var afterTextHTML = params.afterText ? params.afterText : '';
                 var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
                 var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
-<<<<<<< HEAD
-                modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
-=======
                 var modalButtonsHTML = params.buttons && params.buttons.length > 0 ? '<div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div>' : '';
                 modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div>' + modalButtonsHTML + '</div>';
->>>>>>> refs/remotes/f7/master
             }
         
             _modalTemplateTempDiv.innerHTML = modalHTML;
@@ -5316,45 +5308,6 @@
         
             // Define popup and picker
             var popup, picker;
-<<<<<<< HEAD
-        
-            // Scroll SS Picker To Input
-            function scrollToInput() {
-                var pageContent = smartSelect.parents('.page-content');
-                if (pageContent.length === 0) return;
-                var paddingTop = parseInt(pageContent.css('padding-top'), 10),
-                    paddingBottom = parseInt(pageContent.css('padding-bottom'), 10),
-                    pageHeight = pageContent[0].offsetHeight - paddingTop - picker.height(),
-                    pageScrollHeight = pageContent[0].scrollHeight - paddingTop - picker.height(),
-                    newPaddingBottom;
-                var inputTop = smartSelect.offset().top - paddingTop + smartSelect[0].offsetHeight;
-                if (inputTop > pageHeight) {
-                    var scrollTop = pageContent.scrollTop() + inputTop - pageHeight;
-                    if (scrollTop + pageHeight > pageScrollHeight) {
-                        newPaddingBottom = scrollTop + pageHeight - pageScrollHeight + paddingBottom;
-                        if (pageHeight === pageScrollHeight) {
-                            newPaddingBottom = picker.height();
-                        }
-                        pageContent.css({'padding-bottom': (newPaddingBottom) + 'px'});
-                    }
-                    pageContent.scrollTop(scrollTop, 300);
-                }
-            }
-            // Close SS Picker on HTML Click
-            function closeOnHTMLClick(e) {
-                var close = true;
-                if (e.target === smartSelect[0] || $(e.target).parents(smartSelect[0]).length > 0) {
-                    close = false;
-                }
-                if ($(e.target).parents('.picker-modal').length > 0) {
-                    close = false;
-                }
-                if (close) {
-                    app.closeModal('.smart-select-picker.modal-in');   
-                }
-            }
-=======
->>>>>>> refs/remotes/f7/master
         
             // Scroll SS Picker To Input
             function scrollToInput() {
@@ -5421,23 +5374,14 @@
                             return false;
                         }
                     });
-<<<<<<< HEAD
-                    $(container).once(openIn === 'popup' || openIn === 'picker' ? 'closed': 'pageBeforeRemove', function () {
-=======
                     container.once(openIn === 'popup' || openIn === 'picker' ? 'closed': 'pageBeforeRemove', function () {
->>>>>>> refs/remotes/f7/master
                         if (virtualListInstance && virtualListInstance.destroy) virtualListInstance.destroy();
                     });
                 }
-<<<<<<< HEAD
-                
-                $(container).on('change', 'input[name="' + inputName + '"]', function () {
-=======
                 if (maxLength) {
                     checkMaxLength(container);
                 }
                 container.on('change', 'input[name="' + inputName + '"]', function () {
->>>>>>> refs/remotes/f7/master
                     var input = this;
                     var value = input.value;
                     var optionText = [];
@@ -5501,11 +5445,7 @@
                 }
                 else {
                     picker = app.pickerModal(
-<<<<<<< HEAD
-                        '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '">' +
-=======
                         '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '"' + (pickerHeight ? ' style="height:' + pickerHeight + '"' : '') + '>' +
->>>>>>> refs/remotes/f7/master
                             toolbarHTML +
                             '<div class="picker-modal-inner">' +
                                 '<div class="view">' +
@@ -6046,10 +5986,6 @@
                 
                 /*jshint validthis:true */
                 container = $(this);
-<<<<<<< HEAD
-        
-=======
->>>>>>> refs/remotes/f7/master
                 if (container.hasClass('refreshing')) {
                     return;
                 }
@@ -6802,19 +6738,6 @@
                 else {
                     removeRipple();   
                 }
-            }
-        
-            // Send Click
-            function sendClick(e) {
-                var touch = e.changedTouches[0];
-                var evt = document.createEvent('MouseEvents');
-                var eventType = 'click';
-                if (app.device.android && targetElement.nodeName.toLowerCase() === 'select') {
-                    eventType = 'mousedown';
-                }
-                evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-                evt.forwardedTouchEvent = true;
-                targetElement.dispatchEvent(evt);
             }
         
             // Send Click
@@ -15513,7 +15436,6 @@
 
 })();
 
-<<<<<<< HEAD
         Framework7.prototype.plugins.indexedlist = function (app, params) {
         	'use strict';
             var $ = window.Dom7;
@@ -15614,6 +15536,3 @@
         
 
 //# sourceMappingURL=framework7.js.map
-=======
-//# sourceMappingURL=framework7.js.map
->>>>>>> refs/remotes/f7/master
