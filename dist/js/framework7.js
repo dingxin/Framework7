@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 15, 2015
+ * Released on: October 26, 2015
  */
 (function () {
 
@@ -239,11 +239,13 @@
             // Pages
             view.pagesContainer = container.find('.pages')[0];
             view.initialPages = [];
+            view.initialPagesUrl = [];
             view.initialNavbars = [];
             if (view.params.domCache) {
                 var initialPages = container.find('.page');
                 for (i = 0; i < initialPages.length; i++) {
                     view.initialPages.push(initialPages[i]);
+                    view.initialPagesUrl.push('#' + initialPages.eq(i).attr('data-page'));
                 }
                 if (view.params.dynamicNavbar) {
                     var initialNavbars = container.find('.navbar-inner');
@@ -718,24 +720,35 @@
             // Push State on load
             if (app.params.pushState && view.main) {
                 var pushStateUrl;
+                var pushStateUrlSplit = docLocation.split(pushStateSeparator)[1];
                 if (pushStateRoot) {
                     pushStateUrl = docLocation.split(app.params.pushStateRoot + pushStateSeparator)[1];
                 }
-                else if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
-                    pushStateUrl = docLocation.split(pushStateSeparator)[1];
+                else if (pushStateSeparator && docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
+                    pushStateUrl = pushStateUrlSplit;
                 }
                 var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
+                var historyState = history.state;
         
                 if (pushStateUrl) {
-                    app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
+                    if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && historyState && historyState.pageName && 'viewIndex' in historyState) {
+                        app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+                    }
+                    else if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && view.initialPagesUrl.indexOf(pushStateUrl) >= 0) {
+                        app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});   
+                    }
+                    else app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
                 }
-                else if (docLocation.indexOf(pushStateSeparator + '#') >= 0) {
-                    var state = history.state;
-                    if (state.pageName && 'viewIndex' in state) {
-                        app.router.load(view, {pageName: state.pageName, pushState: false});
+                else if (view.params.domCache && docLocation.indexOf(pushStateSeparator + '#') >= 0) {
+                    if (historyState && historyState.pageName && 'viewIndex' in historyState) {
+                        app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+                    }
+                    else if (pushStateSeparator && pushStateUrlSplit.indexOf('#') === 0) {
+                        if (view.initialPagesUrl.indexOf(pushStateUrlSplit)) {
+                            app.router.load(view, {pageName: pushStateUrlSplit.replace('#', ''), animatePages: pushStateAnimatePages, pushState: false});
+                        }
                     }
                 }
-        
             }
         
             // Destroy
@@ -1737,11 +1750,24 @@
             var pageContainer = params.pageContainer;
             if (pageContainer.f7PageInitialized && view && !view.params.domCache) return;
         
+            var pageQuery = params.query;
+            if (!pageQuery) {
+                if (params.url && params.url.indexOf('?') > 0) {
+                    pageQuery = $.parseUrlQuery(params.url || '');
+                }
+                else if (pageContainer.f7PageData && pageContainer.f7PageData.query) {
+                    pageQuery = pageContainer.f7PageData.query;
+                }
+                else {
+                    pageQuery = {};
+                }
+            }
+        
             // Page Data
             var pageData = {
                 container: pageContainer,
                 url: params.url,
-                query: params.query || $.parseUrlQuery(params.url || ''),
+                query: pageQuery,
                 name: $(pageContainer).attr('data-page'),
                 view: view,
                 from: params.position,
@@ -1848,11 +1874,24 @@
             var pageContainer = params.pageContainer;
             var pageContext;
             if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
+        
+            var pageQuery = params.query;
+            if (!pageQuery) {
+                if (params.url && params.url.indexOf('?') > 0) {
+                    pageQuery = $.parseUrlQuery(params.url || '');
+                }
+                else if (pageContainer.f7PageData && pageContainer.f7PageData.query) {
+                    pageQuery = pageContainer.f7PageData.query;
+                }
+                else {
+                    pageQuery = {};
+                }
+            }
             // Page Data
             var pageData = {
                 container: pageContainer,
                 url: params.url,
-                query: params.query || $.parseUrlQuery(params.url || ''),
+                query: pageQuery,
                 name: $(pageContainer).attr('data-page'),
                 view: view,
                 from: params.position,
@@ -2238,7 +2277,7 @@
         
             // Parse DOM
             if (!pageName) {
-                if (url || (typeof content === 'string')) {
+                if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
                     app.router.temporaryDom.innerHTML = t7_rendered.content;
                 } else {
                     if ('length' in content && content.length > 1) {
@@ -2692,7 +2731,7 @@
             function parseNewPage() {
                 app.router.temporaryDom.innerHTML = '';
                 // Parse DOM
-                if (url || (typeof content === 'string')) {
+                if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
                     app.router.temporaryDom.innerHTML = t7_rendered.content;
                 } else {
                     if ('length' in content && content.length > 1) {
@@ -3709,7 +3748,14 @@
         
             var removeOnClose = modal.hasClass('remove-on-close');
         
-            var overlay = isPopup ? $('.popup-overlay') : (isPickerModal && app.params.material ? $('.picker-modal-overlay') : $('.modal-overlay'));
+            var overlay;
+            
+            if (isPopup) overlay = $('.popup-overlay');
+            else {
+                if (isPickerModal && app.params.material) overlay = $('.picker-modal-overlay');
+                else if (!isPickerModal) overlay = $('.modal-overlay');
+            }
+        
             if (isPopup){
                 if (modal.length === $('.popup.modal-in').length) {
                     overlay.removeClass('modal-overlay-visible');
@@ -5502,7 +5548,8 @@
                 cols: 1,
                 height: app.params.material ? 48 : 44,
                 cache: true,
-                dynamicHeightBufferSize: 1
+                dynamicHeightBufferSize: 1,
+                showFilteredItemsOnly: false
             };
             params = params || {};
             for (var def in defaults) {
@@ -5515,10 +5562,13 @@
             var vl = this;
             vl.listBlock = $(listBlock);
             vl.params = params;
-            vl.items = params.items;
-            if (params.template) {
-                if (typeof params.template === 'string') vl.template = t7.compile(params.template);
-                else if (typeof params.template === 'function') vl.template = params.template;
+            vl.items = vl.params.items;
+            if (vl.params.showFilteredItemsOnly) {
+                vl.filteredItems = [];
+            }
+            if (vl.params.template) {
+                if (typeof vl.params.template === 'string') vl.template = t7.compile(vl.params.template);
+                else if (typeof vl.params.template === 'function') vl.template = vl.params.template;
             }
             vl.pageContent = vl.listBlock.parents('.page-content');
         
@@ -5533,7 +5583,7 @@
                     updatableScroll = false;
                 }
             }
-                
+        
             // Append <ul>
             vl.ul = vl.params.ul ? $(vl.params.ul) : vl.listBlock.children('ul');
             if (vl.ul.length === 0) {
@@ -5569,8 +5619,13 @@
                 vl.update();
             };
             vl.resetFilter = function () {
-                vl.filteredItems = null;
-                delete vl.filteredItems;
+                if (vl.params.showFilteredItemsOnly) {
+                    vl.filteredItems = [];
+                }
+                else {
+                    vl.filteredItems = null;
+                    delete vl.filteredItems;    
+                }
                 vl.update();
             };
         
@@ -5609,7 +5664,7 @@
                 if (force) vl.lastRepaintY = null;
         
                 var scrollTop = -(vl.listBlock[0].getBoundingClientRect().top - vl.pageContent[0].getBoundingClientRect().top);
-                
+        
                 if (typeof forceScrollTop !== 'undefined') scrollTop = forceScrollTop;
         
                 if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (vl.pageContent[0].scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
@@ -5624,14 +5679,14 @@
                 if (dynamicHeight) {
                     var itemTop = 0, j, itemHeight; 
                     maxBufferHeight = pageHeight;
-                    
+        
                     for (j = 0; j < vl.heights.length; j++) {
                         itemHeight = vl.heights[j];
                         if (typeof fromIndex === 'undefined') {
                             if (itemTop + itemHeight >= scrollTop - pageHeight * 2 * vl.params.dynamicHeightBufferSize) fromIndex = j;
                             else heightBeforeFirstItem += itemHeight;
                         }
-                        
+        
                         if (typeof toIndex === 'undefined') {
                             if (itemTop + itemHeight >= scrollTop + pageHeight * 2 * vl.params.dynamicHeightBufferSize || j === vl.heights.length - 1) toIndex = j + 1;
                             heightBeforeLastItem += itemHeight;
@@ -5658,7 +5713,7 @@
                     if (i === fromIndex) vl.currentFromIndex = index;
                     if (i === toIndex - 1) vl.currentToIndex = index;
                     if (index === vl.items.length - 1) vl.reachEnd = true;
-                    
+        
                     // Find items
                     if (vl.domCache[index]) {
                         item = vl.domCache[index];
@@ -5688,14 +5743,14 @@
                         }
                     }
                     item.style.top = topPosition + 'px';
-                    
+        
                     // Before item insert
                     if (vl.params.onItemBeforeInsert) vl.params.onItemBeforeInsert(vl, item);
         
                     // Append item to fragment
                     vl.fragment.appendChild(item);
         
-                
+        
                 }
         
                 // Update list height with not updatable scroll
@@ -5707,7 +5762,7 @@
                         vl.ul[0].style.height = i * vl.params.height / vl.params.cols + 'px';
                     }
                 }
-                    
+        
         
                 // Update list html
                 if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
@@ -5871,7 +5926,7 @@
                     prevIndex = indexes[i];
                     // Delete item
                     var deletedItem = vl.items.splice(index, 1)[0];
-                    
+        
                     // Delete from filtered
                     if (vl.filteredItems && vl.filteredItems.indexOf(deletedItem) >= 0) {
                         vl.filteredItems.splice(vl.filteredItems.indexOf(deletedItem), 1);
@@ -6267,13 +6322,15 @@
                 currentScroll = scrollContent[0].scrollTop;
                 scrollHeight = scrollContent[0].scrollHeight;
                 offsetHeight = scrollContent[0].offsetHeight;
-                reachEnd = app.params.showBarsOnPageScrollEnd && (currentScroll + offsetHeight >= scrollHeight - bottomBarHeight);
+                reachEnd =  currentScroll + offsetHeight >= scrollHeight - bottomBarHeight;
                 navbarHidden = navbar.hasClass('navbar-hidden');
                 toolbarHidden = toolbar.hasClass('toolbar-hidden');
                 tabbarHidden = tabbar && tabbar.hasClass('toolbar-hidden');
         
                 if (reachEnd) {
-                    action = 'show';
+                    if (app.params.showBarsOnPageScrollEnd) {
+                        action = 'show';
+                    }
                 }
                 else if (previousScroll > currentScroll) {
                     if (app.params.showBarsOnPageScrollTop || currentScroll <= 44) {
@@ -9470,9 +9527,25 @@
                 if (!range) return false;
                 if ($.isArray(range)) {
                     for (i = 0; i < range.length; i ++) {
-                        if (dayDate === new Date(range[i]).getTime()) {
+                        if (range[i].from || range[i].to) {
+                            if (range[i].from && range[i].to) {
+                                if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
+                                    match = true;   
+                                }
+                            }
+                            else if (range[i].from) {
+                                if (dayDate >= new Date(range[i].from).getTime()) {
+                                    match = true;   
+                                }
+                            }
+                            else if (range[i].to) {
+                                if (dayDate <= new Date(range[i].to).getTime()) {
+                                    match = true;   
+                                }
+                            }
+                        } else if (dayDate === new Date(range[i]).getTime()) {
                             match = true;
-                        }
+                        } 
                     }
                 }
                 else if (range.from || range.to) {
@@ -11065,11 +11138,13 @@
             parent: function (selector) {
                 var parents = [];
                 for (var i = 0; i < this.length; i++) {
-                    if (selector) {
-                        if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
-                    }
-                    else {
-                        parents.push(this[i].parentNode);
+                    if (this[i].parentNode !== null) {
+                        if (selector) {
+                            if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+                        }
+                        else {
+                           parents.push(this[i].parentNode);
+                        }
                     }
                 }
                 return $($.unique(parents));
@@ -11233,7 +11308,7 @@
             // UC method
             var _method = options.method.toUpperCase();
             // Data to modify GET URL
-            if ((_method === 'GET' || _method === 'HEAD') && options.data) {
+            if ((_method === 'GET' || _method === 'HEAD' || _method === 'OPTIONS' || _method === 'DELETE') && options.data) {
                 var stringData;
                 if (typeof options.data === 'string') {
                     // Should be key=value string
@@ -11292,7 +11367,7 @@
             }
         
             // Cache for GET/HEAD requests
-            if (_method === 'GET' || _method === 'HEAD') {
+            if (_method === 'GET' || _method === 'HEAD' || _method === 'OPTIONS' || _method === 'DELETE') {
                 if (options.cache === false) {
                     options.url += (paramsPrefix + '_nocache=' + Date.now());
                 }
@@ -11311,7 +11386,7 @@
             // Create POST Data
             var postData = null;
         
-            if ((_method === 'POST' || _method === 'PUT') && options.data) {
+            if ((_method === 'POST' || _method === 'PUT' || _method === 'PATCH') && options.data) {
                 if (options.processData) {
                     var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
                     // Post Data
@@ -11491,11 +11566,12 @@
             }
             return unique;
         };
-        $.serializeObject = function (obj, parents) {
+        $.serializeObject = $.param = function (obj, parents) {
             if (typeof obj === 'string') return obj;
             var resultArray = [];
             var separator = '&';
             parents = parents || [];
+            var newParents;
             function var_name(name) {
                 if (parents.length > 0) {
                     var _parents = '';
@@ -11518,15 +11594,24 @@
                     if ($.isArray(obj[prop])) {
                         toPush = [];
                         for (var i = 0; i < obj[prop].length; i ++) {
-                            toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
+                            if (!$.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+                                newParents = parents.slice();
+                                newParents.push(prop);
+                                newParents.push(i + '');
+                                toPush.push($.serializeObject(obj[prop][i], newParents));
+                            }
+                            else {
+                                toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
+                            }
+                            
                         }
                         if (toPush.length > 0) resultArray.push(toPush.join(separator));
                     }
                     else if (typeof obj[prop] === 'object') {
                         // Object, convert to named array
-                        var _newParents = parents.slice();
-                        _newParents.push(prop);
-                        toPush = $.serializeObject(obj[prop], _newParents);
+                        newParents = parents.slice();
+                        newParents.push(prop);
+                        toPush = $.serializeObject(obj[prop], newParents);
                         if (toPush !== '') resultArray.push(toPush);
                     }
                     else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {

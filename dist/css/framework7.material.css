@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 15, 2015
+ * Released on: October 26, 2015
  */
 html,
 body {
@@ -2020,6 +2020,7 @@ html.pixel-ratio-3 .list-block ul:after {
   box-sizing: border-box;
   -webkit-box-flex: 1;
   -ms-flex: 1;
+  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -2060,6 +2061,7 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   transform: scaleY(0.33);
 }
 .list-block .item-title {
+  min-width: 0;
   -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
@@ -3450,7 +3452,7 @@ html.pixel-ratio-3 .card-footer:before {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 10600;
+  z-index: 13000;
   visibility: hidden;
   opacity: 0;
   -webkit-transition-duration: 400ms;
@@ -3464,12 +3466,15 @@ html.pixel-ratio-3 .card-footer:before {
   opacity: 1;
 }
 .popup-overlay {
-  z-index: 10200;
+  z-index: 10500;
+}
+.picker-modal-overlay {
+  z-index: 12000;
 }
 .modal {
   width: 280px;
   position: absolute;
-  z-index: 11000;
+  z-index: 13500;
   left: 50%;
   margin-left: -140px;
   margin-top: 0;
@@ -3498,7 +3503,7 @@ html.pixel-ratio-3 .card-footer:before {
 }
 .modal.modal-out {
   opacity: 0;
-  z-index: 10999;
+  z-index: 13499;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, 0, 0) scale(0.815);
@@ -3671,7 +3676,7 @@ html:not(.watch-active-state) .notifications .modal-buttons .button:not(.button-
   position: absolute;
   left: 0;
   bottom: 0;
-  z-index: 11000;
+  z-index: 13500;
   width: 100%;
   background: #fff;
   -webkit-transform: translate3d(0, 100%, 0);
@@ -3684,7 +3689,7 @@ html:not(.watch-active-state) .notifications .modal-buttons .button:not(.button-
   transform: translate3d(0, 0, 0);
 }
 .actions-modal.modal-out {
-  z-index: 10999;
+  z-index: 13499;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
   -webkit-transform: translate3d(0, 100%, 0);
@@ -3820,7 +3825,7 @@ input.modal-text-input + input.modal-text-input {
 .popover {
   width: 320px;
   background: #fff;
-  z-index: 11000;
+  z-index: 13500;
   margin: 0;
   top: 0;
   opacity: 0;
@@ -3940,7 +3945,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 10400;
+  z-index: 11000;
   background: #fff;
   box-sizing: border-box;
   display: none;
@@ -4004,7 +4009,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
     top: 20px;
   }
   html.with-statusbar-overlay .popup-overlay {
-    z-index: 9800;
+    z-index: 9500;
   }
 }
 html.with-statusbar-overlay .login-screen,
@@ -4030,7 +4035,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   margin-left: -24px;
   margin-top: -24px;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 11000;
+  z-index: 13500;
   border-radius: 4px;
 }
 .preloader-indicator-modal .preloader {
@@ -4042,7 +4047,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   bottom: 0;
   width: 100%;
   height: 260px;
-  z-index: 11500;
+  z-index: 12000;
   display: none;
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
@@ -5105,7 +5110,7 @@ html.with-statusbar-overlay body .panel {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 10500;
+  z-index: 11500;
 }
 body > .photo-browser {
   opacity: 0;
@@ -5595,6 +5600,9 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   left: 0;
   top: 0;
   box-shadow: none;
+}
+.picker-calendar.picker-modal {
+  z-index: 12500;
 }
 .popover.popover-picker-calendar {
   width: 320px;
