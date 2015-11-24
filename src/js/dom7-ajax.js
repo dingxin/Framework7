@@ -249,6 +249,9 @@ $.ajax = function (options) {
 
     // Timeout
     if (options.timeout > 0) {
+        xhr.onabort = function () {
+            if (xhrTimeout) clearTimeout(xhrTimeout);
+        };
         xhrTimeout = setTimeout(function () {
             xhr.abort();
             fireAjaxCallback('ajaxError', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');

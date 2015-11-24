@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.1
+ * Framework7 1.3.5
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
@@ -12,7 +12,11 @@
  * 
  * Licensed under MIT
  * 
+<<<<<<< HEAD
  * Released on: October 26, 2015
+=======
+ * Released on: November 8, 2015
+>>>>>>> refs/remotes/f7/master
  */
 /*==========================
 Framework7 Layouts Themes
@@ -158,6 +162,9 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 html:not(.watch-active-state) .layout-dark .button:not(.button-fill):active,
 .layout-dark .button:not(.button-fill).active-state {
   background: rgba(255, 255, 255, 0.1);
+}
+.layout-dark .chip {
+  background: rgba(255, 255, 255, 0.87);
 }
 /*==========================
 Framework7 Color Themes

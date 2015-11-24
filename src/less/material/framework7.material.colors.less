@@ -136,6 +136,10 @@ Framework7 Layouts Themes
             background:rgba(255,255,255,0.1);
         }
     }
+    // Chips
+    .chip {
+        background: rgba(255,255,255,0.87);
+    }
 }
 
 /*==========================
@@ -361,6 +365,11 @@ Framework7 Color Themes
         .ripple-wave {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
         }
+    }
+    //Badges
+    .badge.color-@{colorName}, .badge.theme-@{colorName} {
+    	background-color:@color;
+    	color: #fff;
     }
 }
 .theme-mixin(e('red'), @red, #D32F2F);
