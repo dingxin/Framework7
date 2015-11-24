@@ -12,11 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: October 26, 2015
-=======
- * Released on: November 8, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: November 24, 2015
  */
 /*==========================
 Framework7 Color Themes
@@ -164,6 +160,11 @@ a.bg-gray,
 .border-gray:before {
   background-color: #8e8e93;
 }
+.badge.color-gray,
+.badge.theme-gray {
+  background-color: #8e8e93;
+  color: #fff;
+}
 .color-white {
   color: #ffffff;
 }
@@ -306,6 +307,11 @@ a.bg-white,
 .list-block ul.border-white:before,
 .border-white:before {
   background-color: #ffffff;
+}
+.badge.color-white,
+.badge.theme-white {
+  background-color: #ffffff;
+  color: #fff;
 }
 .color-black {
   color: #000000;
@@ -450,6 +456,11 @@ a.bg-black,
 .border-black:before {
   background-color: #000000;
 }
+.badge.color-black,
+.badge.theme-black {
+  background-color: #000000;
+  color: #fff;
+}
 .color-lightblue {
   color: #5ac8fa;
 }
@@ -592,6 +603,11 @@ a.bg-lightblue,
 .list-block ul.border-lightblue:before,
 .border-lightblue:before {
   background-color: #5ac8fa;
+}
+.badge.color-lightblue,
+.badge.theme-lightblue {
+  background-color: #5ac8fa;
+  color: #fff;
 }
 .color-yellow {
   color: #ffcc00;
@@ -736,6 +752,11 @@ a.bg-yellow,
 .border-yellow:before {
   background-color: #ffcc00;
 }
+.badge.color-yellow,
+.badge.theme-yellow {
+  background-color: #ffcc00;
+  color: #fff;
+}
 .color-orange {
   color: #ff9500;
 }
@@ -878,6 +899,11 @@ a.bg-orange,
 .list-block ul.border-orange:before,
 .border-orange:before {
   background-color: #ff9500;
+}
+.badge.color-orange,
+.badge.theme-orange {
+  background-color: #ff9500;
+  color: #fff;
 }
 .color-pink {
   color: #ff2d55;
@@ -1022,6 +1048,11 @@ a.bg-pink,
 .border-pink:before {
   background-color: #ff2d55;
 }
+.badge.color-pink,
+.badge.theme-pink {
+  background-color: #ff2d55;
+  color: #fff;
+}
 .color-blue {
   color: #007aff;
 }
@@ -1164,6 +1195,11 @@ a.bg-blue,
 .list-block ul.border-blue:before,
 .border-blue:before {
   background-color: #007aff;
+}
+.badge.color-blue,
+.badge.theme-blue {
+  background-color: #007aff;
+  color: #fff;
 }
 .color-green {
   color: #4cd964;
@@ -1308,6 +1344,11 @@ a.bg-green,
 .border-green:before {
   background-color: #4cd964;
 }
+.badge.color-green,
+.badge.theme-green {
+  background-color: #4cd964;
+  color: #fff;
+}
 .color-red {
   color: #ff3b30;
 }
@@ -1450,6 +1491,11 @@ a.bg-red,
 .list-block ul.border-red:before,
 .border-red:before {
   background-color: #ff3b30;
+}
+.badge.color-red,
+.badge.theme-red {
+  background-color: #ff3b30;
+  color: #fff;
 }
 /*==========================
 Framework7 Layouts Themes

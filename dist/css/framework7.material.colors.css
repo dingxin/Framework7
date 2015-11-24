@@ -12,11 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: October 26, 2015
-=======
- * Released on: November 8, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: November 24, 2015
  */
 /*==========================
 Framework7 Layouts Themes
@@ -420,6 +416,11 @@ html:not(.watch-active-state) .floating-button.color-red:active,
 .ripple-red .ripple-wave {
   background-color: rgba(244, 67, 54, 0.3);
 }
+.badge.color-red,
+.badge.theme-red {
+  background-color: #f44336;
+  color: #fff;
+}
 .color-pink {
   color: #e91e63;
 }
@@ -670,6 +671,11 @@ html:not(.watch-active-state) .floating-button.color-pink:active,
 }
 .ripple-pink .ripple-wave {
   background-color: rgba(233, 30, 99, 0.3);
+}
+.badge.color-pink,
+.badge.theme-pink {
+  background-color: #e91e63;
+  color: #fff;
 }
 .color-purple {
   color: #9c27b0;
@@ -922,6 +928,11 @@ html:not(.watch-active-state) .floating-button.color-purple:active,
 .ripple-purple .ripple-wave {
   background-color: rgba(156, 39, 176, 0.3);
 }
+.badge.color-purple,
+.badge.theme-purple {
+  background-color: #9c27b0;
+  color: #fff;
+}
 .color-deeppurple {
   color: #673ab7;
 }
@@ -1172,6 +1183,11 @@ html:not(.watch-active-state) .floating-button.color-deeppurple:active,
 }
 .ripple-deeppurple .ripple-wave {
   background-color: rgba(103, 58, 183, 0.3);
+}
+.badge.color-deeppurple,
+.badge.theme-deeppurple {
+  background-color: #673ab7;
+  color: #fff;
 }
 .color-indigo {
   color: #3f51b5;
@@ -1424,6 +1440,11 @@ html:not(.watch-active-state) .floating-button.color-indigo:active,
 .ripple-indigo .ripple-wave {
   background-color: rgba(63, 81, 181, 0.3);
 }
+.badge.color-indigo,
+.badge.theme-indigo {
+  background-color: #3f51b5;
+  color: #fff;
+}
 .color-blue {
   color: #2196f3;
 }
@@ -1674,6 +1695,11 @@ html:not(.watch-active-state) .floating-button.color-blue:active,
 }
 .ripple-blue .ripple-wave {
   background-color: rgba(33, 150, 243, 0.3);
+}
+.badge.color-blue,
+.badge.theme-blue {
+  background-color: #2196f3;
+  color: #fff;
 }
 .color-lightblue {
   color: #03a9f4;
@@ -1926,6 +1952,11 @@ html:not(.watch-active-state) .floating-button.color-lightblue:active,
 .ripple-lightblue .ripple-wave {
   background-color: rgba(3, 169, 244, 0.3);
 }
+.badge.color-lightblue,
+.badge.theme-lightblue {
+  background-color: #03a9f4;
+  color: #fff;
+}
 .color-cyan {
   color: #00bcd4;
 }
@@ -2176,6 +2207,11 @@ html:not(.watch-active-state) .floating-button.color-cyan:active,
 }
 .ripple-cyan .ripple-wave {
   background-color: rgba(0, 188, 212, 0.3);
+}
+.badge.color-cyan,
+.badge.theme-cyan {
+  background-color: #00bcd4;
+  color: #fff;
 }
 .color-teal {
   color: #009688;
@@ -2428,6 +2464,11 @@ html:not(.watch-active-state) .floating-button.color-teal:active,
 .ripple-teal .ripple-wave {
   background-color: rgba(0, 150, 136, 0.3);
 }
+.badge.color-teal,
+.badge.theme-teal {
+  background-color: #009688;
+  color: #fff;
+}
 .color-green {
   color: #4caf50;
 }
@@ -2678,6 +2719,11 @@ html:not(.watch-active-state) .floating-button.color-green:active,
 }
 .ripple-green .ripple-wave {
   background-color: rgba(76, 175, 80, 0.3);
+}
+.badge.color-green,
+.badge.theme-green {
+  background-color: #4caf50;
+  color: #fff;
 }
 .color-lightgreen {
   color: #8bc34a;
@@ -2930,6 +2976,11 @@ html:not(.watch-active-state) .floating-button.color-lightgreen:active,
 .ripple-lightgreen .ripple-wave {
   background-color: rgba(139, 195, 74, 0.3);
 }
+.badge.color-lightgreen,
+.badge.theme-lightgreen {
+  background-color: #8bc34a;
+  color: #fff;
+}
 .color-lime {
   color: #cddc39;
 }
@@ -3180,6 +3231,11 @@ html:not(.watch-active-state) .floating-button.color-lime:active,
 }
 .ripple-lime .ripple-wave {
   background-color: rgba(205, 220, 57, 0.3);
+}
+.badge.color-lime,
+.badge.theme-lime {
+  background-color: #cddc39;
+  color: #fff;
 }
 .color-yellow {
   color: #ffeb3b;
@@ -3432,6 +3488,11 @@ html:not(.watch-active-state) .floating-button.color-yellow:active,
 .ripple-yellow .ripple-wave {
   background-color: rgba(255, 235, 59, 0.3);
 }
+.badge.color-yellow,
+.badge.theme-yellow {
+  background-color: #ffeb3b;
+  color: #fff;
+}
 .color-amber {
   color: #ffc107;
 }
@@ -3682,6 +3743,11 @@ html:not(.watch-active-state) .floating-button.color-amber:active,
 }
 .ripple-amber .ripple-wave {
   background-color: rgba(255, 193, 7, 0.3);
+}
+.badge.color-amber,
+.badge.theme-amber {
+  background-color: #ffc107;
+  color: #fff;
 }
 .color-orange {
   color: #ff9800;
@@ -3934,6 +4000,11 @@ html:not(.watch-active-state) .floating-button.color-orange:active,
 .ripple-orange .ripple-wave {
   background-color: rgba(255, 152, 0, 0.3);
 }
+.badge.color-orange,
+.badge.theme-orange {
+  background-color: #ff9800;
+  color: #fff;
+}
 .color-deeporange {
   color: #ff5722;
 }
@@ -4184,6 +4255,11 @@ html:not(.watch-active-state) .floating-button.color-deeporange:active,
 }
 .ripple-deeporange .ripple-wave {
   background-color: rgba(255, 87, 34, 0.3);
+}
+.badge.color-deeporange,
+.badge.theme-deeporange {
+  background-color: #ff5722;
+  color: #fff;
 }
 .color-brown {
   color: #795548;
@@ -4436,6 +4512,11 @@ html:not(.watch-active-state) .floating-button.color-brown:active,
 .ripple-brown .ripple-wave {
   background-color: rgba(121, 85, 72, 0.3);
 }
+.badge.color-brown,
+.badge.theme-brown {
+  background-color: #795548;
+  color: #fff;
+}
 .color-gray {
   color: #9e9e9e;
 }
@@ -4686,6 +4767,11 @@ html:not(.watch-active-state) .floating-button.color-gray:active,
 }
 .ripple-gray .ripple-wave {
   background-color: rgba(158, 158, 158, 0.3);
+}
+.badge.color-gray,
+.badge.theme-gray {
+  background-color: #9e9e9e;
+  color: #fff;
 }
 .color-bluegray {
   color: #607d8b;
@@ -4938,6 +5024,11 @@ html:not(.watch-active-state) .floating-button.color-bluegray:active,
 .ripple-bluegray .ripple-wave {
   background-color: rgba(96, 125, 139, 0.3);
 }
+.badge.color-bluegray,
+.badge.theme-bluegray {
+  background-color: #607d8b;
+  color: #fff;
+}
 .color-white {
   color: #ffffff;
 }
@@ -5189,6 +5280,11 @@ html:not(.watch-active-state) .floating-button.color-white:active,
 .ripple-white .ripple-wave {
   background-color: rgba(255, 255, 255, 0.3);
 }
+.badge.color-white,
+.badge.theme-white {
+  background-color: #ffffff;
+  color: #fff;
+}
 .color-black {
   color: #000000;
 }
@@ -5439,4 +5535,9 @@ html:not(.watch-active-state) .floating-button.color-black:active,
 }
 .ripple-black .ripple-wave {
   background-color: rgba(0, 0, 0, 0.3);
+}
+.badge.color-black,
+.badge.theme-black {
+  background-color: #000000;
+  color: #fff;
 }

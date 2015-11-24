@@ -12,11 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: October 26, 2015
-=======
- * Released on: November 8, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: November 24, 2015
  */
 html,
 body {
@@ -4837,10 +4833,6 @@ html.with-statusbar-overlay body .panel {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
-  transform-style: preserve-3d;
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
   -o-transition-property: -o-transform;
@@ -4861,7 +4853,7 @@ html.with-statusbar-overlay body .panel {
 .swiper-container-multirow > .swiper-wrapper {
   -webkit-box-lines: multiple;
   -moz-box-lines: multiple;
-  -ms-fles-wrap: wrap;
+  -ms-flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
 }
@@ -4874,16 +4866,28 @@ html.with-statusbar-overlay body .panel {
   margin: 0 auto;
 }
 .swiper-slide {
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
-  transform-style: preserve-3d;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
   width: 100%;
   height: 100%;
   position: relative;
+}
+/* Auto Height */
+.swiper-container-autoheight,
+.swiper-container-autoheight .swiper-slide {
+  height: auto;
+}
+.swiper-container-autoheight .swiper-wrapper {
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -webkit-transition-property: -webkit-transform, height;
+  -moz-transition-property: -moz-transform;
+  -o-transition-property: -o-transform;
+  -ms-transition-property: -ms-transform;
+  transition-property: transform, height;
 }
 /* a11y */
 .swiper-container .swiper-notification {
@@ -5082,7 +5086,11 @@ html.with-statusbar-overlay body .panel {
 .swiper-container-fade .swiper-slide {
   pointer-events: none;
 }
-.swiper-container-fade .swiper-slide-active {
+.swiper-container-fade .swiper-slide .swiper-slide {
+  pointer-events: none;
+}
+.swiper-container-fade .swiper-slide-active,
+.swiper-container-fade .swiper-slide-active .swiper-slide-active {
   pointer-events: auto;
 }
 /* Cube */
@@ -5102,6 +5110,7 @@ html.with-statusbar-overlay body .panel {
   backface-visibility: hidden;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 .swiper-container-cube.swiper-container-rtl .swiper-slide {
   -webkit-transform-origin: 100% 0;
@@ -5116,6 +5125,16 @@ html.with-statusbar-overlay body .panel {
   pointer-events: auto;
   visibility: visible;
 }
+.swiper-container-cube .swiper-slide-shadow-top,
+.swiper-container-cube .swiper-slide-shadow-bottom,
+.swiper-container-cube .swiper-slide-shadow-left,
+.swiper-container-cube .swiper-slide-shadow-right {
+  z-index: 0;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 .swiper-container-cube .swiper-cube-shadow {
   position: absolute;
   left: 0;
@@ -5126,8 +5145,6 @@ html.with-statusbar-overlay body .panel {
   opacity: 0.6;
   -webkit-filter: blur(50px);
   filter: blur(50px);
-}
-.swiper-container-cube.swiper-container-vertical .swiper-cube-shadow {
   z-index: 0;
 }
 /* Scrollbar */
