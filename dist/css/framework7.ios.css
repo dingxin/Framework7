@@ -1961,6 +1961,7 @@ i.icon.icon-plus {
   width: 100%;
   position: relative;
   color: #000;
+  box-sizing: content-box;
 }
 .content-block-inner:before {
   content: '';

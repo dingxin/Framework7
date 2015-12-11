@@ -1882,6 +1882,7 @@ html:not(.watch-active-state) .chip .chip-delete:active,
   padding: 16px 16px;
   margin-left: -16px;
   width: 100%;
+  box-sizing: content-box;
   position: relative;
 }
 .content-block-inner:before {
