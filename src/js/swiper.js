@@ -187,7 +187,7 @@ window.Swiper = function (container, params) {
     params = params || {};
     var originalParams = {};
     for (var param in params) {
-        if (typeof params[param] === 'object') {
+        if (typeof params[param] === 'object' && !(params[param].nodeType || params[param] === window || params[param] === document || (typeof Dom7 !== 'undefined' && params[param] instanceof Dom7) || (typeof jQuery !== 'undefined' && params[param] instanceof jQuery))) {
             originalParams[param] = {};
             for (var deepParam in params[param]) {
                 originalParams[param][deepParam] = params[param][deepParam];
@@ -1713,7 +1713,6 @@ window.Swiper = function (container, params) {
         if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
     
         var translate = - s.snapGrid[s.snapIndex];
-    
         // Stop autoplay
         if (s.params.autoplay && s.autoplaying) {
             if (internal || !s.params.autoplayDisableOnInteraction) {
@@ -1746,12 +1745,11 @@ window.Swiper = function (container, params) {
         s.previousIndex = s.activeIndex || 0;
         s.activeIndex = slideIndex;
     
-        // Update Height
-        if (s.params.autoHeight) {
-            s.updateAutoHeight();
-        }
-    
-        if (translate === s.translate) {
+        if ((s.rtl && -translate === s.translate) || (!s.rtl && translate === s.translate)) {
+            // Update Height
+            if (s.params.autoHeight) {
+                s.updateAutoHeight();
+            }
             s.updateClasses();
             if (s.params.effect !== 'slide') {
                 s.setWrapperTranslate(translate);
@@ -1762,13 +1760,13 @@ window.Swiper = function (container, params) {
         s.onTransitionStart(runCallbacks);
     
         if (speed === 0) {
-            s.setWrapperTransition(0);
             s.setWrapperTranslate(translate);
+            s.setWrapperTransition(0);
             s.onTransitionEnd(runCallbacks);
         }
         else {
-            s.setWrapperTransition(speed);
             s.setWrapperTranslate(translate);
+            s.setWrapperTransition(speed);
             if (!s.animating) {
                 s.animating = true;
                 s.wrapper.transitionEnd(function () {
@@ -1784,6 +1782,9 @@ window.Swiper = function (container, params) {
     
     s.onTransitionStart = function (runCallbacks) {
         if (typeof runCallbacks === 'undefined') runCallbacks = true;
+        if (s.params.autoHeight) {
+            s.updateAutoHeight();
+        }
         if (s.lazy) s.lazy.onTransitionStart();
         if (runCallbacks) {
             s.emit('onTransitionStart', s);
@@ -2791,6 +2792,7 @@ window.Swiper = function (container, params) {
     function setParallaxTransform(el, progress) {
         el = $(el);
         var p, pX, pY;
+        var rtlFactor = s.rtl ? -1 : 1;
     
         p = el.attr('data-swiper-parallax') || '0';
         pX = el.attr('data-swiper-parallax-x');
@@ -2809,11 +2811,12 @@ window.Swiper = function (container, params) {
                 pX = '0';
             }
         }
+    
         if ((pX).indexOf('%') >= 0) {
-            pX = parseInt(pX, 10) * progress + '%';
+            pX = parseInt(pX, 10) * progress * rtlFactor + '%';
         }
         else {
-            pX = pX * progress + 'px' ;
+            pX = pX * progress * rtlFactor + 'px' ;
         }
         if ((pY).indexOf('%') >= 0) {
             pY = parseInt(pY, 10) * progress + '%';
@@ -2821,6 +2824,7 @@ window.Swiper = function (container, params) {
         else {
             pY = pY * progress + 'px' ;
         }
+    
         el.transform('translate3d(' + pX + ', ' + pY + ',0px)');
     }
     s.parallax = {
