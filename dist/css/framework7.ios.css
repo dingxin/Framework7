@@ -12,11 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: December 4, 2015
-=======
- * Released on: December 7, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: December 11, 2015
  */
 html,
 body {
@@ -26,7 +22,7 @@ body {
   overflow-x: hidden;
 }
 body {
-  font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, PingFang SC, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
   color: #000;
@@ -2052,7 +2048,7 @@ html.pixel-ratio-3 .content-block-inner:after {
   font-size: 17px;
 }
 .list-block ul {
-  background: #fff;
+  background: #ffffff;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -2579,7 +2575,7 @@ html.ios-gt-8 .list-block li.media-item .item-title {
 }
 .list-block .item-divider,
 .list-block .list-group-title {
-  background: #F7F7F7;
+  background: #f7f7f7;
   margin-top: -1px;
   padding: 4px 15px;
   white-space: nowrap;
@@ -6024,7 +6020,7 @@ html.pixel-ratio-3 .picker-calendar-week-days:after {
   top: auto;
   height: 1px;
   width: 100%;
-  background-color: #ccc;
+  background-color: #cccccc;
   display: block;
   z-index: 15;
   -webkit-transform-origin: 50% 100%;

@@ -10,11 +10,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
- * Released on: December 4, 2015
-=======
- * Released on: December 7, 2015
->>>>>>> refs/remotes/f7/master
+ * Released on: December 11, 2015
  */
 (function () {
 
@@ -3665,7 +3661,6 @@
             modal = $(modal);
             if (modal.length === 0) return false;
             modal.show();
-<<<<<<< HEAD
             if (modal.find('.' + app.params.viewClass).length > 0) {
             	modal.find('.' + app.params.viewClass).each(function() {
             		app.addView(this);
@@ -3678,10 +3673,6 @@
             });
         
             app.openModal(modal, hideOverlay);
-=======
-        
-            app.openModal(modal);
->>>>>>> refs/remotes/f7/master
             return modal[0];
         };
         app.pickerModal = function (modal, removeOnClose) {
@@ -15004,20 +14995,11 @@
             s.previousIndex = s.activeIndex || 0;
             s.activeIndex = slideIndex;
         
-<<<<<<< HEAD
-            // Update Height
-            if (s.params.autoHeight) {
-                s.updateAutoHeight();
-            }
-        
-            if (translate === s.translate) {
-=======
             if ((s.rtl && -translate === s.translate) || (!s.rtl && translate === s.translate)) {
                 // Update Height
                 if (s.params.autoHeight) {
                     s.updateAutoHeight();
                 }
->>>>>>> refs/remotes/f7/master
                 s.updateClasses();
                 if (s.params.effect !== 'slide') {
                     s.setWrapperTranslate(translate);
