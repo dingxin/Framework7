@@ -6,13 +6,13 @@
  *
  * http://www.idangero.us/framework7
  * 
- * Copyright 2015, Vladimir Kharlampidi
+ * Copyright 2016, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: December 11, 2015
+ * Released on: January 15, 2016
  */
 /*==========================
 Framework7 Layouts Themes
@@ -469,7 +469,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-red,
 .speed-dial-buttons a.theme-red,
 .floating-button.color-red,
-.speed-dial-buttons a.color-red {
+.speed-dial-buttons a.color-red,
+.floating-button.bg-red,
+.speed-dial-buttons a.bg-red {
   color: #fff;
   background: #f44336;
 }
@@ -479,12 +481,16 @@ html:not(.watch-active-state) .floating-button.theme-red:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-red:active,
 html:not(.watch-active-state) .floating-button.color-red:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-red:active,
+html:not(.watch-active-state) .floating-button.bg-red:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-red:active,
 .theme-red .floating-button.active-state,
 .theme-red .speed-dial-buttons a.active-state,
 .floating-button.theme-red.active-state,
 .speed-dial-buttons a.theme-red.active-state,
 .floating-button.color-red.active-state,
-.speed-dial-buttons a.color-red.active-state {
+.speed-dial-buttons a.color-red.active-state,
+.floating-button.bg-red.active-state,
+.speed-dial-buttons a.bg-red.active-state {
   background: #d32f2f;
 }
 .theme-red .floating-button i,
@@ -492,7 +498,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-red:active,
 .floating-button.theme-red i,
 .speed-dial-buttons a.theme-red i,
 .floating-button.color-red i,
-.speed-dial-buttons a.color-red i {
+.speed-dial-buttons a.color-red i,
+.floating-button.bg-red i,
+.speed-dial-buttons a.bg-red i {
   color: inherit;
 }
 .ripple-red .ripple-wave {
@@ -798,7 +806,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-pink,
 .speed-dial-buttons a.theme-pink,
 .floating-button.color-pink,
-.speed-dial-buttons a.color-pink {
+.speed-dial-buttons a.color-pink,
+.floating-button.bg-pink,
+.speed-dial-buttons a.bg-pink {
   color: #fff;
   background: #e91e63;
 }
@@ -808,12 +818,16 @@ html:not(.watch-active-state) .floating-button.theme-pink:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-pink:active,
 html:not(.watch-active-state) .floating-button.color-pink:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-pink:active,
+html:not(.watch-active-state) .floating-button.bg-pink:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-pink:active,
 .theme-pink .floating-button.active-state,
 .theme-pink .speed-dial-buttons a.active-state,
 .floating-button.theme-pink.active-state,
 .speed-dial-buttons a.theme-pink.active-state,
 .floating-button.color-pink.active-state,
-.speed-dial-buttons a.color-pink.active-state {
+.speed-dial-buttons a.color-pink.active-state,
+.floating-button.bg-pink.active-state,
+.speed-dial-buttons a.bg-pink.active-state {
   background: #c2185b;
 }
 .theme-pink .floating-button i,
@@ -821,7 +835,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-pink:active,
 .floating-button.theme-pink i,
 .speed-dial-buttons a.theme-pink i,
 .floating-button.color-pink i,
-.speed-dial-buttons a.color-pink i {
+.speed-dial-buttons a.color-pink i,
+.floating-button.bg-pink i,
+.speed-dial-buttons a.bg-pink i {
   color: inherit;
 }
 .ripple-pink .ripple-wave {
@@ -1127,7 +1143,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-purple,
 .speed-dial-buttons a.theme-purple,
 .floating-button.color-purple,
-.speed-dial-buttons a.color-purple {
+.speed-dial-buttons a.color-purple,
+.floating-button.bg-purple,
+.speed-dial-buttons a.bg-purple {
   color: #fff;
   background: #9c27b0;
 }
@@ -1137,12 +1155,16 @@ html:not(.watch-active-state) .floating-button.theme-purple:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-purple:active,
 html:not(.watch-active-state) .floating-button.color-purple:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-purple:active,
+html:not(.watch-active-state) .floating-button.bg-purple:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-purple:active,
 .theme-purple .floating-button.active-state,
 .theme-purple .speed-dial-buttons a.active-state,
 .floating-button.theme-purple.active-state,
 .speed-dial-buttons a.theme-purple.active-state,
 .floating-button.color-purple.active-state,
-.speed-dial-buttons a.color-purple.active-state {
+.speed-dial-buttons a.color-purple.active-state,
+.floating-button.bg-purple.active-state,
+.speed-dial-buttons a.bg-purple.active-state {
   background: #7b1fa2;
 }
 .theme-purple .floating-button i,
@@ -1150,7 +1172,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-purple:active,
 .floating-button.theme-purple i,
 .speed-dial-buttons a.theme-purple i,
 .floating-button.color-purple i,
-.speed-dial-buttons a.color-purple i {
+.speed-dial-buttons a.color-purple i,
+.floating-button.bg-purple i,
+.speed-dial-buttons a.bg-purple i {
   color: inherit;
 }
 .ripple-purple .ripple-wave {
@@ -1456,7 +1480,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-deeppurple,
 .speed-dial-buttons a.theme-deeppurple,
 .floating-button.color-deeppurple,
-.speed-dial-buttons a.color-deeppurple {
+.speed-dial-buttons a.color-deeppurple,
+.floating-button.bg-deeppurple,
+.speed-dial-buttons a.bg-deeppurple {
   color: #fff;
   background: #673ab7;
 }
@@ -1466,12 +1492,16 @@ html:not(.watch-active-state) .floating-button.theme-deeppurple:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-deeppurple:active,
 html:not(.watch-active-state) .floating-button.color-deeppurple:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-deeppurple:active,
+html:not(.watch-active-state) .floating-button.bg-deeppurple:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-deeppurple:active,
 .theme-deeppurple .floating-button.active-state,
 .theme-deeppurple .speed-dial-buttons a.active-state,
 .floating-button.theme-deeppurple.active-state,
 .speed-dial-buttons a.theme-deeppurple.active-state,
 .floating-button.color-deeppurple.active-state,
-.speed-dial-buttons a.color-deeppurple.active-state {
+.speed-dial-buttons a.color-deeppurple.active-state,
+.floating-button.bg-deeppurple.active-state,
+.speed-dial-buttons a.bg-deeppurple.active-state {
   background: #512da8;
 }
 .theme-deeppurple .floating-button i,
@@ -1479,7 +1509,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-deeppurple:active,
 .floating-button.theme-deeppurple i,
 .speed-dial-buttons a.theme-deeppurple i,
 .floating-button.color-deeppurple i,
-.speed-dial-buttons a.color-deeppurple i {
+.speed-dial-buttons a.color-deeppurple i,
+.floating-button.bg-deeppurple i,
+.speed-dial-buttons a.bg-deeppurple i {
   color: inherit;
 }
 .ripple-deeppurple .ripple-wave {
@@ -1785,7 +1817,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-indigo,
 .speed-dial-buttons a.theme-indigo,
 .floating-button.color-indigo,
-.speed-dial-buttons a.color-indigo {
+.speed-dial-buttons a.color-indigo,
+.floating-button.bg-indigo,
+.speed-dial-buttons a.bg-indigo {
   color: #fff;
   background: #3f51b5;
 }
@@ -1795,12 +1829,16 @@ html:not(.watch-active-state) .floating-button.theme-indigo:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-indigo:active,
 html:not(.watch-active-state) .floating-button.color-indigo:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-indigo:active,
+html:not(.watch-active-state) .floating-button.bg-indigo:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-indigo:active,
 .theme-indigo .floating-button.active-state,
 .theme-indigo .speed-dial-buttons a.active-state,
 .floating-button.theme-indigo.active-state,
 .speed-dial-buttons a.theme-indigo.active-state,
 .floating-button.color-indigo.active-state,
-.speed-dial-buttons a.color-indigo.active-state {
+.speed-dial-buttons a.color-indigo.active-state,
+.floating-button.bg-indigo.active-state,
+.speed-dial-buttons a.bg-indigo.active-state {
   background: #303f9f;
 }
 .theme-indigo .floating-button i,
@@ -1808,7 +1846,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-indigo:active,
 .floating-button.theme-indigo i,
 .speed-dial-buttons a.theme-indigo i,
 .floating-button.color-indigo i,
-.speed-dial-buttons a.color-indigo i {
+.speed-dial-buttons a.color-indigo i,
+.floating-button.bg-indigo i,
+.speed-dial-buttons a.bg-indigo i {
   color: inherit;
 }
 .ripple-indigo .ripple-wave {
@@ -2114,7 +2154,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-blue,
 .speed-dial-buttons a.theme-blue,
 .floating-button.color-blue,
-.speed-dial-buttons a.color-blue {
+.speed-dial-buttons a.color-blue,
+.floating-button.bg-blue,
+.speed-dial-buttons a.bg-blue {
   color: #fff;
   background: #2196f3;
 }
@@ -2124,12 +2166,16 @@ html:not(.watch-active-state) .floating-button.theme-blue:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-blue:active,
 html:not(.watch-active-state) .floating-button.color-blue:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-blue:active,
+html:not(.watch-active-state) .floating-button.bg-blue:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-blue:active,
 .theme-blue .floating-button.active-state,
 .theme-blue .speed-dial-buttons a.active-state,
 .floating-button.theme-blue.active-state,
 .speed-dial-buttons a.theme-blue.active-state,
 .floating-button.color-blue.active-state,
-.speed-dial-buttons a.color-blue.active-state {
+.speed-dial-buttons a.color-blue.active-state,
+.floating-button.bg-blue.active-state,
+.speed-dial-buttons a.bg-blue.active-state {
   background: #1976d2;
 }
 .theme-blue .floating-button i,
@@ -2137,7 +2183,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-blue:active,
 .floating-button.theme-blue i,
 .speed-dial-buttons a.theme-blue i,
 .floating-button.color-blue i,
-.speed-dial-buttons a.color-blue i {
+.speed-dial-buttons a.color-blue i,
+.floating-button.bg-blue i,
+.speed-dial-buttons a.bg-blue i {
   color: inherit;
 }
 .ripple-blue .ripple-wave {
@@ -2443,7 +2491,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-lightblue,
 .speed-dial-buttons a.theme-lightblue,
 .floating-button.color-lightblue,
-.speed-dial-buttons a.color-lightblue {
+.speed-dial-buttons a.color-lightblue,
+.floating-button.bg-lightblue,
+.speed-dial-buttons a.bg-lightblue {
   color: #fff;
   background: #03a9f4;
 }
@@ -2453,12 +2503,16 @@ html:not(.watch-active-state) .floating-button.theme-lightblue:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-lightblue:active,
 html:not(.watch-active-state) .floating-button.color-lightblue:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-lightblue:active,
+html:not(.watch-active-state) .floating-button.bg-lightblue:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-lightblue:active,
 .theme-lightblue .floating-button.active-state,
 .theme-lightblue .speed-dial-buttons a.active-state,
 .floating-button.theme-lightblue.active-state,
 .speed-dial-buttons a.theme-lightblue.active-state,
 .floating-button.color-lightblue.active-state,
-.speed-dial-buttons a.color-lightblue.active-state {
+.speed-dial-buttons a.color-lightblue.active-state,
+.floating-button.bg-lightblue.active-state,
+.speed-dial-buttons a.bg-lightblue.active-state {
   background: #0288d1;
 }
 .theme-lightblue .floating-button i,
@@ -2466,7 +2520,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-lightblue:active,
 .floating-button.theme-lightblue i,
 .speed-dial-buttons a.theme-lightblue i,
 .floating-button.color-lightblue i,
-.speed-dial-buttons a.color-lightblue i {
+.speed-dial-buttons a.color-lightblue i,
+.floating-button.bg-lightblue i,
+.speed-dial-buttons a.bg-lightblue i {
   color: inherit;
 }
 .ripple-lightblue .ripple-wave {
@@ -2772,7 +2828,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-cyan,
 .speed-dial-buttons a.theme-cyan,
 .floating-button.color-cyan,
-.speed-dial-buttons a.color-cyan {
+.speed-dial-buttons a.color-cyan,
+.floating-button.bg-cyan,
+.speed-dial-buttons a.bg-cyan {
   color: #fff;
   background: #00bcd4;
 }
@@ -2782,12 +2840,16 @@ html:not(.watch-active-state) .floating-button.theme-cyan:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-cyan:active,
 html:not(.watch-active-state) .floating-button.color-cyan:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-cyan:active,
+html:not(.watch-active-state) .floating-button.bg-cyan:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-cyan:active,
 .theme-cyan .floating-button.active-state,
 .theme-cyan .speed-dial-buttons a.active-state,
 .floating-button.theme-cyan.active-state,
 .speed-dial-buttons a.theme-cyan.active-state,
 .floating-button.color-cyan.active-state,
-.speed-dial-buttons a.color-cyan.active-state {
+.speed-dial-buttons a.color-cyan.active-state,
+.floating-button.bg-cyan.active-state,
+.speed-dial-buttons a.bg-cyan.active-state {
   background: #0097a7;
 }
 .theme-cyan .floating-button i,
@@ -2795,7 +2857,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-cyan:active,
 .floating-button.theme-cyan i,
 .speed-dial-buttons a.theme-cyan i,
 .floating-button.color-cyan i,
-.speed-dial-buttons a.color-cyan i {
+.speed-dial-buttons a.color-cyan i,
+.floating-button.bg-cyan i,
+.speed-dial-buttons a.bg-cyan i {
   color: inherit;
 }
 .ripple-cyan .ripple-wave {
@@ -3101,7 +3165,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-teal,
 .speed-dial-buttons a.theme-teal,
 .floating-button.color-teal,
-.speed-dial-buttons a.color-teal {
+.speed-dial-buttons a.color-teal,
+.floating-button.bg-teal,
+.speed-dial-buttons a.bg-teal {
   color: #fff;
   background: #009688;
 }
@@ -3111,12 +3177,16 @@ html:not(.watch-active-state) .floating-button.theme-teal:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-teal:active,
 html:not(.watch-active-state) .floating-button.color-teal:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-teal:active,
+html:not(.watch-active-state) .floating-button.bg-teal:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-teal:active,
 .theme-teal .floating-button.active-state,
 .theme-teal .speed-dial-buttons a.active-state,
 .floating-button.theme-teal.active-state,
 .speed-dial-buttons a.theme-teal.active-state,
 .floating-button.color-teal.active-state,
-.speed-dial-buttons a.color-teal.active-state {
+.speed-dial-buttons a.color-teal.active-state,
+.floating-button.bg-teal.active-state,
+.speed-dial-buttons a.bg-teal.active-state {
   background: #00897b;
 }
 .theme-teal .floating-button i,
@@ -3124,7 +3194,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-teal:active,
 .floating-button.theme-teal i,
 .speed-dial-buttons a.theme-teal i,
 .floating-button.color-teal i,
-.speed-dial-buttons a.color-teal i {
+.speed-dial-buttons a.color-teal i,
+.floating-button.bg-teal i,
+.speed-dial-buttons a.bg-teal i {
   color: inherit;
 }
 .ripple-teal .ripple-wave {
@@ -3430,7 +3502,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-green,
 .speed-dial-buttons a.theme-green,
 .floating-button.color-green,
-.speed-dial-buttons a.color-green {
+.speed-dial-buttons a.color-green,
+.floating-button.bg-green,
+.speed-dial-buttons a.bg-green {
   color: #fff;
   background: #4caf50;
 }
@@ -3440,12 +3514,16 @@ html:not(.watch-active-state) .floating-button.theme-green:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-green:active,
 html:not(.watch-active-state) .floating-button.color-green:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-green:active,
+html:not(.watch-active-state) .floating-button.bg-green:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-green:active,
 .theme-green .floating-button.active-state,
 .theme-green .speed-dial-buttons a.active-state,
 .floating-button.theme-green.active-state,
 .speed-dial-buttons a.theme-green.active-state,
 .floating-button.color-green.active-state,
-.speed-dial-buttons a.color-green.active-state {
+.speed-dial-buttons a.color-green.active-state,
+.floating-button.bg-green.active-state,
+.speed-dial-buttons a.bg-green.active-state {
   background: #388e3c;
 }
 .theme-green .floating-button i,
@@ -3453,7 +3531,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-green:active,
 .floating-button.theme-green i,
 .speed-dial-buttons a.theme-green i,
 .floating-button.color-green i,
-.speed-dial-buttons a.color-green i {
+.speed-dial-buttons a.color-green i,
+.floating-button.bg-green i,
+.speed-dial-buttons a.bg-green i {
   color: inherit;
 }
 .ripple-green .ripple-wave {
@@ -3759,7 +3839,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-lightgreen,
 .speed-dial-buttons a.theme-lightgreen,
 .floating-button.color-lightgreen,
-.speed-dial-buttons a.color-lightgreen {
+.speed-dial-buttons a.color-lightgreen,
+.floating-button.bg-lightgreen,
+.speed-dial-buttons a.bg-lightgreen {
   color: #fff;
   background: #8bc34a;
 }
@@ -3769,12 +3851,16 @@ html:not(.watch-active-state) .floating-button.theme-lightgreen:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-lightgreen:active,
 html:not(.watch-active-state) .floating-button.color-lightgreen:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-lightgreen:active,
+html:not(.watch-active-state) .floating-button.bg-lightgreen:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-lightgreen:active,
 .theme-lightgreen .floating-button.active-state,
 .theme-lightgreen .speed-dial-buttons a.active-state,
 .floating-button.theme-lightgreen.active-state,
 .speed-dial-buttons a.theme-lightgreen.active-state,
 .floating-button.color-lightgreen.active-state,
-.speed-dial-buttons a.color-lightgreen.active-state {
+.speed-dial-buttons a.color-lightgreen.active-state,
+.floating-button.bg-lightgreen.active-state,
+.speed-dial-buttons a.bg-lightgreen.active-state {
   background: #689f38;
 }
 .theme-lightgreen .floating-button i,
@@ -3782,7 +3868,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-lightgreen:active,
 .floating-button.theme-lightgreen i,
 .speed-dial-buttons a.theme-lightgreen i,
 .floating-button.color-lightgreen i,
-.speed-dial-buttons a.color-lightgreen i {
+.speed-dial-buttons a.color-lightgreen i,
+.floating-button.bg-lightgreen i,
+.speed-dial-buttons a.bg-lightgreen i {
   color: inherit;
 }
 .ripple-lightgreen .ripple-wave {
@@ -4088,7 +4176,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-lime,
 .speed-dial-buttons a.theme-lime,
 .floating-button.color-lime,
-.speed-dial-buttons a.color-lime {
+.speed-dial-buttons a.color-lime,
+.floating-button.bg-lime,
+.speed-dial-buttons a.bg-lime {
   color: #fff;
   background: #cddc39;
 }
@@ -4098,12 +4188,16 @@ html:not(.watch-active-state) .floating-button.theme-lime:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-lime:active,
 html:not(.watch-active-state) .floating-button.color-lime:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-lime:active,
+html:not(.watch-active-state) .floating-button.bg-lime:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-lime:active,
 .theme-lime .floating-button.active-state,
 .theme-lime .speed-dial-buttons a.active-state,
 .floating-button.theme-lime.active-state,
 .speed-dial-buttons a.theme-lime.active-state,
 .floating-button.color-lime.active-state,
-.speed-dial-buttons a.color-lime.active-state {
+.speed-dial-buttons a.color-lime.active-state,
+.floating-button.bg-lime.active-state,
+.speed-dial-buttons a.bg-lime.active-state {
   background: #afb42b;
 }
 .theme-lime .floating-button i,
@@ -4111,7 +4205,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-lime:active,
 .floating-button.theme-lime i,
 .speed-dial-buttons a.theme-lime i,
 .floating-button.color-lime i,
-.speed-dial-buttons a.color-lime i {
+.speed-dial-buttons a.color-lime i,
+.floating-button.bg-lime i,
+.speed-dial-buttons a.bg-lime i {
   color: inherit;
 }
 .ripple-lime .ripple-wave {
@@ -4417,7 +4513,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-yellow,
 .speed-dial-buttons a.theme-yellow,
 .floating-button.color-yellow,
-.speed-dial-buttons a.color-yellow {
+.speed-dial-buttons a.color-yellow,
+.floating-button.bg-yellow,
+.speed-dial-buttons a.bg-yellow {
   color: #fff;
   background: #ffeb3b;
 }
@@ -4427,12 +4525,16 @@ html:not(.watch-active-state) .floating-button.theme-yellow:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-yellow:active,
 html:not(.watch-active-state) .floating-button.color-yellow:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-yellow:active,
+html:not(.watch-active-state) .floating-button.bg-yellow:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-yellow:active,
 .theme-yellow .floating-button.active-state,
 .theme-yellow .speed-dial-buttons a.active-state,
 .floating-button.theme-yellow.active-state,
 .speed-dial-buttons a.theme-yellow.active-state,
 .floating-button.color-yellow.active-state,
-.speed-dial-buttons a.color-yellow.active-state {
+.speed-dial-buttons a.color-yellow.active-state,
+.floating-button.bg-yellow.active-state,
+.speed-dial-buttons a.bg-yellow.active-state {
   background: #fbc02d;
 }
 .theme-yellow .floating-button i,
@@ -4440,7 +4542,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-yellow:active,
 .floating-button.theme-yellow i,
 .speed-dial-buttons a.theme-yellow i,
 .floating-button.color-yellow i,
-.speed-dial-buttons a.color-yellow i {
+.speed-dial-buttons a.color-yellow i,
+.floating-button.bg-yellow i,
+.speed-dial-buttons a.bg-yellow i {
   color: inherit;
 }
 .ripple-yellow .ripple-wave {
@@ -4746,7 +4850,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-amber,
 .speed-dial-buttons a.theme-amber,
 .floating-button.color-amber,
-.speed-dial-buttons a.color-amber {
+.speed-dial-buttons a.color-amber,
+.floating-button.bg-amber,
+.speed-dial-buttons a.bg-amber {
   color: #fff;
   background: #ffc107;
 }
@@ -4756,12 +4862,16 @@ html:not(.watch-active-state) .floating-button.theme-amber:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-amber:active,
 html:not(.watch-active-state) .floating-button.color-amber:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-amber:active,
+html:not(.watch-active-state) .floating-button.bg-amber:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-amber:active,
 .theme-amber .floating-button.active-state,
 .theme-amber .speed-dial-buttons a.active-state,
 .floating-button.theme-amber.active-state,
 .speed-dial-buttons a.theme-amber.active-state,
 .floating-button.color-amber.active-state,
-.speed-dial-buttons a.color-amber.active-state {
+.speed-dial-buttons a.color-amber.active-state,
+.floating-button.bg-amber.active-state,
+.speed-dial-buttons a.bg-amber.active-state {
   background: #ffa000;
 }
 .theme-amber .floating-button i,
@@ -4769,7 +4879,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-amber:active,
 .floating-button.theme-amber i,
 .speed-dial-buttons a.theme-amber i,
 .floating-button.color-amber i,
-.speed-dial-buttons a.color-amber i {
+.speed-dial-buttons a.color-amber i,
+.floating-button.bg-amber i,
+.speed-dial-buttons a.bg-amber i {
   color: inherit;
 }
 .ripple-amber .ripple-wave {
@@ -5075,7 +5187,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-orange,
 .speed-dial-buttons a.theme-orange,
 .floating-button.color-orange,
-.speed-dial-buttons a.color-orange {
+.speed-dial-buttons a.color-orange,
+.floating-button.bg-orange,
+.speed-dial-buttons a.bg-orange {
   color: #fff;
   background: #ff9800;
 }
@@ -5085,12 +5199,16 @@ html:not(.watch-active-state) .floating-button.theme-orange:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-orange:active,
 html:not(.watch-active-state) .floating-button.color-orange:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-orange:active,
+html:not(.watch-active-state) .floating-button.bg-orange:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-orange:active,
 .theme-orange .floating-button.active-state,
 .theme-orange .speed-dial-buttons a.active-state,
 .floating-button.theme-orange.active-state,
 .speed-dial-buttons a.theme-orange.active-state,
 .floating-button.color-orange.active-state,
-.speed-dial-buttons a.color-orange.active-state {
+.speed-dial-buttons a.color-orange.active-state,
+.floating-button.bg-orange.active-state,
+.speed-dial-buttons a.bg-orange.active-state {
   background: #f57c00;
 }
 .theme-orange .floating-button i,
@@ -5098,7 +5216,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-orange:active,
 .floating-button.theme-orange i,
 .speed-dial-buttons a.theme-orange i,
 .floating-button.color-orange i,
-.speed-dial-buttons a.color-orange i {
+.speed-dial-buttons a.color-orange i,
+.floating-button.bg-orange i,
+.speed-dial-buttons a.bg-orange i {
   color: inherit;
 }
 .ripple-orange .ripple-wave {
@@ -5404,7 +5524,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-deeporange,
 .speed-dial-buttons a.theme-deeporange,
 .floating-button.color-deeporange,
-.speed-dial-buttons a.color-deeporange {
+.speed-dial-buttons a.color-deeporange,
+.floating-button.bg-deeporange,
+.speed-dial-buttons a.bg-deeporange {
   color: #fff;
   background: #ff5722;
 }
@@ -5414,12 +5536,16 @@ html:not(.watch-active-state) .floating-button.theme-deeporange:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-deeporange:active,
 html:not(.watch-active-state) .floating-button.color-deeporange:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-deeporange:active,
+html:not(.watch-active-state) .floating-button.bg-deeporange:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-deeporange:active,
 .theme-deeporange .floating-button.active-state,
 .theme-deeporange .speed-dial-buttons a.active-state,
 .floating-button.theme-deeporange.active-state,
 .speed-dial-buttons a.theme-deeporange.active-state,
 .floating-button.color-deeporange.active-state,
-.speed-dial-buttons a.color-deeporange.active-state {
+.speed-dial-buttons a.color-deeporange.active-state,
+.floating-button.bg-deeporange.active-state,
+.speed-dial-buttons a.bg-deeporange.active-state {
   background: #e64a19;
 }
 .theme-deeporange .floating-button i,
@@ -5427,7 +5553,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-deeporange:active,
 .floating-button.theme-deeporange i,
 .speed-dial-buttons a.theme-deeporange i,
 .floating-button.color-deeporange i,
-.speed-dial-buttons a.color-deeporange i {
+.speed-dial-buttons a.color-deeporange i,
+.floating-button.bg-deeporange i,
+.speed-dial-buttons a.bg-deeporange i {
   color: inherit;
 }
 .ripple-deeporange .ripple-wave {
@@ -5733,7 +5861,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-brown,
 .speed-dial-buttons a.theme-brown,
 .floating-button.color-brown,
-.speed-dial-buttons a.color-brown {
+.speed-dial-buttons a.color-brown,
+.floating-button.bg-brown,
+.speed-dial-buttons a.bg-brown {
   color: #fff;
   background: #795548;
 }
@@ -5743,12 +5873,16 @@ html:not(.watch-active-state) .floating-button.theme-brown:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-brown:active,
 html:not(.watch-active-state) .floating-button.color-brown:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-brown:active,
+html:not(.watch-active-state) .floating-button.bg-brown:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-brown:active,
 .theme-brown .floating-button.active-state,
 .theme-brown .speed-dial-buttons a.active-state,
 .floating-button.theme-brown.active-state,
 .speed-dial-buttons a.theme-brown.active-state,
 .floating-button.color-brown.active-state,
-.speed-dial-buttons a.color-brown.active-state {
+.speed-dial-buttons a.color-brown.active-state,
+.floating-button.bg-brown.active-state,
+.speed-dial-buttons a.bg-brown.active-state {
   background: #5d4037;
 }
 .theme-brown .floating-button i,
@@ -5756,7 +5890,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-brown:active,
 .floating-button.theme-brown i,
 .speed-dial-buttons a.theme-brown i,
 .floating-button.color-brown i,
-.speed-dial-buttons a.color-brown i {
+.speed-dial-buttons a.color-brown i,
+.floating-button.bg-brown i,
+.speed-dial-buttons a.bg-brown i {
   color: inherit;
 }
 .ripple-brown .ripple-wave {
@@ -6062,7 +6198,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-gray,
 .speed-dial-buttons a.theme-gray,
 .floating-button.color-gray,
-.speed-dial-buttons a.color-gray {
+.speed-dial-buttons a.color-gray,
+.floating-button.bg-gray,
+.speed-dial-buttons a.bg-gray {
   color: #fff;
   background: #9e9e9e;
 }
@@ -6072,12 +6210,16 @@ html:not(.watch-active-state) .floating-button.theme-gray:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-gray:active,
 html:not(.watch-active-state) .floating-button.color-gray:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-gray:active,
+html:not(.watch-active-state) .floating-button.bg-gray:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-gray:active,
 .theme-gray .floating-button.active-state,
 .theme-gray .speed-dial-buttons a.active-state,
 .floating-button.theme-gray.active-state,
 .speed-dial-buttons a.theme-gray.active-state,
 .floating-button.color-gray.active-state,
-.speed-dial-buttons a.color-gray.active-state {
+.speed-dial-buttons a.color-gray.active-state,
+.floating-button.bg-gray.active-state,
+.speed-dial-buttons a.bg-gray.active-state {
   background: #616161;
 }
 .theme-gray .floating-button i,
@@ -6085,7 +6227,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-gray:active,
 .floating-button.theme-gray i,
 .speed-dial-buttons a.theme-gray i,
 .floating-button.color-gray i,
-.speed-dial-buttons a.color-gray i {
+.speed-dial-buttons a.color-gray i,
+.floating-button.bg-gray i,
+.speed-dial-buttons a.bg-gray i {
   color: inherit;
 }
 .ripple-gray .ripple-wave {
@@ -6391,7 +6535,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-bluegray,
 .speed-dial-buttons a.theme-bluegray,
 .floating-button.color-bluegray,
-.speed-dial-buttons a.color-bluegray {
+.speed-dial-buttons a.color-bluegray,
+.floating-button.bg-bluegray,
+.speed-dial-buttons a.bg-bluegray {
   color: #fff;
   background: #607d8b;
 }
@@ -6401,12 +6547,16 @@ html:not(.watch-active-state) .floating-button.theme-bluegray:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-bluegray:active,
 html:not(.watch-active-state) .floating-button.color-bluegray:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-bluegray:active,
+html:not(.watch-active-state) .floating-button.bg-bluegray:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-bluegray:active,
 .theme-bluegray .floating-button.active-state,
 .theme-bluegray .speed-dial-buttons a.active-state,
 .floating-button.theme-bluegray.active-state,
 .speed-dial-buttons a.theme-bluegray.active-state,
 .floating-button.color-bluegray.active-state,
-.speed-dial-buttons a.color-bluegray.active-state {
+.speed-dial-buttons a.color-bluegray.active-state,
+.floating-button.bg-bluegray.active-state,
+.speed-dial-buttons a.bg-bluegray.active-state {
   background: #455a64;
 }
 .theme-bluegray .floating-button i,
@@ -6414,7 +6564,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-bluegray:active,
 .floating-button.theme-bluegray i,
 .speed-dial-buttons a.theme-bluegray i,
 .floating-button.color-bluegray i,
-.speed-dial-buttons a.color-bluegray i {
+.speed-dial-buttons a.color-bluegray i,
+.floating-button.bg-bluegray i,
+.speed-dial-buttons a.bg-bluegray i {
   color: inherit;
 }
 .ripple-bluegray .ripple-wave {
@@ -6720,7 +6872,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-white,
 .speed-dial-buttons a.theme-white,
 .floating-button.color-white,
-.speed-dial-buttons a.color-white {
+.speed-dial-buttons a.color-white,
+.floating-button.bg-white,
+.speed-dial-buttons a.bg-white {
   color: #fff;
   background: #ffffff;
 }
@@ -6730,12 +6884,16 @@ html:not(.watch-active-state) .floating-button.theme-white:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-white:active,
 html:not(.watch-active-state) .floating-button.color-white:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-white:active,
+html:not(.watch-active-state) .floating-button.bg-white:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-white:active,
 .theme-white .floating-button.active-state,
 .theme-white .speed-dial-buttons a.active-state,
 .floating-button.theme-white.active-state,
 .speed-dial-buttons a.theme-white.active-state,
 .floating-button.color-white.active-state,
-.speed-dial-buttons a.color-white.active-state {
+.speed-dial-buttons a.color-white.active-state,
+.floating-button.bg-white.active-state,
+.speed-dial-buttons a.bg-white.active-state {
   background: rgba(0, 0, 0, 0.1);
 }
 .theme-white .floating-button i,
@@ -6743,7 +6901,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-white:active,
 .floating-button.theme-white i,
 .speed-dial-buttons a.theme-white i,
 .floating-button.color-white i,
-.speed-dial-buttons a.color-white i {
+.speed-dial-buttons a.color-white i,
+.floating-button.bg-white i,
+.speed-dial-buttons a.bg-white i {
   color: inherit;
 }
 .ripple-white .ripple-wave {
@@ -7049,7 +7209,9 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .floating-button.theme-black,
 .speed-dial-buttons a.theme-black,
 .floating-button.color-black,
-.speed-dial-buttons a.color-black {
+.speed-dial-buttons a.color-black,
+.floating-button.bg-black,
+.speed-dial-buttons a.bg-black {
   color: #fff;
   background: #000000;
 }
@@ -7059,12 +7221,16 @@ html:not(.watch-active-state) .floating-button.theme-black:active,
 html:not(.watch-active-state) .speed-dial-buttons a.theme-black:active,
 html:not(.watch-active-state) .floating-button.color-black:active,
 html:not(.watch-active-state) .speed-dial-buttons a.color-black:active,
+html:not(.watch-active-state) .floating-button.bg-black:active,
+html:not(.watch-active-state) .speed-dial-buttons a.bg-black:active,
 .theme-black .floating-button.active-state,
 .theme-black .speed-dial-buttons a.active-state,
 .floating-button.theme-black.active-state,
 .speed-dial-buttons a.theme-black.active-state,
 .floating-button.color-black.active-state,
-.speed-dial-buttons a.color-black.active-state {
+.speed-dial-buttons a.color-black.active-state,
+.floating-button.bg-black.active-state,
+.speed-dial-buttons a.bg-black.active-state {
   background: #333333;
 }
 .theme-black .floating-button i,
@@ -7072,7 +7238,9 @@ html:not(.watch-active-state) .speed-dial-buttons a.color-black:active,
 .floating-button.theme-black i,
 .speed-dial-buttons a.theme-black i,
 .floating-button.color-black i,
-.speed-dial-buttons a.color-black i {
+.speed-dial-buttons a.color-black i,
+.floating-button.bg-black i,
+.speed-dial-buttons a.bg-black i {
   color: inherit;
 }
 .ripple-black .ripple-wave {
