@@ -35,6 +35,7 @@ app.showTab = function (tab, tabLink, force) {
 
     // Remove active class from old tabs
     var oldTab = tabs.children('.tab.active').removeClass('active');
+    oldTab.trigger('hide');
     // Add active class to new tab
     newTab.addClass('active');
     // Trigger 'show' event on new tab

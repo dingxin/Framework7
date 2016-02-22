@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: January 15, 2016
+ * Released on: February 22, 2016
  */
 /*==========================
 Framework7 Layouts Themes
@@ -409,6 +409,13 @@ label.label-radio.theme-red input[type="radio"]:checked ~ .item-inner i.icon-for
 .theme-red .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #f44336;
 }
+.swiper-pagination.color-red .swiper-pagination-progressbar,
+.theme-red .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #f44336;
+}
+.swiper-pagination.swiper-pagination-progress.bg-red {
+  background-color: rgba(244, 67, 54, 0.25);
+}
 .swiper-button-next.color-red,
 .swiper-container-rtl .swiper-button-prev.color-red,
 .theme-red .swiper-button-next,
@@ -745,6 +752,13 @@ label.label-radio.theme-pink input[type="radio"]:checked ~ .item-inner i.icon-fo
 .swiper-pagination.color-pink .swiper-pagination-bullet-active,
 .theme-pink .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #e91e63;
+}
+.swiper-pagination.color-pink .swiper-pagination-progressbar,
+.theme-pink .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #e91e63;
+}
+.swiper-pagination.swiper-pagination-progress.bg-pink {
+  background-color: rgba(233, 30, 99, 0.25);
 }
 .swiper-button-next.color-pink,
 .swiper-container-rtl .swiper-button-prev.color-pink,
@@ -1083,6 +1097,13 @@ label.label-radio.theme-purple input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-purple .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #9c27b0;
 }
+.swiper-pagination.color-purple .swiper-pagination-progressbar,
+.theme-purple .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #9c27b0;
+}
+.swiper-pagination.swiper-pagination-progress.bg-purple {
+  background-color: rgba(156, 39, 176, 0.25);
+}
 .swiper-button-next.color-purple,
 .swiper-container-rtl .swiper-button-prev.color-purple,
 .theme-purple .swiper-button-next,
@@ -1419,6 +1440,13 @@ label.label-radio.theme-deeppurple input[type="radio"]:checked ~ .item-inner i.i
 .swiper-pagination.color-deeppurple .swiper-pagination-bullet-active,
 .theme-deeppurple .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #673ab7;
+}
+.swiper-pagination.color-deeppurple .swiper-pagination-progressbar,
+.theme-deeppurple .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #673ab7;
+}
+.swiper-pagination.swiper-pagination-progress.bg-deeppurple {
+  background-color: rgba(103, 58, 183, 0.25);
 }
 .swiper-button-next.color-deeppurple,
 .swiper-container-rtl .swiper-button-prev.color-deeppurple,
@@ -1757,6 +1785,13 @@ label.label-radio.theme-indigo input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-indigo .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #3f51b5;
 }
+.swiper-pagination.color-indigo .swiper-pagination-progressbar,
+.theme-indigo .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #3f51b5;
+}
+.swiper-pagination.swiper-pagination-progress.bg-indigo {
+  background-color: rgba(63, 81, 181, 0.25);
+}
 .swiper-button-next.color-indigo,
 .swiper-container-rtl .swiper-button-prev.color-indigo,
 .theme-indigo .swiper-button-next,
@@ -2093,6 +2128,13 @@ label.label-radio.theme-blue input[type="radio"]:checked ~ .item-inner i.icon-fo
 .swiper-pagination.color-blue .swiper-pagination-bullet-active,
 .theme-blue .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #2196f3;
+}
+.swiper-pagination.color-blue .swiper-pagination-progressbar,
+.theme-blue .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #2196f3;
+}
+.swiper-pagination.swiper-pagination-progress.bg-blue {
+  background-color: rgba(33, 150, 243, 0.25);
 }
 .swiper-button-next.color-blue,
 .swiper-container-rtl .swiper-button-prev.color-blue,
@@ -2431,6 +2473,13 @@ label.label-radio.theme-lightblue input[type="radio"]:checked ~ .item-inner i.ic
 .theme-lightblue .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #03a9f4;
 }
+.swiper-pagination.color-lightblue .swiper-pagination-progressbar,
+.theme-lightblue .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #03a9f4;
+}
+.swiper-pagination.swiper-pagination-progress.bg-lightblue {
+  background-color: rgba(3, 169, 244, 0.25);
+}
 .swiper-button-next.color-lightblue,
 .swiper-container-rtl .swiper-button-prev.color-lightblue,
 .theme-lightblue .swiper-button-next,
@@ -2767,6 +2816,13 @@ label.label-radio.theme-cyan input[type="radio"]:checked ~ .item-inner i.icon-fo
 .swiper-pagination.color-cyan .swiper-pagination-bullet-active,
 .theme-cyan .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #00bcd4;
+}
+.swiper-pagination.color-cyan .swiper-pagination-progressbar,
+.theme-cyan .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #00bcd4;
+}
+.swiper-pagination.swiper-pagination-progress.bg-cyan {
+  background-color: rgba(0, 188, 212, 0.25);
 }
 .swiper-button-next.color-cyan,
 .swiper-container-rtl .swiper-button-prev.color-cyan,
@@ -3105,6 +3161,13 @@ label.label-radio.theme-teal input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-teal .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #009688;
 }
+.swiper-pagination.color-teal .swiper-pagination-progressbar,
+.theme-teal .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #009688;
+}
+.swiper-pagination.swiper-pagination-progress.bg-teal {
+  background-color: rgba(0, 150, 136, 0.25);
+}
 .swiper-button-next.color-teal,
 .swiper-container-rtl .swiper-button-prev.color-teal,
 .theme-teal .swiper-button-next,
@@ -3441,6 +3504,13 @@ label.label-radio.theme-green input[type="radio"]:checked ~ .item-inner i.icon-f
 .swiper-pagination.color-green .swiper-pagination-bullet-active,
 .theme-green .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #4caf50;
+}
+.swiper-pagination.color-green .swiper-pagination-progressbar,
+.theme-green .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #4caf50;
+}
+.swiper-pagination.swiper-pagination-progress.bg-green {
+  background-color: rgba(76, 175, 80, 0.25);
 }
 .swiper-button-next.color-green,
 .swiper-container-rtl .swiper-button-prev.color-green,
@@ -3779,6 +3849,13 @@ label.label-radio.theme-lightgreen input[type="radio"]:checked ~ .item-inner i.i
 .theme-lightgreen .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #8bc34a;
 }
+.swiper-pagination.color-lightgreen .swiper-pagination-progressbar,
+.theme-lightgreen .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #8bc34a;
+}
+.swiper-pagination.swiper-pagination-progress.bg-lightgreen {
+  background-color: rgba(139, 195, 74, 0.25);
+}
 .swiper-button-next.color-lightgreen,
 .swiper-container-rtl .swiper-button-prev.color-lightgreen,
 .theme-lightgreen .swiper-button-next,
@@ -4115,6 +4192,13 @@ label.label-radio.theme-lime input[type="radio"]:checked ~ .item-inner i.icon-fo
 .swiper-pagination.color-lime .swiper-pagination-bullet-active,
 .theme-lime .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #cddc39;
+}
+.swiper-pagination.color-lime .swiper-pagination-progressbar,
+.theme-lime .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #cddc39;
+}
+.swiper-pagination.swiper-pagination-progress.bg-lime {
+  background-color: rgba(205, 220, 57, 0.25);
 }
 .swiper-button-next.color-lime,
 .swiper-container-rtl .swiper-button-prev.color-lime,
@@ -4453,6 +4537,13 @@ label.label-radio.theme-yellow input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-yellow .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffeb3b;
 }
+.swiper-pagination.color-yellow .swiper-pagination-progressbar,
+.theme-yellow .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ffeb3b;
+}
+.swiper-pagination.swiper-pagination-progress.bg-yellow {
+  background-color: rgba(255, 235, 59, 0.25);
+}
 .swiper-button-next.color-yellow,
 .swiper-container-rtl .swiper-button-prev.color-yellow,
 .theme-yellow .swiper-button-next,
@@ -4789,6 +4880,13 @@ label.label-radio.theme-amber input[type="radio"]:checked ~ .item-inner i.icon-f
 .swiper-pagination.color-amber .swiper-pagination-bullet-active,
 .theme-amber .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffc107;
+}
+.swiper-pagination.color-amber .swiper-pagination-progressbar,
+.theme-amber .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ffc107;
+}
+.swiper-pagination.swiper-pagination-progress.bg-amber {
+  background-color: rgba(255, 193, 7, 0.25);
 }
 .swiper-button-next.color-amber,
 .swiper-container-rtl .swiper-button-prev.color-amber,
@@ -5127,6 +5225,13 @@ label.label-radio.theme-orange input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-orange .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff9800;
 }
+.swiper-pagination.color-orange .swiper-pagination-progressbar,
+.theme-orange .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ff9800;
+}
+.swiper-pagination.swiper-pagination-progress.bg-orange {
+  background-color: rgba(255, 152, 0, 0.25);
+}
 .swiper-button-next.color-orange,
 .swiper-container-rtl .swiper-button-prev.color-orange,
 .theme-orange .swiper-button-next,
@@ -5463,6 +5568,13 @@ label.label-radio.theme-deeporange input[type="radio"]:checked ~ .item-inner i.i
 .swiper-pagination.color-deeporange .swiper-pagination-bullet-active,
 .theme-deeporange .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff5722;
+}
+.swiper-pagination.color-deeporange .swiper-pagination-progressbar,
+.theme-deeporange .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ff5722;
+}
+.swiper-pagination.swiper-pagination-progress.bg-deeporange {
+  background-color: rgba(255, 87, 34, 0.25);
 }
 .swiper-button-next.color-deeporange,
 .swiper-container-rtl .swiper-button-prev.color-deeporange,
@@ -5801,6 +5913,13 @@ label.label-radio.theme-brown input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-brown .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #795548;
 }
+.swiper-pagination.color-brown .swiper-pagination-progressbar,
+.theme-brown .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #795548;
+}
+.swiper-pagination.swiper-pagination-progress.bg-brown {
+  background-color: rgba(121, 85, 72, 0.25);
+}
 .swiper-button-next.color-brown,
 .swiper-container-rtl .swiper-button-prev.color-brown,
 .theme-brown .swiper-button-next,
@@ -6137,6 +6256,13 @@ label.label-radio.theme-gray input[type="radio"]:checked ~ .item-inner i.icon-fo
 .swiper-pagination.color-gray .swiper-pagination-bullet-active,
 .theme-gray .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #9e9e9e;
+}
+.swiper-pagination.color-gray .swiper-pagination-progressbar,
+.theme-gray .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #9e9e9e;
+}
+.swiper-pagination.swiper-pagination-progress.bg-gray {
+  background-color: rgba(158, 158, 158, 0.25);
 }
 .swiper-button-next.color-gray,
 .swiper-container-rtl .swiper-button-prev.color-gray,
@@ -6475,6 +6601,13 @@ label.label-radio.theme-bluegray input[type="radio"]:checked ~ .item-inner i.ico
 .theme-bluegray .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #607d8b;
 }
+.swiper-pagination.color-bluegray .swiper-pagination-progressbar,
+.theme-bluegray .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #607d8b;
+}
+.swiper-pagination.swiper-pagination-progress.bg-bluegray {
+  background-color: rgba(96, 125, 139, 0.25);
+}
 .swiper-button-next.color-bluegray,
 .swiper-container-rtl .swiper-button-prev.color-bluegray,
 .theme-bluegray .swiper-button-next,
@@ -6812,6 +6945,13 @@ label.label-radio.theme-white input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-white .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffffff;
 }
+.swiper-pagination.color-white .swiper-pagination-progressbar,
+.theme-white .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ffffff;
+}
+.swiper-pagination.swiper-pagination-progress.bg-white {
+  background-color: rgba(255, 255, 255, 0.25);
+}
 .swiper-button-next.color-white,
 .swiper-container-rtl .swiper-button-prev.color-white,
 .theme-white .swiper-button-next,
@@ -7148,6 +7288,13 @@ label.label-radio.theme-black input[type="radio"]:checked ~ .item-inner i.icon-f
 .swiper-pagination.color-black .swiper-pagination-bullet-active,
 .theme-black .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #000000;
+}
+.swiper-pagination.color-black .swiper-pagination-progressbar,
+.theme-black .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #000000;
+}
+.swiper-pagination.swiper-pagination-progress.bg-black {
+  background-color: rgba(0, 0, 0, 0.25);
 }
 .swiper-button-next.color-black,
 .swiper-container-rtl .swiper-button-prev.color-black,
