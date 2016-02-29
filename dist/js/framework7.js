@@ -1,5 +1,5 @@
 /**
- * Framework7 1.4.0
+ * Framework7 1.4.2
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 22, 2016
+ * Released on: February 29, 2016
  */
 (function () {
 
@@ -23,7 +23,7 @@
         var app = this;
     
         // Version
-        app.version = '1.4.0';
+        app.version = '1.4.2';
     
         // Default Parameters
         app.params = {
@@ -42,7 +42,7 @@
             pushStateRoot: undefined,
             pushStateNoAnimation: false,
             pushStateSeparator: '#!/',
-            pushStatePreventOnLoad: true,
+            pushStateOnLoad: true,
             // Fast clicks
             fastClicks: true,
             fastClicksDistanceThreshold: 10,
@@ -728,7 +728,7 @@
             };
         
             // Push State on load
-            if (app.params.pushState && view.main) {
+            if (app.params.pushState && app.params.pushStateOnLoad && view.main) {
                 var pushStateUrl;
                 var pushStateUrlSplit = docLocation.split(pushStateSeparator)[1];
                 if (pushStateRoot) {
@@ -744,7 +744,7 @@
                         app.router.load(view, {pageName: historyState.pageName, url: historyState.url, animatePages: pushStateAnimatePages, pushState: false});
                     }
                     else if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && view.initialPagesUrl.indexOf(pushStateUrl) >= 0) {
-                        app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});   
+                        app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});
                     }
                     else app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
                 }
@@ -3471,6 +3471,10 @@
             modal = $(modal);
             target = $(target);
             if (modal.length === 0 || target.length === 0) return false;
+            if (modal.parents('body').length === 0) {
+                if (removeOnClose) modal.addClass('remove-on-close');
+                $('body').append(modal[0]);
+            }
             if (modal.find('.popover-angle').length === 0 && !app.params.material) {
                 modal.append('<div class="popover-angle"></div>');
             }
@@ -3665,6 +3669,10 @@
             }
             modal = $(modal);
             if (modal.length === 0) return false;
+            if (modal.parents('body').length === 0) {
+                if (removeOnClose) modal.addClass('remove-on-close');
+                $('body').append(modal[0]);
+            }
             modal.show();
             if (modal.find('.' + app.params.viewClass).length > 0) {
             	modal.find('.' + app.params.viewClass).each(function() {
@@ -3692,6 +3700,10 @@
             }
             modal = $(modal);
             if (modal.length === 0) return false;
+            if (modal.parents('body').length === 0) {
+                if (removeOnClose) modal.addClass('remove-on-close');
+                $('body').append(modal[0]);
+            }
             if ($('.picker-modal.modal-in:not(.modal-out)').length > 0 && !modal.hasClass('modal-in')) {
                 app.closeModal('.picker-modal.modal-in:not(.modal-out)');
             }
@@ -7991,14 +8003,15 @@
         };
         
         app.initPushState = function () {
-            var blockPopstate;
-            if (app.params.pushStatePreventOnLoad) {
-                blockPopstate = true;
-                $(window).on('load', function () {
-                    setTimeout(function () {
-                        blockPopstate = false;
-                    }, 0);
-                });
+            var blockPopstate = true;
+            $(window).on('load', function () {
+                setTimeout(function () {
+                    blockPopstate = false;
+                }, 0);
+            });
+        
+            if (document.readyState && document.readyState === 'complete') {
+                blockPopstate = false;
             }
         
             function handlePopState(e) {
