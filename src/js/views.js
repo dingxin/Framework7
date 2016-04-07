@@ -210,7 +210,7 @@ var View = function (selector, params) {
                 return;
             }
 
-            if (view.params.swipeBackPageAnimateShadow && !app.device.android) {
+            if (view.params.swipeBackPageAnimateShadow) {
                 pageShadow = activePage.find('.swipeback-page-shadow');
                 if (pageShadow.length === 0) {
                     pageShadow = $('<div class="swipeback-page-shadow"></div>');

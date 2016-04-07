@@ -88,6 +88,7 @@ Framework7.prototype.plugins.indexedlist = function (app, params) {
         eventsTarget.on(app.touchEvents.end, handleTouchEnd);
     }
 
+    app.initIndexedList = initIndexedList;
 
     return {
         hooks: {

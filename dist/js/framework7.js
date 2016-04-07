@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 29, 2016
+ * Released on: April 7, 2016
  */
 (function () {
 
@@ -392,7 +392,7 @@
                         return;
                     }
         
-                    if (view.params.swipeBackPageAnimateShadow && !app.device.android) {
+                    if (view.params.swipeBackPageAnimateShadow) {
                         pageShadow = activePage.find('.swipeback-page-shadow');
                         if (pageShadow.length === 0) {
                             pageShadow = $('<div class="swipeback-page-shadow"></div>');
@@ -16848,6 +16848,7 @@
                 eventsTarget.on(app.touchEvents.end, handleTouchEnd);
             }
         
+            app.initIndexedList = initIndexedList;
         
             return {
                 hooks: {
