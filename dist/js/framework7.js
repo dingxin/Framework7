@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: April 7, 2016
+ * Released on: May 20, 2016
  */
 (function () {
 
@@ -3655,7 +3655,7 @@
             app.openModal(modal);
             return modal[0];
         };
-        app.popup = function (modal, removeOnClose, hideOverlay) {
+        app.popup = function (modal, removeOnClose, hideOverlay, params) {
             if (typeof removeOnClose === 'undefined') removeOnClose = true;
             if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
                 var _modal = document.createElement('div');
@@ -3676,7 +3676,7 @@
             modal.show();
             if (modal.find('.' + app.params.viewClass).length > 0) {
             	modal.find('.' + app.params.viewClass).each(function() {
-            		app.addView(this);
+            		app.addView(this, params);
             	});
             	
                 app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
