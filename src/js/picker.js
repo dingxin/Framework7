@@ -489,7 +489,7 @@ var Picker = function (params) {
             
     }
     
-    if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
+    if (!p.inline && p.params.closeByOutsideClick) $('html').on('click touchstart', closeOnHTMLClick);
 
     // Open
     function onPickerClose() {

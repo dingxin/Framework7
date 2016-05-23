@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 20, 2016
+ * Released on: May 23, 2016
  */
 (function () {
 
@@ -9926,7 +9926,7 @@
                     
             }
             
-            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
+            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click touchstart', closeOnHTMLClick);
         
             // Open
             function onPickerClose() {
@@ -10914,7 +10914,7 @@
         
             }
         
-            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
+            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click touchstart', closeOnHTMLClick);
         
             // Open
             function onPickerClose() {
