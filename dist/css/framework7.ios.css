@@ -1,5 +1,5 @@
 /**
- * Framework7 1.6.0
+ * Framework7 1.6.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
@@ -13,10 +13,14 @@
  * Licensed under MIT
  * 
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Released on: May 27, 2016
 =======
  * Released on: April 10, 2017
 >>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
+=======
+ * Released on: May 31, 2017
+>>>>>>> refs/remotes/f7/master
  */
 html,
 body,
@@ -917,19 +921,27 @@ p {
   display: none;
 }
 .page-on-left {
-  opacity: 0.9;
   -webkit-transform: translate3d(-20%, 0, 0);
   transform: translate3d(-20%, 0, 0);
 }
+.page-on-left .swipeback-page-opacity {
+  opacity: 1;
+}
+.page-on-left:after {
+  opacity: 1;
+}
 .page-on-center .swipeback-page-shadow {
   opacity: 1;
+}
+.page-on-center .swipeback-page-opacity {
+  opacity: 0 !important;
 }
 .page-on-right {
   -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
 }
 .page-on-right .swipeback-page-shadow {
-  opacity: 0;
+  opacity: 0 !important;
 }
 .page-content {
   overflow: auto;
@@ -949,9 +961,33 @@ p {
   background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.01) 50%, rgba(0, 0, 0, 0.2) 100%);
   z-index: -1;
   content: '';
+  will-change: opacity;
+  contain: strict;
 }
+<<<<<<< HEAD
+=======
+html.android .swipeback-page-shadow {
+  display: none;
+  -webkit-animation: none;
+  animation: none;
+}
+.swipeback-page-opacity {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  content: '';
+  opacity: 0;
+  z-index: 10000;
+  will-change: opacity;
+  contain: strict;
+}
+>>>>>>> refs/remotes/f7/master
 .page-transitioning,
-.page-transitioning .swipeback-page-shadow {
+.page-transitioning .swipeback-page-shadow,
+.page-transitioning .swipeback-page-opacity {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
@@ -966,6 +1002,8 @@ p {
   background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.01) 50%, rgba(0, 0, 0, 0.2) 100%);
   z-index: -1;
   content: '';
+  will-change: opacity;
+  contain: strict;
 }
 .page-from-right-to-center {
   -webkit-animation: pageFromRightToCenter 400ms forwards;
@@ -1051,17 +1089,45 @@ p {
   -webkit-animation: pageFromCenterToLeft 400ms forwards;
   animation: pageFromCenterToLeft 400ms forwards;
 }
+.page-from-center-to-left:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  content: '';
+  opacity: 0;
+  z-index: 10000;
+  will-change: opacity;
+  contain: strict;
+  -webkit-animation: pageFromCenterToLeftOpacity 400ms forwards;
+  animation: pageFromCenterToLeftOpacity 400ms forwards;
+}
 .page-from-left-to-center {
   -webkit-animation: pageFromLeftToCenter 400ms forwards;
   animation: pageFromLeftToCenter 400ms forwards;
 }
+.page-from-left-to-center:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100%;
+  content: '';
+  opacity: 0;
+  z-index: 10000;
+  will-change: opacity;
+  contain: strict;
+  -webkit-animation: pageFromLeftToCenterOpacity 400ms forwards;
+  animation: pageFromLeftToCenterOpacity 400ms forwards;
+}
 @-webkit-keyframes pageFromCenterToLeft {
   from {
-    opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
   }
   to {
-    opacity: 0.9;
     -webkit-transform: translate3d(-20%, 0, 0);
   }
 }
@@ -1070,17 +1136,14 @@ p {
     transform: translate3d(0, 0, 0);
   }
   to {
-    opacity: 0.9;
     transform: translate3d(-20%, 0, 0);
   }
 }
 @-webkit-keyframes pageFromLeftToCenter {
   from {
-    opacity: 0.9;
     -webkit-transform: translate3d(-20%, 0, 0);
   }
   to {
-    opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
   }
 }
@@ -1089,8 +1152,39 @@ p {
     transform: translate3d(-20%, 0, 0);
   }
   to {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+@-webkit-keyframes pageFromCenterToLeftOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pageFromCenterToLeftOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes pageFromLeftToCenterOpacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes pageFromLeftToCenterOpacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 /* === Toolbars === */
