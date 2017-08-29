@@ -12,15 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Released on: May 27, 2016
-=======
- * Released on: April 10, 2017
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
-=======
  * Released on: May 31, 2017
->>>>>>> refs/remotes/f7/master
  */
 /*==========================
 Framework7 Layouts Themes
@@ -31,7 +23,7 @@ Framework7 Layouts Themes
 .page.layout-dark,
 .layout-dark .panel,
 .panel.layout-dark {
-  background-color: #222222;
+  background-color: #222;
   color: rgba(255, 255, 255, 0.87);
 }
 .layout-dark .content-block-title {
@@ -53,7 +45,7 @@ Framework7 Layouts Themes
   background-color: #393939;
 }
 .layout-dark .card-footer {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .card-footer:before {
   background-color: #393939;
@@ -79,7 +71,7 @@ Framework7 Layouts Themes
 }
 .layout-dark .swipeout-actions-left a,
 .layout-dark .swipeout-actions-right a {
-  background-color: #444444;
+  background-color: #444;
 }
 .layout-dark .item-inner:after,
 .layout-dark .list-block ul ul li:last-child .item-inner:after {
@@ -90,12 +82,12 @@ Framework7 Layouts Themes
   color: rgba(255, 255, 255, 0.7);
 }
 .layout-dark .list-block-label {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider,
 .layout-dark .list-group-title {
   background: #1a1a1a;
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider:before,
 .layout-dark .list-group-title:before {
@@ -133,7 +125,7 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-dark .list-block input[type="number"],
 .layout-dark .list-block select,
 .layout-dark .list-block textarea {
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .list-block input[type="text"]::-webkit-input-placeholder,
 .layout-dark .list-block input[type="password"]::-webkit-input-placeholder,
@@ -287,23 +279,8 @@ Framework7 Color Themes
 }
 html:not(.watch-active-state) .theme-red .button.button-fill:active,
 .theme-red .button.button-fill.active-state {
-  background: #d32f2f;
+  background: #D32F2F;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-red,
-.button.button-fill.color-red {
-  background: #f44336 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-red:active,
-html:not(.watch-active-state) .button.button-fill.color-red:active,
-.button.button-fill.bg-red.active-state,
-.button.button-fill.color-red.active-state {
-  background: #d32f2f !important;
-}
-.progressbar.color-red,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-red,
 .theme-red .progressbar {
   background-color: rgba(244, 67, 54, 0.5);
@@ -504,52 +481,6 @@ label.label-radio.theme-red input[type="radio"]:checked ~ .item-inner i.icon-for
 .theme-red .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23f44336'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-red,
-a.bg-red,
-.list-block .swipeout-actions-left a.bg-red,
-.list-block .swipeout-actions-right a.bg-red {
-  background-color: #f44336;
-}
-html:not(.watch-active-state) .list-block .bg-red .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-red .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-red .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-red .item-link:active,
-html:not(.watch-active-state) .list-block.bg-red .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-red .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-red .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-red .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-red:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-red:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-red:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-red:active,
-.list-block .bg-red .item-link.active-state,
-.list-block a.bg-red .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-red .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-red .item-link.active-state,
-.list-block.bg-red .item-link.active-state,
-.list-blocka.bg-red .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-red .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-red .item-link.active-state,
-.list-block .item-link.bg-red.active-state,
-.list-block .item-linka.bg-red.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-red.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-red.active-state {
-  background: #d32f2f;
-}
-.border-red {
-  border-color: #f44336;
-}
-.list-block .border-red.item-inner:after,
-.list-block ul.border-red:after,
-.border-red:after,
-.list-block .border-red.item-inner:before,
-.list-block ul.border-red:before,
-.border-red:before {
-  background-color: #f44336;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-red .floating-button,
 .theme-red .speed-dial-buttons a,
 .floating-button.theme-red,
@@ -564,17 +495,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-red:active,
 .theme-red .floating-button.active-state,
 .theme-red .speed-dial-buttons a.active-state,
 .floating-button.theme-red.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-red.active-state,
-.floating-button.color-red.active-state,
-.speed-dial-buttons a.color-red.active-state,
-.floating-button.bg-red.active-state,
-.speed-dial-buttons a.bg-red.active-state {
-  background: #d32f2f;
-=======
 .speed-dial-buttons a.theme-red.active-state {
   background: #D32F2F;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-red .floating-button i,
 .theme-red .speed-dial-buttons a i,
@@ -623,23 +545,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-red:active,
 }
 html:not(.watch-active-state) .theme-pink .button.button-fill:active,
 .theme-pink .button.button-fill.active-state {
-  background: #c2185b;
+  background: #C2185B;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-pink,
-.button.button-fill.color-pink {
-  background: #e91e63 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-pink:active,
-html:not(.watch-active-state) .button.button-fill.color-pink:active,
-.button.button-fill.bg-pink.active-state,
-.button.button-fill.color-pink.active-state {
-  background: #c2185b !important;
-}
-.progressbar.color-pink,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-pink,
 .theme-pink .progressbar {
   background-color: rgba(233, 30, 99, 0.5);
@@ -840,52 +747,6 @@ label.label-radio.theme-pink input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-pink .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23e91e63'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-pink,
-a.bg-pink,
-.list-block .swipeout-actions-left a.bg-pink,
-.list-block .swipeout-actions-right a.bg-pink {
-  background-color: #e91e63;
-}
-html:not(.watch-active-state) .list-block .bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-pink .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-pink:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-pink:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-pink:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-pink:active,
-.list-block .bg-pink .item-link.active-state,
-.list-block a.bg-pink .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-pink .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-pink .item-link.active-state,
-.list-block.bg-pink .item-link.active-state,
-.list-blocka.bg-pink .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-pink .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-pink .item-link.active-state,
-.list-block .item-link.bg-pink.active-state,
-.list-block .item-linka.bg-pink.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-pink.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-pink.active-state {
-  background: #c2185b;
-}
-.border-pink {
-  border-color: #e91e63;
-}
-.list-block .border-pink.item-inner:after,
-.list-block ul.border-pink:after,
-.border-pink:after,
-.list-block .border-pink.item-inner:before,
-.list-block ul.border-pink:before,
-.border-pink:before {
-  background-color: #e91e63;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-pink .floating-button,
 .theme-pink .speed-dial-buttons a,
 .floating-button.theme-pink,
@@ -900,17 +761,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-pink:active,
 .theme-pink .floating-button.active-state,
 .theme-pink .speed-dial-buttons a.active-state,
 .floating-button.theme-pink.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-pink.active-state,
-.floating-button.color-pink.active-state,
-.speed-dial-buttons a.color-pink.active-state,
-.floating-button.bg-pink.active-state,
-.speed-dial-buttons a.bg-pink.active-state {
-  background: #c2185b;
-=======
 .speed-dial-buttons a.theme-pink.active-state {
   background: #C2185B;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-pink .floating-button i,
 .theme-pink .speed-dial-buttons a i,
@@ -959,23 +811,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-pink:active,
 }
 html:not(.watch-active-state) .theme-purple .button.button-fill:active,
 .theme-purple .button.button-fill.active-state {
-  background: #7b1fa2;
+  background: #7B1FA2;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-purple,
-.button.button-fill.color-purple {
-  background: #9c27b0 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-purple:active,
-html:not(.watch-active-state) .button.button-fill.color-purple:active,
-.button.button-fill.bg-purple.active-state,
-.button.button-fill.color-purple.active-state {
-  background: #7b1fa2 !important;
-}
-.progressbar.color-purple,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-purple,
 .theme-purple .progressbar {
   background-color: rgba(156, 39, 176, 0.5);
@@ -1176,52 +1013,6 @@ label.label-radio.theme-purple input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-purple .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%239c27b0'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-purple,
-a.bg-purple,
-.list-block .swipeout-actions-left a.bg-purple,
-.list-block .swipeout-actions-right a.bg-purple {
-  background-color: #9c27b0;
-}
-html:not(.watch-active-state) .list-block .bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-purple .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-purple:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-purple:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-purple:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-purple:active,
-.list-block .bg-purple .item-link.active-state,
-.list-block a.bg-purple .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-purple .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-purple .item-link.active-state,
-.list-block.bg-purple .item-link.active-state,
-.list-blocka.bg-purple .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-purple .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-purple .item-link.active-state,
-.list-block .item-link.bg-purple.active-state,
-.list-block .item-linka.bg-purple.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-purple.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-purple.active-state {
-  background: #7b1fa2;
-}
-.border-purple {
-  border-color: #9c27b0;
-}
-.list-block .border-purple.item-inner:after,
-.list-block ul.border-purple:after,
-.border-purple:after,
-.list-block .border-purple.item-inner:before,
-.list-block ul.border-purple:before,
-.border-purple:before {
-  background-color: #9c27b0;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-purple .floating-button,
 .theme-purple .speed-dial-buttons a,
 .floating-button.theme-purple,
@@ -1236,17 +1027,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-purple:active,
 .theme-purple .floating-button.active-state,
 .theme-purple .speed-dial-buttons a.active-state,
 .floating-button.theme-purple.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-purple.active-state,
-.floating-button.color-purple.active-state,
-.speed-dial-buttons a.color-purple.active-state,
-.floating-button.bg-purple.active-state,
-.speed-dial-buttons a.bg-purple.active-state {
-  background: #7b1fa2;
-=======
 .speed-dial-buttons a.theme-purple.active-state {
   background: #7B1FA2;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-purple .floating-button i,
 .theme-purple .speed-dial-buttons a i,
@@ -1295,23 +1077,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-purple:active,
 }
 html:not(.watch-active-state) .theme-deeppurple .button.button-fill:active,
 .theme-deeppurple .button.button-fill.active-state {
-  background: #512da8;
+  background: #512DA8;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-deeppurple,
-.button.button-fill.color-deeppurple {
-  background: #673ab7 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-deeppurple:active,
-html:not(.watch-active-state) .button.button-fill.color-deeppurple:active,
-.button.button-fill.bg-deeppurple.active-state,
-.button.button-fill.color-deeppurple.active-state {
-  background: #512da8 !important;
-}
-.progressbar.color-deeppurple,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-deeppurple,
 .theme-deeppurple .progressbar {
   background-color: rgba(103, 58, 183, 0.5);
@@ -1512,52 +1279,6 @@ label.label-radio.theme-deeppurple input[type="radio"]:checked ~ .item-inner i.i
 .theme-deeppurple .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23673ab7'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-deeppurple,
-a.bg-deeppurple,
-.list-block .swipeout-actions-left a.bg-deeppurple,
-.list-block .swipeout-actions-right a.bg-deeppurple {
-  background-color: #673ab7;
-}
-html:not(.watch-active-state) .list-block .bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-deeppurple .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-deeppurple:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-deeppurple:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-deeppurple:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-deeppurple:active,
-.list-block .bg-deeppurple .item-link.active-state,
-.list-block a.bg-deeppurple .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-deeppurple .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-deeppurple .item-link.active-state,
-.list-block.bg-deeppurple .item-link.active-state,
-.list-blocka.bg-deeppurple .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-deeppurple .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-deeppurple .item-link.active-state,
-.list-block .item-link.bg-deeppurple.active-state,
-.list-block .item-linka.bg-deeppurple.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-deeppurple.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-deeppurple.active-state {
-  background: #512da8;
-}
-.border-deeppurple {
-  border-color: #673ab7;
-}
-.list-block .border-deeppurple.item-inner:after,
-.list-block ul.border-deeppurple:after,
-.border-deeppurple:after,
-.list-block .border-deeppurple.item-inner:before,
-.list-block ul.border-deeppurple:before,
-.border-deeppurple:before {
-  background-color: #673ab7;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-deeppurple .floating-button,
 .theme-deeppurple .speed-dial-buttons a,
 .floating-button.theme-deeppurple,
@@ -1572,17 +1293,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-deeppurple:active,
 .theme-deeppurple .floating-button.active-state,
 .theme-deeppurple .speed-dial-buttons a.active-state,
 .floating-button.theme-deeppurple.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-deeppurple.active-state,
-.floating-button.color-deeppurple.active-state,
-.speed-dial-buttons a.color-deeppurple.active-state,
-.floating-button.bg-deeppurple.active-state,
-.speed-dial-buttons a.bg-deeppurple.active-state {
-  background: #512da8;
-=======
 .speed-dial-buttons a.theme-deeppurple.active-state {
   background: #512DA8;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-deeppurple .floating-button i,
 .theme-deeppurple .speed-dial-buttons a i,
@@ -1631,23 +1343,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-deeppurple:active,
 }
 html:not(.watch-active-state) .theme-indigo .button.button-fill:active,
 .theme-indigo .button.button-fill.active-state {
-  background: #303f9f;
+  background: #303F9F;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-indigo,
-.button.button-fill.color-indigo {
-  background: #3f51b5 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-indigo:active,
-html:not(.watch-active-state) .button.button-fill.color-indigo:active,
-.button.button-fill.bg-indigo.active-state,
-.button.button-fill.color-indigo.active-state {
-  background: #303f9f !important;
-}
-.progressbar.color-indigo,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-indigo,
 .theme-indigo .progressbar {
   background-color: rgba(63, 81, 181, 0.5);
@@ -1848,52 +1545,6 @@ label.label-radio.theme-indigo input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-indigo .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%233f51b5'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-indigo,
-a.bg-indigo,
-.list-block .swipeout-actions-left a.bg-indigo,
-.list-block .swipeout-actions-right a.bg-indigo {
-  background-color: #3f51b5;
-}
-html:not(.watch-active-state) .list-block .bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-indigo .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-indigo:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-indigo:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-indigo:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-indigo:active,
-.list-block .bg-indigo .item-link.active-state,
-.list-block a.bg-indigo .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-indigo .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-indigo .item-link.active-state,
-.list-block.bg-indigo .item-link.active-state,
-.list-blocka.bg-indigo .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-indigo .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-indigo .item-link.active-state,
-.list-block .item-link.bg-indigo.active-state,
-.list-block .item-linka.bg-indigo.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-indigo.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-indigo.active-state {
-  background: #303f9f;
-}
-.border-indigo {
-  border-color: #3f51b5;
-}
-.list-block .border-indigo.item-inner:after,
-.list-block ul.border-indigo:after,
-.border-indigo:after,
-.list-block .border-indigo.item-inner:before,
-.list-block ul.border-indigo:before,
-.border-indigo:before {
-  background-color: #3f51b5;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-indigo .floating-button,
 .theme-indigo .speed-dial-buttons a,
 .floating-button.theme-indigo,
@@ -1908,17 +1559,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-indigo:active,
 .theme-indigo .floating-button.active-state,
 .theme-indigo .speed-dial-buttons a.active-state,
 .floating-button.theme-indigo.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-indigo.active-state,
-.floating-button.color-indigo.active-state,
-.speed-dial-buttons a.color-indigo.active-state,
-.floating-button.bg-indigo.active-state,
-.speed-dial-buttons a.bg-indigo.active-state {
-  background: #303f9f;
-=======
 .speed-dial-buttons a.theme-indigo.active-state {
   background: #303F9F;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-indigo .floating-button i,
 .theme-indigo .speed-dial-buttons a i,
@@ -1967,23 +1609,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-indigo:active,
 }
 html:not(.watch-active-state) .theme-blue .button.button-fill:active,
 .theme-blue .button.button-fill.active-state {
-  background: #1976d2;
+  background: #1976D2;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-blue,
-.button.button-fill.color-blue {
-  background: #2196f3 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-blue:active,
-html:not(.watch-active-state) .button.button-fill.color-blue:active,
-.button.button-fill.bg-blue.active-state,
-.button.button-fill.color-blue.active-state {
-  background: #1976d2 !important;
-}
-.progressbar.color-blue,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-blue,
 .theme-blue .progressbar {
   background-color: rgba(33, 150, 243, 0.5);
@@ -2184,52 +1811,6 @@ label.label-radio.theme-blue input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-blue .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%232196f3'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-blue,
-a.bg-blue,
-.list-block .swipeout-actions-left a.bg-blue,
-.list-block .swipeout-actions-right a.bg-blue {
-  background-color: #2196f3;
-}
-html:not(.watch-active-state) .list-block .bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-blue .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-blue:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-blue:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-blue:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-blue:active,
-.list-block .bg-blue .item-link.active-state,
-.list-block a.bg-blue .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-blue .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-blue .item-link.active-state,
-.list-block.bg-blue .item-link.active-state,
-.list-blocka.bg-blue .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-blue .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-blue .item-link.active-state,
-.list-block .item-link.bg-blue.active-state,
-.list-block .item-linka.bg-blue.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-blue.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-blue.active-state {
-  background: #1976d2;
-}
-.border-blue {
-  border-color: #2196f3;
-}
-.list-block .border-blue.item-inner:after,
-.list-block ul.border-blue:after,
-.border-blue:after,
-.list-block .border-blue.item-inner:before,
-.list-block ul.border-blue:before,
-.border-blue:before {
-  background-color: #2196f3;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-blue .floating-button,
 .theme-blue .speed-dial-buttons a,
 .floating-button.theme-blue,
@@ -2244,17 +1825,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-blue:active,
 .theme-blue .floating-button.active-state,
 .theme-blue .speed-dial-buttons a.active-state,
 .floating-button.theme-blue.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-blue.active-state,
-.floating-button.color-blue.active-state,
-.speed-dial-buttons a.color-blue.active-state,
-.floating-button.bg-blue.active-state,
-.speed-dial-buttons a.bg-blue.active-state {
-  background: #1976d2;
-=======
 .speed-dial-buttons a.theme-blue.active-state {
   background: #1976D2;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-blue .floating-button i,
 .theme-blue .speed-dial-buttons a i,
@@ -2303,23 +1875,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-blue:active,
 }
 html:not(.watch-active-state) .theme-lightblue .button.button-fill:active,
 .theme-lightblue .button.button-fill.active-state {
-  background: #0288d1;
+  background: #0288D1;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-lightblue,
-.button.button-fill.color-lightblue {
-  background: #03a9f4 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-lightblue:active,
-html:not(.watch-active-state) .button.button-fill.color-lightblue:active,
-.button.button-fill.bg-lightblue.active-state,
-.button.button-fill.color-lightblue.active-state {
-  background: #0288d1 !important;
-}
-.progressbar.color-lightblue,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-lightblue,
 .theme-lightblue .progressbar {
   background-color: rgba(3, 169, 244, 0.5);
@@ -2520,52 +2077,6 @@ label.label-radio.theme-lightblue input[type="radio"]:checked ~ .item-inner i.ic
 .theme-lightblue .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%2303a9f4'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-lightblue,
-a.bg-lightblue,
-.list-block .swipeout-actions-left a.bg-lightblue,
-.list-block .swipeout-actions-right a.bg-lightblue {
-  background-color: #03a9f4;
-}
-html:not(.watch-active-state) .list-block .bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-lightblue .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-lightblue:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-lightblue:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-lightblue:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-lightblue:active,
-.list-block .bg-lightblue .item-link.active-state,
-.list-block a.bg-lightblue .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-lightblue .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-lightblue .item-link.active-state,
-.list-block.bg-lightblue .item-link.active-state,
-.list-blocka.bg-lightblue .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-lightblue .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-lightblue .item-link.active-state,
-.list-block .item-link.bg-lightblue.active-state,
-.list-block .item-linka.bg-lightblue.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-lightblue.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-lightblue.active-state {
-  background: #0288d1;
-}
-.border-lightblue {
-  border-color: #03a9f4;
-}
-.list-block .border-lightblue.item-inner:after,
-.list-block ul.border-lightblue:after,
-.border-lightblue:after,
-.list-block .border-lightblue.item-inner:before,
-.list-block ul.border-lightblue:before,
-.border-lightblue:before {
-  background-color: #03a9f4;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-lightblue .floating-button,
 .theme-lightblue .speed-dial-buttons a,
 .floating-button.theme-lightblue,
@@ -2580,17 +2091,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-lightblue:active,
 .theme-lightblue .floating-button.active-state,
 .theme-lightblue .speed-dial-buttons a.active-state,
 .floating-button.theme-lightblue.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-lightblue.active-state,
-.floating-button.color-lightblue.active-state,
-.speed-dial-buttons a.color-lightblue.active-state,
-.floating-button.bg-lightblue.active-state,
-.speed-dial-buttons a.bg-lightblue.active-state {
-  background: #0288d1;
-=======
 .speed-dial-buttons a.theme-lightblue.active-state {
   background: #0288D1;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-lightblue .floating-button i,
 .theme-lightblue .speed-dial-buttons a i,
@@ -2639,23 +2141,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-lightblue:active,
 }
 html:not(.watch-active-state) .theme-cyan .button.button-fill:active,
 .theme-cyan .button.button-fill.active-state {
-  background: #0097a7;
+  background: #0097A7;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-cyan,
-.button.button-fill.color-cyan {
-  background: #00bcd4 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-cyan:active,
-html:not(.watch-active-state) .button.button-fill.color-cyan:active,
-.button.button-fill.bg-cyan.active-state,
-.button.button-fill.color-cyan.active-state {
-  background: #0097a7 !important;
-}
-.progressbar.color-cyan,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-cyan,
 .theme-cyan .progressbar {
   background-color: rgba(0, 188, 212, 0.5);
@@ -2856,52 +2343,6 @@ label.label-radio.theme-cyan input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-cyan .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%2300bcd4'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-cyan,
-a.bg-cyan,
-.list-block .swipeout-actions-left a.bg-cyan,
-.list-block .swipeout-actions-right a.bg-cyan {
-  background-color: #00bcd4;
-}
-html:not(.watch-active-state) .list-block .bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-cyan .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-cyan:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-cyan:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-cyan:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-cyan:active,
-.list-block .bg-cyan .item-link.active-state,
-.list-block a.bg-cyan .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-cyan .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-cyan .item-link.active-state,
-.list-block.bg-cyan .item-link.active-state,
-.list-blocka.bg-cyan .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-cyan .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-cyan .item-link.active-state,
-.list-block .item-link.bg-cyan.active-state,
-.list-block .item-linka.bg-cyan.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-cyan.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-cyan.active-state {
-  background: #0097a7;
-}
-.border-cyan {
-  border-color: #00bcd4;
-}
-.list-block .border-cyan.item-inner:after,
-.list-block ul.border-cyan:after,
-.border-cyan:after,
-.list-block .border-cyan.item-inner:before,
-.list-block ul.border-cyan:before,
-.border-cyan:before {
-  background-color: #00bcd4;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-cyan .floating-button,
 .theme-cyan .speed-dial-buttons a,
 .floating-button.theme-cyan,
@@ -2916,17 +2357,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-cyan:active,
 .theme-cyan .floating-button.active-state,
 .theme-cyan .speed-dial-buttons a.active-state,
 .floating-button.theme-cyan.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-cyan.active-state,
-.floating-button.color-cyan.active-state,
-.speed-dial-buttons a.color-cyan.active-state,
-.floating-button.bg-cyan.active-state,
-.speed-dial-buttons a.bg-cyan.active-state {
-  background: #0097a7;
-=======
 .speed-dial-buttons a.theme-cyan.active-state {
   background: #0097A7;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-cyan .floating-button i,
 .theme-cyan .speed-dial-buttons a i,
@@ -2975,23 +2407,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-cyan:active,
 }
 html:not(.watch-active-state) .theme-teal .button.button-fill:active,
 .theme-teal .button.button-fill.active-state {
-  background: #00897b;
+  background: #00897B;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-teal,
-.button.button-fill.color-teal {
-  background: #009688 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-teal:active,
-html:not(.watch-active-state) .button.button-fill.color-teal:active,
-.button.button-fill.bg-teal.active-state,
-.button.button-fill.color-teal.active-state {
-  background: #00897b !important;
-}
-.progressbar.color-teal,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-teal,
 .theme-teal .progressbar {
   background-color: rgba(0, 150, 136, 0.5);
@@ -3192,52 +2609,6 @@ label.label-radio.theme-teal input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-teal .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23009688'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-teal,
-a.bg-teal,
-.list-block .swipeout-actions-left a.bg-teal,
-.list-block .swipeout-actions-right a.bg-teal {
-  background-color: #009688;
-}
-html:not(.watch-active-state) .list-block .bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-teal .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-teal:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-teal:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-teal:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-teal:active,
-.list-block .bg-teal .item-link.active-state,
-.list-block a.bg-teal .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-teal .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-teal .item-link.active-state,
-.list-block.bg-teal .item-link.active-state,
-.list-blocka.bg-teal .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-teal .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-teal .item-link.active-state,
-.list-block .item-link.bg-teal.active-state,
-.list-block .item-linka.bg-teal.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-teal.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-teal.active-state {
-  background: #00897b;
-}
-.border-teal {
-  border-color: #009688;
-}
-.list-block .border-teal.item-inner:after,
-.list-block ul.border-teal:after,
-.border-teal:after,
-.list-block .border-teal.item-inner:before,
-.list-block ul.border-teal:before,
-.border-teal:before {
-  background-color: #009688;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-teal .floating-button,
 .theme-teal .speed-dial-buttons a,
 .floating-button.theme-teal,
@@ -3252,17 +2623,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-teal:active,
 .theme-teal .floating-button.active-state,
 .theme-teal .speed-dial-buttons a.active-state,
 .floating-button.theme-teal.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-teal.active-state,
-.floating-button.color-teal.active-state,
-.speed-dial-buttons a.color-teal.active-state,
-.floating-button.bg-teal.active-state,
-.speed-dial-buttons a.bg-teal.active-state {
-  background: #00897b;
-=======
 .speed-dial-buttons a.theme-teal.active-state {
   background: #00897B;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-teal .floating-button i,
 .theme-teal .speed-dial-buttons a i,
@@ -3311,23 +2673,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-teal:active,
 }
 html:not(.watch-active-state) .theme-green .button.button-fill:active,
 .theme-green .button.button-fill.active-state {
-  background: #388e3c;
+  background: #388E3C;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-green,
-.button.button-fill.color-green {
-  background: #4caf50 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-green:active,
-html:not(.watch-active-state) .button.button-fill.color-green:active,
-.button.button-fill.bg-green.active-state,
-.button.button-fill.color-green.active-state {
-  background: #388e3c !important;
-}
-.progressbar.color-green,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-green,
 .theme-green .progressbar {
   background-color: rgba(76, 175, 80, 0.5);
@@ -3528,52 +2875,6 @@ label.label-radio.theme-green input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-green .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%234caf50'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-green,
-a.bg-green,
-.list-block .swipeout-actions-left a.bg-green,
-.list-block .swipeout-actions-right a.bg-green {
-  background-color: #4caf50;
-}
-html:not(.watch-active-state) .list-block .bg-green .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-green .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-green .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-green .item-link:active,
-html:not(.watch-active-state) .list-block.bg-green .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-green .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-green .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-green .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-green:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-green:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-green:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-green:active,
-.list-block .bg-green .item-link.active-state,
-.list-block a.bg-green .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-green .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-green .item-link.active-state,
-.list-block.bg-green .item-link.active-state,
-.list-blocka.bg-green .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-green .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-green .item-link.active-state,
-.list-block .item-link.bg-green.active-state,
-.list-block .item-linka.bg-green.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-green.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-green.active-state {
-  background: #388e3c;
-}
-.border-green {
-  border-color: #4caf50;
-}
-.list-block .border-green.item-inner:after,
-.list-block ul.border-green:after,
-.border-green:after,
-.list-block .border-green.item-inner:before,
-.list-block ul.border-green:before,
-.border-green:before {
-  background-color: #4caf50;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-green .floating-button,
 .theme-green .speed-dial-buttons a,
 .floating-button.theme-green,
@@ -3588,17 +2889,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-green:active,
 .theme-green .floating-button.active-state,
 .theme-green .speed-dial-buttons a.active-state,
 .floating-button.theme-green.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-green.active-state,
-.floating-button.color-green.active-state,
-.speed-dial-buttons a.color-green.active-state,
-.floating-button.bg-green.active-state,
-.speed-dial-buttons a.bg-green.active-state {
-  background: #388e3c;
-=======
 .speed-dial-buttons a.theme-green.active-state {
   background: #388E3C;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-green .floating-button i,
 .theme-green .speed-dial-buttons a i,
@@ -3647,23 +2939,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-green:active,
 }
 html:not(.watch-active-state) .theme-lightgreen .button.button-fill:active,
 .theme-lightgreen .button.button-fill.active-state {
-  background: #689f38;
+  background: #689F38;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-lightgreen,
-.button.button-fill.color-lightgreen {
-  background: #8bc34a !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-lightgreen:active,
-html:not(.watch-active-state) .button.button-fill.color-lightgreen:active,
-.button.button-fill.bg-lightgreen.active-state,
-.button.button-fill.color-lightgreen.active-state {
-  background: #689f38 !important;
-}
-.progressbar.color-lightgreen,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-lightgreen,
 .theme-lightgreen .progressbar {
   background-color: rgba(139, 195, 74, 0.5);
@@ -3864,52 +3141,6 @@ label.label-radio.theme-lightgreen input[type="radio"]:checked ~ .item-inner i.i
 .theme-lightgreen .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%238bc34a'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-lightgreen,
-a.bg-lightgreen,
-.list-block .swipeout-actions-left a.bg-lightgreen,
-.list-block .swipeout-actions-right a.bg-lightgreen {
-  background-color: #8bc34a;
-}
-html:not(.watch-active-state) .list-block .bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-lightgreen .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-lightgreen:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-lightgreen:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-lightgreen:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-lightgreen:active,
-.list-block .bg-lightgreen .item-link.active-state,
-.list-block a.bg-lightgreen .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-lightgreen .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-lightgreen .item-link.active-state,
-.list-block.bg-lightgreen .item-link.active-state,
-.list-blocka.bg-lightgreen .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-lightgreen .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-lightgreen .item-link.active-state,
-.list-block .item-link.bg-lightgreen.active-state,
-.list-block .item-linka.bg-lightgreen.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-lightgreen.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-lightgreen.active-state {
-  background: #689f38;
-}
-.border-lightgreen {
-  border-color: #8bc34a;
-}
-.list-block .border-lightgreen.item-inner:after,
-.list-block ul.border-lightgreen:after,
-.border-lightgreen:after,
-.list-block .border-lightgreen.item-inner:before,
-.list-block ul.border-lightgreen:before,
-.border-lightgreen:before {
-  background-color: #8bc34a;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-lightgreen .floating-button,
 .theme-lightgreen .speed-dial-buttons a,
 .floating-button.theme-lightgreen,
@@ -3924,17 +3155,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-lightgreen:active,
 .theme-lightgreen .floating-button.active-state,
 .theme-lightgreen .speed-dial-buttons a.active-state,
 .floating-button.theme-lightgreen.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-lightgreen.active-state,
-.floating-button.color-lightgreen.active-state,
-.speed-dial-buttons a.color-lightgreen.active-state,
-.floating-button.bg-lightgreen.active-state,
-.speed-dial-buttons a.bg-lightgreen.active-state {
-  background: #689f38;
-=======
 .speed-dial-buttons a.theme-lightgreen.active-state {
   background: #689F38;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-lightgreen .floating-button i,
 .theme-lightgreen .speed-dial-buttons a i,
@@ -3983,23 +3205,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-lightgreen:active,
 }
 html:not(.watch-active-state) .theme-lime .button.button-fill:active,
 .theme-lime .button.button-fill.active-state {
-  background: #afb42b;
+  background: #AFB42B;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-lime,
-.button.button-fill.color-lime {
-  background: #cddc39 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-lime:active,
-html:not(.watch-active-state) .button.button-fill.color-lime:active,
-.button.button-fill.bg-lime.active-state,
-.button.button-fill.color-lime.active-state {
-  background: #afb42b !important;
-}
-.progressbar.color-lime,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-lime,
 .theme-lime .progressbar {
   background-color: rgba(205, 220, 57, 0.5);
@@ -4200,52 +3407,6 @@ label.label-radio.theme-lime input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-lime .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23cddc39'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-lime,
-a.bg-lime,
-.list-block .swipeout-actions-left a.bg-lime,
-.list-block .swipeout-actions-right a.bg-lime {
-  background-color: #cddc39;
-}
-html:not(.watch-active-state) .list-block .bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-lime .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-lime:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-lime:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-lime:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-lime:active,
-.list-block .bg-lime .item-link.active-state,
-.list-block a.bg-lime .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-lime .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-lime .item-link.active-state,
-.list-block.bg-lime .item-link.active-state,
-.list-blocka.bg-lime .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-lime .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-lime .item-link.active-state,
-.list-block .item-link.bg-lime.active-state,
-.list-block .item-linka.bg-lime.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-lime.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-lime.active-state {
-  background: #afb42b;
-}
-.border-lime {
-  border-color: #cddc39;
-}
-.list-block .border-lime.item-inner:after,
-.list-block ul.border-lime:after,
-.border-lime:after,
-.list-block .border-lime.item-inner:before,
-.list-block ul.border-lime:before,
-.border-lime:before {
-  background-color: #cddc39;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-lime .floating-button,
 .theme-lime .speed-dial-buttons a,
 .floating-button.theme-lime,
@@ -4260,17 +3421,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-lime:active,
 .theme-lime .floating-button.active-state,
 .theme-lime .speed-dial-buttons a.active-state,
 .floating-button.theme-lime.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-lime.active-state,
-.floating-button.color-lime.active-state,
-.speed-dial-buttons a.color-lime.active-state,
-.floating-button.bg-lime.active-state,
-.speed-dial-buttons a.bg-lime.active-state {
-  background: #afb42b;
-=======
 .speed-dial-buttons a.theme-lime.active-state {
   background: #AFB42B;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-lime .floating-button i,
 .theme-lime .speed-dial-buttons a i,
@@ -4319,23 +3471,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-lime:active,
 }
 html:not(.watch-active-state) .theme-yellow .button.button-fill:active,
 .theme-yellow .button.button-fill.active-state {
-  background: #fbc02d;
+  background: #FBC02D;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-yellow,
-.button.button-fill.color-yellow {
-  background: #ffeb3b !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-yellow:active,
-html:not(.watch-active-state) .button.button-fill.color-yellow:active,
-.button.button-fill.bg-yellow.active-state,
-.button.button-fill.color-yellow.active-state {
-  background: #fbc02d !important;
-}
-.progressbar.color-yellow,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-yellow,
 .theme-yellow .progressbar {
   background-color: rgba(255, 235, 59, 0.5);
@@ -4536,52 +3673,6 @@ label.label-radio.theme-yellow input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-yellow .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ffeb3b'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-yellow,
-a.bg-yellow,
-.list-block .swipeout-actions-left a.bg-yellow,
-.list-block .swipeout-actions-right a.bg-yellow {
-  background-color: #ffeb3b;
-}
-html:not(.watch-active-state) .list-block .bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-yellow .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-yellow:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-yellow:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-yellow:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-yellow:active,
-.list-block .bg-yellow .item-link.active-state,
-.list-block a.bg-yellow .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-yellow .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-yellow .item-link.active-state,
-.list-block.bg-yellow .item-link.active-state,
-.list-blocka.bg-yellow .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-yellow .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-yellow .item-link.active-state,
-.list-block .item-link.bg-yellow.active-state,
-.list-block .item-linka.bg-yellow.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-yellow.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-yellow.active-state {
-  background: #fbc02d;
-}
-.border-yellow {
-  border-color: #ffeb3b;
-}
-.list-block .border-yellow.item-inner:after,
-.list-block ul.border-yellow:after,
-.border-yellow:after,
-.list-block .border-yellow.item-inner:before,
-.list-block ul.border-yellow:before,
-.border-yellow:before {
-  background-color: #ffeb3b;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-yellow .floating-button,
 .theme-yellow .speed-dial-buttons a,
 .floating-button.theme-yellow,
@@ -4596,17 +3687,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-yellow:active,
 .theme-yellow .floating-button.active-state,
 .theme-yellow .speed-dial-buttons a.active-state,
 .floating-button.theme-yellow.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-yellow.active-state,
-.floating-button.color-yellow.active-state,
-.speed-dial-buttons a.color-yellow.active-state,
-.floating-button.bg-yellow.active-state,
-.speed-dial-buttons a.bg-yellow.active-state {
-  background: #fbc02d;
-=======
 .speed-dial-buttons a.theme-yellow.active-state {
   background: #FBC02D;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-yellow .floating-button i,
 .theme-yellow .speed-dial-buttons a i,
@@ -4655,23 +3737,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-yellow:active,
 }
 html:not(.watch-active-state) .theme-amber .button.button-fill:active,
 .theme-amber .button.button-fill.active-state {
-  background: #ffa000;
+  background: #FFA000;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-amber,
-.button.button-fill.color-amber {
-  background: #ffc107 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-amber:active,
-html:not(.watch-active-state) .button.button-fill.color-amber:active,
-.button.button-fill.bg-amber.active-state,
-.button.button-fill.color-amber.active-state {
-  background: #ffa000 !important;
-}
-.progressbar.color-amber,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-amber,
 .theme-amber .progressbar {
   background-color: rgba(255, 193, 7, 0.5);
@@ -4872,52 +3939,6 @@ label.label-radio.theme-amber input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-amber .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ffc107'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-amber,
-a.bg-amber,
-.list-block .swipeout-actions-left a.bg-amber,
-.list-block .swipeout-actions-right a.bg-amber {
-  background-color: #ffc107;
-}
-html:not(.watch-active-state) .list-block .bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-amber .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-amber:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-amber:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-amber:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-amber:active,
-.list-block .bg-amber .item-link.active-state,
-.list-block a.bg-amber .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-amber .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-amber .item-link.active-state,
-.list-block.bg-amber .item-link.active-state,
-.list-blocka.bg-amber .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-amber .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-amber .item-link.active-state,
-.list-block .item-link.bg-amber.active-state,
-.list-block .item-linka.bg-amber.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-amber.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-amber.active-state {
-  background: #ffa000;
-}
-.border-amber {
-  border-color: #ffc107;
-}
-.list-block .border-amber.item-inner:after,
-.list-block ul.border-amber:after,
-.border-amber:after,
-.list-block .border-amber.item-inner:before,
-.list-block ul.border-amber:before,
-.border-amber:before {
-  background-color: #ffc107;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-amber .floating-button,
 .theme-amber .speed-dial-buttons a,
 .floating-button.theme-amber,
@@ -4932,17 +3953,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-amber:active,
 .theme-amber .floating-button.active-state,
 .theme-amber .speed-dial-buttons a.active-state,
 .floating-button.theme-amber.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-amber.active-state,
-.floating-button.color-amber.active-state,
-.speed-dial-buttons a.color-amber.active-state,
-.floating-button.bg-amber.active-state,
-.speed-dial-buttons a.bg-amber.active-state {
-  background: #ffa000;
-=======
 .speed-dial-buttons a.theme-amber.active-state {
   background: #FFA000;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-amber .floating-button i,
 .theme-amber .speed-dial-buttons a i,
@@ -4991,23 +4003,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-amber:active,
 }
 html:not(.watch-active-state) .theme-orange .button.button-fill:active,
 .theme-orange .button.button-fill.active-state {
-  background: #f57c00;
+  background: #F57C00;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-orange,
-.button.button-fill.color-orange {
-  background: #ff9800 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-orange:active,
-html:not(.watch-active-state) .button.button-fill.color-orange:active,
-.button.button-fill.bg-orange.active-state,
-.button.button-fill.color-orange.active-state {
-  background: #f57c00 !important;
-}
-.progressbar.color-orange,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-orange,
 .theme-orange .progressbar {
   background-color: rgba(255, 152, 0, 0.5);
@@ -5208,52 +4205,6 @@ label.label-radio.theme-orange input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-orange .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ff9800'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-orange,
-a.bg-orange,
-.list-block .swipeout-actions-left a.bg-orange,
-.list-block .swipeout-actions-right a.bg-orange {
-  background-color: #ff9800;
-}
-html:not(.watch-active-state) .list-block .bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-orange .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-orange:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-orange:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-orange:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-orange:active,
-.list-block .bg-orange .item-link.active-state,
-.list-block a.bg-orange .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-orange .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-orange .item-link.active-state,
-.list-block.bg-orange .item-link.active-state,
-.list-blocka.bg-orange .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-orange .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-orange .item-link.active-state,
-.list-block .item-link.bg-orange.active-state,
-.list-block .item-linka.bg-orange.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-orange.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-orange.active-state {
-  background: #f57c00;
-}
-.border-orange {
-  border-color: #ff9800;
-}
-.list-block .border-orange.item-inner:after,
-.list-block ul.border-orange:after,
-.border-orange:after,
-.list-block .border-orange.item-inner:before,
-.list-block ul.border-orange:before,
-.border-orange:before {
-  background-color: #ff9800;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-orange .floating-button,
 .theme-orange .speed-dial-buttons a,
 .floating-button.theme-orange,
@@ -5268,17 +4219,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-orange:active,
 .theme-orange .floating-button.active-state,
 .theme-orange .speed-dial-buttons a.active-state,
 .floating-button.theme-orange.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-orange.active-state,
-.floating-button.color-orange.active-state,
-.speed-dial-buttons a.color-orange.active-state,
-.floating-button.bg-orange.active-state,
-.speed-dial-buttons a.bg-orange.active-state {
-  background: #f57c00;
-=======
 .speed-dial-buttons a.theme-orange.active-state {
   background: #F57C00;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-orange .floating-button i,
 .theme-orange .speed-dial-buttons a i,
@@ -5327,23 +4269,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-orange:active,
 }
 html:not(.watch-active-state) .theme-deeporange .button.button-fill:active,
 .theme-deeporange .button.button-fill.active-state {
-  background: #e64a19;
+  background: #E64A19;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-deeporange,
-.button.button-fill.color-deeporange {
-  background: #ff5722 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-deeporange:active,
-html:not(.watch-active-state) .button.button-fill.color-deeporange:active,
-.button.button-fill.bg-deeporange.active-state,
-.button.button-fill.color-deeporange.active-state {
-  background: #e64a19 !important;
-}
-.progressbar.color-deeporange,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-deeporange,
 .theme-deeporange .progressbar {
   background-color: rgba(255, 87, 34, 0.5);
@@ -5544,52 +4471,6 @@ label.label-radio.theme-deeporange input[type="radio"]:checked ~ .item-inner i.i
 .theme-deeporange .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ff5722'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-deeporange,
-a.bg-deeporange,
-.list-block .swipeout-actions-left a.bg-deeporange,
-.list-block .swipeout-actions-right a.bg-deeporange {
-  background-color: #ff5722;
-}
-html:not(.watch-active-state) .list-block .bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-deeporange .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-deeporange:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-deeporange:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-deeporange:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-deeporange:active,
-.list-block .bg-deeporange .item-link.active-state,
-.list-block a.bg-deeporange .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-deeporange .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-deeporange .item-link.active-state,
-.list-block.bg-deeporange .item-link.active-state,
-.list-blocka.bg-deeporange .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-deeporange .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-deeporange .item-link.active-state,
-.list-block .item-link.bg-deeporange.active-state,
-.list-block .item-linka.bg-deeporange.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-deeporange.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-deeporange.active-state {
-  background: #e64a19;
-}
-.border-deeporange {
-  border-color: #ff5722;
-}
-.list-block .border-deeporange.item-inner:after,
-.list-block ul.border-deeporange:after,
-.border-deeporange:after,
-.list-block .border-deeporange.item-inner:before,
-.list-block ul.border-deeporange:before,
-.border-deeporange:before {
-  background-color: #ff5722;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-deeporange .floating-button,
 .theme-deeporange .speed-dial-buttons a,
 .floating-button.theme-deeporange,
@@ -5604,17 +4485,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-deeporange:active,
 .theme-deeporange .floating-button.active-state,
 .theme-deeporange .speed-dial-buttons a.active-state,
 .floating-button.theme-deeporange.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-deeporange.active-state,
-.floating-button.color-deeporange.active-state,
-.speed-dial-buttons a.color-deeporange.active-state,
-.floating-button.bg-deeporange.active-state,
-.speed-dial-buttons a.bg-deeporange.active-state {
-  background: #e64a19;
-=======
 .speed-dial-buttons a.theme-deeporange.active-state {
   background: #E64A19;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-deeporange .floating-button i,
 .theme-deeporange .speed-dial-buttons a i,
@@ -5663,23 +4535,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-deeporange:active,
 }
 html:not(.watch-active-state) .theme-brown .button.button-fill:active,
 .theme-brown .button.button-fill.active-state {
-  background: #5d4037;
+  background: #5D4037;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-brown,
-.button.button-fill.color-brown {
-  background: #795548 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-brown:active,
-html:not(.watch-active-state) .button.button-fill.color-brown:active,
-.button.button-fill.bg-brown.active-state,
-.button.button-fill.color-brown.active-state {
-  background: #5d4037 !important;
-}
-.progressbar.color-brown,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-brown,
 .theme-brown .progressbar {
   background-color: rgba(121, 85, 72, 0.5);
@@ -5880,52 +4737,6 @@ label.label-radio.theme-brown input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-brown .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23795548'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-brown,
-a.bg-brown,
-.list-block .swipeout-actions-left a.bg-brown,
-.list-block .swipeout-actions-right a.bg-brown {
-  background-color: #795548;
-}
-html:not(.watch-active-state) .list-block .bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-brown .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-brown:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-brown:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-brown:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-brown:active,
-.list-block .bg-brown .item-link.active-state,
-.list-block a.bg-brown .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-brown .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-brown .item-link.active-state,
-.list-block.bg-brown .item-link.active-state,
-.list-blocka.bg-brown .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-brown .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-brown .item-link.active-state,
-.list-block .item-link.bg-brown.active-state,
-.list-block .item-linka.bg-brown.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-brown.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-brown.active-state {
-  background: #5d4037;
-}
-.border-brown {
-  border-color: #795548;
-}
-.list-block .border-brown.item-inner:after,
-.list-block ul.border-brown:after,
-.border-brown:after,
-.list-block .border-brown.item-inner:before,
-.list-block ul.border-brown:before,
-.border-brown:before {
-  background-color: #795548;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-brown .floating-button,
 .theme-brown .speed-dial-buttons a,
 .floating-button.theme-brown,
@@ -5940,17 +4751,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-brown:active,
 .theme-brown .floating-button.active-state,
 .theme-brown .speed-dial-buttons a.active-state,
 .floating-button.theme-brown.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-brown.active-state,
-.floating-button.color-brown.active-state,
-.speed-dial-buttons a.color-brown.active-state,
-.floating-button.bg-brown.active-state,
-.speed-dial-buttons a.bg-brown.active-state {
-  background: #5d4037;
-=======
 .speed-dial-buttons a.theme-brown.active-state {
   background: #5D4037;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-brown .floating-button i,
 .theme-brown .speed-dial-buttons a i,
@@ -6265,23 +5067,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-gray:active,
 }
 html:not(.watch-active-state) .theme-bluegray .button.button-fill:active,
 .theme-bluegray .button.button-fill.active-state {
-  background: #455a64;
+  background: #455A64;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-bluegray,
-.button.button-fill.color-bluegray {
-  background: #607d8b !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-bluegray:active,
-html:not(.watch-active-state) .button.button-fill.color-bluegray:active,
-.button.button-fill.bg-bluegray.active-state,
-.button.button-fill.color-bluegray.active-state {
-  background: #455a64 !important;
-}
-.progressbar.color-bluegray,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-bluegray,
 .theme-bluegray .progressbar {
   background-color: rgba(96, 125, 139, 0.5);
@@ -6482,52 +5269,6 @@ label.label-radio.theme-bluegray input[type="radio"]:checked ~ .item-inner i.ico
 .theme-bluegray .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23607d8b'%2F%3E%3C%2Fsvg%3E");
 }
-<<<<<<< HEAD
-.bg-bluegray,
-a.bg-bluegray,
-.list-block .swipeout-actions-left a.bg-bluegray,
-.list-block .swipeout-actions-right a.bg-bluegray {
-  background-color: #607d8b;
-}
-html:not(.watch-active-state) .list-block .bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block a.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-blocka.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-bluegray .item-link:active,
-html:not(.watch-active-state) .list-block .item-link.bg-bluegray:active,
-html:not(.watch-active-state) .list-block .item-linka.bg-bluegray:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-bluegray:active,
-html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-bluegray:active,
-.list-block .bg-bluegray .item-link.active-state,
-.list-block a.bg-bluegray .item-link.active-state,
-.list-block .list-block .swipeout-actions-left a.bg-bluegray .item-link.active-state,
-.list-block .list-block .swipeout-actions-right a.bg-bluegray .item-link.active-state,
-.list-block.bg-bluegray .item-link.active-state,
-.list-blocka.bg-bluegray .item-link.active-state,
-.list-block.list-block .swipeout-actions-left a.bg-bluegray .item-link.active-state,
-.list-block.list-block .swipeout-actions-right a.bg-bluegray .item-link.active-state,
-.list-block .item-link.bg-bluegray.active-state,
-.list-block .item-linka.bg-bluegray.active-state,
-.list-block .item-link.list-block .swipeout-actions-left a.bg-bluegray.active-state,
-.list-block .item-link.list-block .swipeout-actions-right a.bg-bluegray.active-state {
-  background: #455a64;
-}
-.border-bluegray {
-  border-color: #607d8b;
-}
-.list-block .border-bluegray.item-inner:after,
-.list-block ul.border-bluegray:after,
-.border-bluegray:after,
-.list-block .border-bluegray.item-inner:before,
-.list-block ul.border-bluegray:before,
-.border-bluegray:before {
-  background-color: #607d8b;
-}
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .theme-bluegray .floating-button,
 .theme-bluegray .speed-dial-buttons a,
 .floating-button.theme-bluegray,
@@ -6542,17 +5283,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-bluegray:active,
 .theme-bluegray .floating-button.active-state,
 .theme-bluegray .speed-dial-buttons a.active-state,
 .floating-button.theme-bluegray.active-state,
-<<<<<<< HEAD
-.speed-dial-buttons a.theme-bluegray.active-state,
-.floating-button.color-bluegray.active-state,
-.speed-dial-buttons a.color-bluegray.active-state,
-.floating-button.bg-bluegray.active-state,
-.speed-dial-buttons a.bg-bluegray.active-state {
-  background: #455a64;
-=======
 .speed-dial-buttons a.theme-bluegray.active-state {
   background: #455A64;
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
 .theme-bluegray .floating-button i,
 .theme-bluegray .speed-dial-buttons a i,
@@ -6867,23 +5599,8 @@ html:not(.watch-active-state) .speed-dial-buttons a.theme-white:active,
 }
 html:not(.watch-active-state) .theme-black .button.button-fill:active,
 .theme-black .button.button-fill.active-state {
-  background: #333333;
+  background: #333;
 }
-<<<<<<< HEAD
-.button.button-fill.bg-black,
-.button.button-fill.color-black {
-  background: #000000 !important;
-  color: #fff;
-}
-html:not(.watch-active-state) .button.button-fill.bg-black:active,
-html:not(.watch-active-state) .button.button-fill.color-black:active,
-.button.button-fill.bg-black.active-state,
-.button.button-fill.color-black.active-state {
-  background: #333333 !important;
-}
-.progressbar.color-black,
-=======
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 .progressbar.theme-black,
 .theme-black .progressbar {
   background-color: rgba(0, 0, 0, 0.5);
@@ -10205,7 +8922,7 @@ html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-action
 .list-block .item-linka.bg-black.active-state,
 .list-block .item-link.list-block .swipeout-actions-left a.bg-black.active-state,
 .list-block .item-link.list-block .swipeout-actions-right a.bg-black.active-state {
-  background: #333333;
+  background: #333;
 }
 .border-black {
   border-color: #000000;
@@ -10233,7 +8950,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-black:active,
 .speed-dial-buttons a.color-black.active-state,
 .floating-button.bg-black.active-state,
 .speed-dial-buttons a.bg-black.active-state {
-  background: #333333;
+  background: #333;
 }
 .floating-button.color-black i,
 .speed-dial-buttons a.color-black i,

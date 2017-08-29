@@ -12,15 +12,7 @@
  * 
  * Licensed under MIT
  * 
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Released on: May 27, 2016
-=======
- * Released on: April 10, 2017
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
-=======
  * Released on: May 31, 2017
->>>>>>> refs/remotes/f7/master
  */
 html,
 body,
@@ -1055,7 +1047,7 @@ p {
   z-index: 500;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  color: #ffffff;
+  color: #fff;
 }
 .navbar b,
 .toolbar b {
@@ -1074,7 +1066,7 @@ p {
 .subnavbar a.link {
   text-decoration: none;
   position: relative;
-  color: #ffffff;
+  color: #fff;
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2265,7 +2257,6 @@ html:not(.watch-active-state) .chip-delete:active,
   padding: 16px 16px;
   margin-left: -16px;
   width: 100%;
-  box-sizing: content-box;
   position: relative;
 }
 .content-block-inner:before {
@@ -2351,10 +2342,6 @@ html.pixel-ratio-3 .content-block-inner:after {
   }
 }
 /* === Lists === */
-.item-media i.icon {
-  font-size: 29px;
-  width: 29px;
-}
 .list-block {
   margin: 32px 0;
   font-size: 16px;
@@ -3343,8 +3330,7 @@ textarea.resizable {
   transform: translate3d(0, 0, 0);
 }
 input[type="submit"].button,
-input[type="button"].button,
-button.button {
+input[type="button"].button {
   width: 100%;
 }
 html:not(.watch-active-state) .button:active,
@@ -4070,9 +4056,7 @@ html.android-4 .accordion-item-content {
 input[type="submit"].card-header a.link,
 input[type="submit"].card-footer a.link,
 input[type="button"].card-header a.link,
-input[type="button"].card-footer a.link,
-button.card-header a.link,
-button.card-footer a.link {
+input[type="button"].card-footer a.link {
   width: 100%;
 }
 html:not(.watch-active-state) .card-header a.link:active,
@@ -4385,9 +4369,7 @@ html.pixel-ratio-3 .card-footer:before {
 input[type="submit"].modal-button,
 input[type="submit"].modal-buttons .button,
 input[type="button"].modal-button,
-input[type="button"].modal-buttons .button,
-button.modal-button,
-button.modal-buttons .button {
+input[type="button"].modal-buttons .button {
   width: 100%;
 }
 html:not(.watch-active-state) .modal-button:active,
@@ -8265,56 +8247,6 @@ a.item-link,
 [disabled] [disabled] {
   opacity: 1;
 }
-<<<<<<< HEAD
-.list-index {
-  color: #057bf7;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 11px;
-  font-weight: bold;
-  position: absolute;
-  z-index: 199;
-  top: 0%;
-  height: 100%;
-  right: 0;
-  background: #fff;
-  width: 15px;
-  text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -ms-flex-direction: column;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-}
-.list-index li {
-  position: relative;
-  z-index: 10;
-}
-.list-index li:before {
-  content: '';
-  position: absolute;
-  right: 100%;
-  width: 10px;
-  height: 100%;
-  top: 0;
-}
-html[dir="rtl"] .list-index {
-  right: auto;
-  left: 0;
-}
-html[dir="rtl"] .list-index li:before {
-  right: auto;
-  left: 100%;
-=======
 .data-table {
   overflow-x: auto;
 }
@@ -8708,5 +8640,4 @@ html:not(.watch-active-state) .data-table .data-table-actions a.link.icon-only:a
   .data-table .tablet-landscape-only {
     display: table-cell;
   }
->>>>>>> branch 'master' of https://github.com/nolimits4web/Framework7.git
 }
