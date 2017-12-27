@@ -30,6 +30,7 @@ Juergen Schimmoeller
 
 ### $50+
 
+Bearr Dayss<br>
 Kris Reddy<br>
 Bart DJ
 
@@ -38,6 +39,8 @@ Bart DJ
 ---
 
 ### $10+
+Dan Boschen<br>
+Catalin Rogojeanu<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
 Firestream<br>
@@ -55,15 +58,14 @@ Dave Billington
 ---
 
 ### $5+
+Travel With Lucas<br>
 Garry Lowther<br>
 Uri Bram<br>
 VOUSYS<br>
-Mnill<br>
 Tirso Martínez Reyes<br>
 Zafer Ayan<br>
 Amir br<br>
 Toby Allen - Ballymaloe Cookery School<br>
-Dan Boschen<br>
 Daniel Dingemanse<br>
 Henry Blackman<br>
 Ruslan Skorynin
