@@ -8,9 +8,15 @@ class Range extends Framework7Class {
     super(params, [app]);
     const range = this;
     const defaults = {
+      el: null,
+      inputEl: null,
       dual: false,
       step: 1,
       label: false,
+      min: 0,
+      max: 100,
+      value: 0,
+      draggableBar: true,
     };
 
     // Extend defaults with modules params
@@ -54,12 +60,18 @@ class Range extends Framework7Class {
       }
     }
 
-
-    Utils.extend(range, range.params, {
+    const { dual, step, label, min, max, value } = range.params;
+    Utils.extend(range, {
       $el,
       el: $el[0],
       $inputEl,
       inputEl: $inputEl ? $inputEl[0] : undefined,
+      dual,
+      step,
+      label,
+      min,
+      max,
+      value,
     });
 
     if ($inputEl) {
@@ -68,11 +80,11 @@ class Range extends Framework7Class {
           range.params[paramName] = parseFloat($inputEl.attr(paramName));
           range[paramName] = parseFloat($inputEl.attr(paramName));
         }
-        if (typeof $inputEl.val() !== 'undefined') {
-          range.params.value = parseFloat($inputEl.val());
-          range.value = parseFloat($inputEl.val());
-        }
       });
+      if (typeof $inputEl.val() !== 'undefined') {
+        range.params.value = parseFloat($inputEl.val());
+        range.value = parseFloat($inputEl.val());
+      }
     }
 
     // Dual
@@ -132,9 +144,18 @@ class Range extends Framework7Class {
     let rangeOffsetLeft;
     let $touchedKnobEl;
     let dualValueIndex;
-
+    let valueChangedByTouch;
+    function onTouchChange() {
+      valueChangedByTouch = true;
+    }
     function handleTouchStart(e) {
       if (isTouched) return;
+      if (!range.params.draggableBar) {
+        if ($(e.target).closest('.range-knob').length === 0) {
+          return;
+        }
+      }
+      valueChangedByTouch = false;
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
 
@@ -167,7 +188,8 @@ class Range extends Framework7Class {
       Utils.nextTick(() => {
         if (isTouched) $touchedKnobEl.addClass('range-knob-active-state');
       }, 70);
-      range.setValue(newValue);
+      range.on('change', onTouchChange);
+      range.setValue(newValue, true);
     }
     function handleTouchMove(e) {
       if (!isTouched) return;
@@ -209,7 +231,7 @@ class Range extends Framework7Class {
         }
         newValue = [leftValue, rightValue];
       }
-      range.setValue(newValue);
+      range.setValue(newValue, true);
     }
     function handleTouchEnd() {
       if (!isTouched) {
@@ -217,8 +239,13 @@ class Range extends Framework7Class {
         isTouched = false;
         return;
       }
+      range.off('change', onTouchChange);
       isTouched = false;
       $touchedKnobEl.removeClass('range-knob-active-state');
+      if (valueChangedByTouch && range.$inputEl && !range.dual) {
+        range.$inputEl.trigger('change');
+      }
+      valueChangedByTouch = false;
     }
 
     function handleResize() {
@@ -232,6 +259,12 @@ class Range extends Framework7Class {
       app.on('touchend:passive', handleTouchEnd);
       app.on('tabShow', handleResize);
       app.on('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .on('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .on('panel:open', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -240,6 +273,12 @@ class Range extends Framework7Class {
       app.off('touchend:passive', handleTouchEnd);
       app.off('tabShow', handleResize);
       app.off('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .off('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .off('panel:open', handleResize);
     };
 
     // Install Modules
@@ -308,10 +347,12 @@ class Range extends Framework7Class {
       range.$el.removeClass('range-slider-max');
     }
   }
-  setValue(newValue) {
+  setValue(newValue, byTouchMove) {
     const range = this;
     const { step, min, max } = range;
+    let valueChanged;
     if (range.dual) {
+      const oldValue = [range.value[0], range.value[1]];
       let newValues = newValue;
       if (!Array.isArray(newValues)) newValues = [newValue, newValue];
       if (newValue[0] > newValue[1]) {
@@ -324,16 +365,25 @@ class Range extends Framework7Class {
       newValues.forEach((value, valueIndex) => {
         range.value[valueIndex] = value;
       });
+      valueChanged = oldValue[0] !== newValues[0] || oldValue[1] !== newValues[1];
       range.layout();
     } else {
+      const oldValue = range.value;
       const value = Math.max(Math.min(Math.round(newValue / step) * step, max), min);
       range.value = value;
       range.layout();
+      valueChanged = oldValue !== value;
     }
     // Events
+    if (!valueChanged) return range;
     range.$el.trigger('range:change', range, range.value);
     if (range.$inputEl && !range.dual) {
-      range.$inputEl.val(range.value).trigger('input change');
+      range.$inputEl.val(range.value);
+      if (!byTouchMove) {
+        range.$inputEl.trigger('input change');
+      } else {
+        range.$inputEl.trigger('input');
+      }
     }
     range.emit('local::change rangeChange', range, range.value);
     return range;

@@ -52,6 +52,14 @@ function swipePanel(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
+    if (params.swipeCloseActiveAreaSide && panel.opened) {
+      if (side === 'left') {
+        if (touchesStart.x < ($el[0].offsetWidth - params.swipeCloseActiveAreaSide)) return;
+      }
+      if (side === 'right') {
+        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeCloseActiveAreaSide)) return;
+      }
+    }
     touchMoves = 0;
     $viewEl = $(panel.getViewEl());
     isMoved = false;
@@ -86,7 +94,7 @@ function swipePanel(panel) {
       }
 
       if (params.swipe === 'both') {
-        if (params.swipeActiveArea > 0) {
+        if (params.swipeActiveArea > 0 && !panel.opened) {
           if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
             isTouched = false;
             return;
@@ -124,12 +132,12 @@ function swipePanel(panel) {
       const timeDiff = (new Date()).getTime() - touchStartTime;
       if (timeDiff < 300) {
         if (direction === 'to-left') {
-          if (side === 'right') app.openPanel(side);
-          if (side === 'left' && $el.hasClass('panel-active')) app.closePanel();
+          if (side === 'right') app.panel.open(side);
+          if (side === 'left' && $el.hasClass('panel-active')) app.panel.close();
         }
         if (direction === 'to-right') {
-          if (side === 'left') app.openPanel(side);
-          if (side === 'right' && $el.hasClass('panel-active')) app.closePanel();
+          if (side === 'left') app.panel.open(side);
+          if (side === 'right' && $el.hasClass('panel-active')) app.panel.close();
         }
       }
       isTouched = false;
@@ -207,8 +215,12 @@ function swipePanel(panel) {
     let action;
     const edge = (translate === 0 || Math.abs(translate) === panelWidth);
 
+    const threshold = params.swipeThreshold || 0;
+
     if (!panel.opened) {
-      if (effect === 'cover') {
+      if (Math.abs(touchesDiff) < threshold) {
+        action = 'reset';
+      } else if (effect === 'cover') {
         if (translate === 0) {
           action = 'swap'; // open
         } else if (timeDiff < 300 && Math.abs(translate) > 0) {

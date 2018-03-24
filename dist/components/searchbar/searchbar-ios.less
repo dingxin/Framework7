@@ -4,6 +4,9 @@
   .searchbar {
     height: @searchbarSize;
     background: @searchbarBg;
+    &.no-hairline {
+      .hairline-remove(bottom);
+    }
     input[type="search"], input[type="text"] {
       padding: 0 28px;
       box-sizing: border-box;
@@ -28,6 +31,12 @@
     }
     .input-clear-button {
       z-index: 40;
+      .ltr({
+        right: 7px;
+      });
+      .rtl({
+        left: 7px;
+      });
     }
   }
   .searchbar-expandable {
